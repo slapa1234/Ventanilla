@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ConsultaDNI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="DNI" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Usuario">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="USULOG" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="USUCON" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaDNIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaDNIResult" type="tns:Persona" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Persona">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="apPrimer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="apSegundo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="direccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="estadoCivil" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="foto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="prenombres" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="restriccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ubigeo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaLicencia">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="DNI" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TIPDOC" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaLicenciaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaLicenciaResult" type="tns:Conductor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Conductor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="dni" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUM_LICENCIA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CATEGORIA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECREV" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ESTADO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TIPO_DOC" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUM_DOCUMENTO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="APE_PATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="APE_MATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NOMBRE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RESTRICCION" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECEXP" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaPlaca">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="PLACA" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaPlacaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaPlacaResult" type="tns:Vehiculo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Vehiculo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="placa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="serie" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vin" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nro_motor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="color" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="marca" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="modelo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sede" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="propietarios" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="nombre" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="propietario" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsulMigra">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="CE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsulMigraResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsulMigraResult" type="tns:Migraciones" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Migraciones">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="strNombres" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="strPrimerApellido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="strSegundoApellido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="strCalidadMigratoria" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="strNumRespuesta" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaPTP">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="PTP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TIPDOC" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaPTPResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaPTPResult" type="tns:PermiTempPerm" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PermiTempPerm">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="NUM_DOCUMENTO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NOMBRE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="APE_PATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="APE_MATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CATEGORIA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECREV" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUM_LICENCIA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ESTADO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RESTRICCION" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECEXP" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaRUC">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="RUC" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaRUCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaRUCResult" type="tns:PersonaRUC" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PersonaRUC">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ddp_nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ddp_numruc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="desc_estado" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaToken">
+        <s:complexType />
+      </s:element>
+      <s:element name="ConsultaTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaTokenResult" type="tns:Token" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Token">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="success" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="error" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="httpstatuscode" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaCITV">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="Placa" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaCITVResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaCITVResult" type="tns:CITV" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CITV">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:CITVRESULT" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CITVRESULT">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Placa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nro_certificado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Vigente_desde" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Vigente_Hasta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Resultado_Inspeccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Empresa_certificadora" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ok" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaSOAT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="PLACA" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSOATResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaSOATResult" type="tns:Soat" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Soat">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="compania" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="inivigen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="finvigen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="polcerti" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nroplaca" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="contrata" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="descruso" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="desclase" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nromotor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nrochasi" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ConsultaPapeleta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="DNI" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TIPDOC" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaPapeletaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaPapeletaResult" type="tns:ArrayOfPapeletas" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPapeletas">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Papeletas" nillable="true" type="tns:Papeletas" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Papeletas">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ENTIDAD" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PAPELETA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECHA_RES" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECHA_FIRME" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FALTA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RESOLUCION" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PUNTOS_FIRME" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="PUNTOS_PROCESO" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ConsultaDNISoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaDNI" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaDNISoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaDNIResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaLicenciaSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaLicencia" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaLicenciaSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaLicenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPlacaSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaPlaca" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPlacaSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaPlacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsulMigraSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsulMigra" />
+  </wsdl:message>
+  <wsdl:message name="ConsulMigraSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsulMigraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPTPSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaPTP" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPTPSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaPTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaRUCSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaRUC" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaRUCSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaRUCResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaToken" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaCITVSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaCITV" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaCITVSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaCITVResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSOATSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaSOAT" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSOATSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaSOATResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPapeletaSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaPapeleta" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaPapeletaSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaPapeletaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Servicio_ATUSoap">
+    <wsdl:operation name="ConsultaDNI">
+      <wsdl:input message="tns:ConsultaDNISoapIn" />
+      <wsdl:output message="tns:ConsultaDNISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLicencia">
+      <wsdl:input message="tns:ConsultaLicenciaSoapIn" />
+      <wsdl:output message="tns:ConsultaLicenciaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPlaca">
+      <wsdl:input message="tns:ConsultaPlacaSoapIn" />
+      <wsdl:output message="tns:ConsultaPlacaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsulMigra">
+      <wsdl:input message="tns:ConsulMigraSoapIn" />
+      <wsdl:output message="tns:ConsulMigraSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPTP">
+      <wsdl:input message="tns:ConsultaPTPSoapIn" />
+      <wsdl:output message="tns:ConsultaPTPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaRUC">
+      <wsdl:input message="tns:ConsultaRUCSoapIn" />
+      <wsdl:output message="tns:ConsultaRUCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaToken">
+      <wsdl:input message="tns:ConsultaTokenSoapIn" />
+      <wsdl:output message="tns:ConsultaTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaCITV">
+      <wsdl:input message="tns:ConsultaCITVSoapIn" />
+      <wsdl:output message="tns:ConsultaCITVSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSOAT">
+      <wsdl:input message="tns:ConsultaSOATSoapIn" />
+      <wsdl:output message="tns:ConsultaSOATSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPapeleta">
+      <wsdl:input message="tns:ConsultaPapeletaSoapIn" />
+      <wsdl:output message="tns:ConsultaPapeletaSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Servicio_ATUSoap" type="tns:Servicio_ATUSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaDNI">
+      <soap:operation soapAction="http://tempuri.org/ConsultaDNI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLicencia">
+      <soap:operation soapAction="http://tempuri.org/ConsultaLicencia" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPlaca">
+      <soap:operation soapAction="http://tempuri.org/ConsultaPlaca" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsulMigra">
+      <soap:operation soapAction="http://tempuri.org/ConsulMigra" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPTP">
+      <soap:operation soapAction="http://tempuri.org/ConsultaPTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaRUC">
+      <soap:operation soapAction="http://tempuri.org/ConsultaRUC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaToken">
+      <soap:operation soapAction="http://tempuri.org/ConsultaToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaCITV">
+      <soap:operation soapAction="http://tempuri.org/ConsultaCITV" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSOAT">
+      <soap:operation soapAction="http://tempuri.org/ConsultaSOAT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPapeleta">
+      <soap:operation soapAction="http://tempuri.org/ConsultaPapeleta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Servicio_ATUSoap12" type="tns:Servicio_ATUSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaDNI">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaDNI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLicencia">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaLicencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPlaca">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaPlaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsulMigra">
+      <soap12:operation soapAction="http://tempuri.org/ConsulMigra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPTP">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaPTP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaRUC">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaRUC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaToken">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaCITV">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaCITV" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSOAT">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaSOAT" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPapeleta">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaPapeleta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Servicio_ATU">
+    <wsdl:port name="Servicio_ATUSoap" binding="tns:Servicio_ATUSoap">
+      <soap:address location="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Servicio_ATUSoap12" binding="tns:Servicio_ATUSoap12">
+      <soap12:address location="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

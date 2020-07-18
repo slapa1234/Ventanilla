@@ -1,0 +1,1954 @@
+﻿@model SisATU.Base.DatosVentanaPrincipalVM
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .sa-button-container {
+        display: inline-flex !important;
+    }
+
+    .select-error {
+        border-color: #ed5565 !important;
+    }
+
+    .select2-selection{
+        height: 34px !important;
+        border-radius: 0px !important;
+    }
+</style>
+@*<link href="~/Content/plugins/dropzone/basic.css" rel="stylesheet" />
+<link href="~/Content/plugins/dropzone/dropzone.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/dropzone/dropzone.js"></script>*@
+@*<link href="~/Content/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>*@
+
+<script src="~/Scripts/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <h2 style="font-weight: bold;margin-top:10px" class="colorLetraATU">Ventanilla virtual</h2>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                @using (Html.BeginForm("GuardarExpediente", "Electronico", FormMethod.Post, new { enctype = "multipart/form-data", @Class = "form-vertical", @id = "frmRegistroTramite" }))
+                {
+              
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5 class="colorLetraATU">Datos del registro</h5>
+                          
+                                <div class="ibox-tools">
+
+                                    @*<a class="collapse-link">
+                                        <img src="~/Images/iconos/manual de uso.png" title="Manual de uso" style="width: 34px;" alt="Manual de uso" />
+                                    </a>*@
+                                    <a target="_blank" href="~/Adjunto/formatos/MANUAL_VENTANILLA.pdf">
+                                        <img src="~/Images/iconos/manual de uso.png" title="Manual de uso" style="width: 34px;" alt="Manual de uso" />
+                                    </a>
+
+                                    @*<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>*@
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo" >
+                                            <div class="form-group row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tipo de Persona">
+                                                <div class="col-lg-12">
+                                                    <select class="form-control m-b" id="selectTipoPersona" onchange="cambioTipoPersona()" name="name_tipopersona">
+                                                        <option value="0">.:Tipo Persona:.</option>
+                                                        @foreach (var item in Model.ListaTipoPersona)
+                                                        {
+                                                            <option value="@item.PARSEC">@item.PARNOM</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="form-group row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modalidad de transporte">
+                                                <div class="col-lg-12">
+                                                    <select class="form-control m-b" id="selectTipoModalidad" onchange="cambioTipoModalidad($(this).val());" name="name_tipo_modalidad">
+                                                        <option value="0">.:Seleccionar Modalidad:.</option>
+                                                        @foreach (var item in Model.ListaModalidadServicio)
+                                                        {
+                                                            <option value="@item.ID_MODALIDAD_SERVICIO" >@item.NOMBRE</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                 
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="form-group row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Trámite">
+                                                <div class="col-lg-12">
+                                                    <select class="form-control m-b selecttramityproc" id="selectTipoTramite" name="name_tipo_tramite" onchange="getProcedimientoByFiltro();">
+                                                        <option value="0">.:Trámite:.</option>
+                                                        @foreach (var item in Model.ListaTramite)
+                                                        {
+                                                           <option value="@item.ID_TIPO_TRAMITE">@item.NOMBRE_TRAMITE</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo" >
+                                            <div class="form-group row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Procedimiento">
+                                                <div class="col-lg-12">
+                                                    <select class="form-control m-b selecttramityproc" onchange="getRequisitosByProcedimiento($(this).val())" id="selectProcedimiento" name="name_procedimiento">
+                                                        <option value="0">.:Seleccionar Procedimiento:.</option>
+                                                    </select>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="form-group row" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tipo de documento">
+                                                <div class="col-lg-12">
+                                                    <select class="form-control m-b" onchange="cambioTipoDocumento()" id="selectTipoDocumento" name="name_tipodocumento">
+                                                        <option value="0">.:Tipo Documento:.</option>
+                                                        @foreach (var item in Model.SelectTipoDocumento)
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group sectionPersonaDNI" style="display:flex" data-toggle="tooltip" id="tooltipNumDoc" data-placement="top" title="" data-original-title="Debe ingresar el número de documento seguido del código de verificación EJM:  [DNI-CODIGOVERIFICACION]">
+                                                <span class="input-group-addon" style="padding-right: 27px;">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input class="form-control" id="txtNroDocumento" onkeyup="verificarTeclas(event);" data-mask="99999999-9" onkeypress="return soloNumeros(event)" placeholder="Nro. Documento"  type="text" value="">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-success" id="btnValidaDatosPersonales" onclick="getDatosPersonalesService();">
+                                                        validar
+                                                    </button>
+                                                </span>
+                                            </div>
+
+                                            <div class="input-group sectionPersonaExtranjera"  style="display:none;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ingresar el número de documento.">
+                                                <span class="input-group-addon" style="padding-right: 27px;">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input class="form-control" id="txtNroDocumentoEXT" onkeyup="verificarTeclas(event);" data-mask="999999999" onkeypress="return soloNumeros(event)" placeholder="Nro. Documento" type="text" value="">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-success" id="btnValidaDatosPersonalesEXT" onclick="getDatosPersonalesService();">
+                                                        validar
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title=""  data-original-title="Apellido Paterno" aria-describedby="tooltip215820">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input class="form-control datos-personales"  id="txtApePat" placeholder="Apellido Paterno" readonly="readonly" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Apellido Materno" aria-describedby="tooltip215820">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input class="form-control datos-personales" id="txtApeMat" name="APELLIDO_PATERNO"  readonly="readonly" placeholder="Apellido Materno"  type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Nombres" aria-describedby="tooltip215820">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input class="form-control datos-personales" id="txtNombres" name="name_nombres"  readonly="readonly"  placeholder="Nombres" type="text" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Dirección">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtDireccion"  name="name_direccion" placeholder="Ingresar dirección" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                  
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Número de teléfono o celular.">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-phone-square"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" onkeypress="return soloNumeros(event);" id="txtTelefono" maxlength="9" placeholder="Número de contácto" name="name_telefo" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="E-mail">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtEmail" name="name_email" placeholder="E-mail" type="text" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-top: 23px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                       
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo" id="sectionRuc" hidden>
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Numero de RUC">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-address-book"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtRUC" maxlength="11" onkeypress="return soloNumeros(event)" name="name_ruc" placeholder="RUC" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tooltip-demo">
+                                            <div><label style="font-weight: 500;"> <input id="checkAutorizacionEmail" type="checkbox" value="">
+                                                     Autorizando a la ATU que las comunicaciones y/o notificaciones sean remitidas a su
+                                                     correo electrónico, en el marco de la Ley 274444.                                                
+                                                </label></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row sectionpago sectiontramitesimple" style="padding-top: 23px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo" >
+                                            <select class="form-control m-b"  id="selectBanco" >
+                                                <option value="0">.:Banco:.</option>
+                                                @foreach (var item in Model.ListaEntidadBancaria)
+                                                {
+                                                    <option value="@item.ID_ENTIDAD_BANCARIA">@item.NOMBRE</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha del pago">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtFechaPago"  data-mask="99/99/9999"  placeholder="Fecha pago" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            @*<div class="input-group" style="display: flex;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Recibo de pago">
+                                                <input type="text" class="form-control" id="txtNroReciboPago" placeholder="Recibo de pago"> <span class="input-group-append">
+                                                    
+                                                </span>
+                                            </div>*@
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Recibo de pago">
+                                                <span class="input-group-addon">
+
+                                                <img src="~/Images/iconos/voucher.png" style="width:20px" />
+                                                </span>
+                                                <input type="text" class="form-control" id="txtNroReciboPago" placeholder="Recibo de pago"> <span class="input-group-append">
+
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <a  onclick="mostrarModalImgBanco();"  >¿Dónde encuentro el número del recibo?</a>
+                                            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal5">
+                                                Large Modal
+                                            </button>*@
+                                        </div>
+                                        <div  class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo text-center">
+                                            <a target="_blank" href="~/Adjunto/tarifa/FICHAS_EXCEL TARIFAS.pdf" data-toggle="tooltip" data-placement="left" title="" data-original-title="TASAS Y TARIFAS TUPA - ATU" > <img style="width:30px" src="~/Images/iconos/tasas y tarifas.png" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row sectionSAT sectiongeneralsat" style="padding-top: 23px;" hidden>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" >
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="N° de Acta de Control">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-file-text-o"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" maxlength="10" id="txtNroActa" onkeypress="return soloNumeros(event);" placeholder="N° de Acta de Control" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha del acta">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtFechaActa" data-mask="99/99/9999" onkeyup="cambioFechaActa(event, $(this));" placeholder="Fecha del Acta" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <select class="form-control m-b" id="selectInfraccion" onchange="cambioInfraccion();" style="width:100%">
+                                                <option value="0">.:Seleccionar Infracción:.</option>
+                                                @foreach (var item in Model.ListaMultas)
+                                                {
+                                                    <option data-montomulta="@item.MONTO_MULTA" value="@item.ID_MULTA">@item.ID_MULTA - @item.DESCRIPCION </option>
+                                                        }
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha del acta">
+                                                <span class="input-group-addon">
+                                                    S/.
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtMontoInfraccion" placeholder="Monto Infracción" type="text" readonly="readonly" value="">
+                                                <input autocomplete="off" class="form-control" id="txtPorcentajeDescuento" type="hidden" readonly="readonly" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha del acta">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-taxi"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtPlacaVehiculo" maxlength="6" placeholder="Placa" type="text" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row sectionSegundaCondicion sectiongeneralsat" style="padding-top: 23px;" hidden>
+                                    <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="" data-original-title="N° de Resolución de Sanción">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-file-text"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtNroResolucion" onkeypress="return soloNumeros(event)" placeholder="N° Resolución de Sanción" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha de la resolución.">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtFechaResolucion" data-mask="99/99/9999" placeholder="Fecha resolución." type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tooltip-demo">
+                                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Monto de la multa dispuesto en la Resolución de Sanción">
+                                                <span class="input-group-addon">
+                                                    S/.
+                                                </span>
+                                                <input autocomplete="off" class="form-control" id="txtmontMultaResolucion" onkeypress="return soloNumeros(event)" placeholder="Monto multa en la resolución" type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                            <select class="form-control m-b" id="selectCantidadCuotas">
+                                                <option value="0">.:Seleccionar Cuotas:.</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                       
+
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="row sectionSegundaCondicion sectiongeneralsat" style="padding-top: 23px;" hidden>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 tooltip-demo">
+                                            <div>
+                                                <label style="font-weight: 500;">
+                                                    <input id="checkResolucion" onclick="validarinpugnado();" type="checkbox" value="">
+                                                    Presentó recurso impugnatorio contra la resolución de sanción
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 tooltip-demo sectionimpugnado" hidden> 
+                                            <div class="form-group" >
+                                                <input type="file" id="fldResolucion" accept="application/pdf" name="files"><br />
+                                                (*) Adjuntar documento de desistimiento de recurso impugnatorio a la resolución de sanción
+                                                Solicitud de desistimiento:
+                                                Por medio del presente documento, solicito se tenga por desistida la acción de contradicción, al haberse presentado recurso impugnatorio contra la resolución de sanción (indicar N° de resolución de sanción) presentado con fecha (indicar fecha).
+                                            </div>
+                                        </div>
+
+                                        
+                              
+                                    </div>
+                                </div>
+
+                                <div class="row sectionReciboPago sectiongeneralsat" style="padding-top: 17px;" hidden>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                        <select class="form-control m-b" id="selectBancoSAT">
+                                            <option value="0">.:Banco:.</option>
+                                            @foreach (var item in Model.ListaEntidadBancaria)
+                                            {
+                                                <option value="@item.ID_ENTIDAD_BANCARIA">@item.NOMBRE</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Fecha de la resolución.">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input autocomplete="off" class="form-control" id="txtFechaPagoSAT" data-mask="99/99/9999" placeholder="Fecha del pago." type="text" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Número del recibo de pago.">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-file-text"></i>
+                                            </span>
+                                            <input autocomplete="off" class="form-control" id="txtNroReciboSAT" onkeypress="return soloNumeros(event)" placeholder="Nro del recibo" type="text" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="" data-original-title="Monto cancelado">
+                                            <span class="input-group-addon">
+                                                S/.
+                                            </span>
+                                            <input autocomplete="off" class="form-control" id="txtMontoCancelado" readonly="readonly" placeholder="Monto cancelado" type="text" value="">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row sectionAdjuntoPago sectiongeneralsat" hidden>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"  >
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                                            <input type="file" id="fileVoucherPago" accept="application/pdf" name="files"><br />
+                                            (*) Aqui se subirá el voucher de pago (obligatorio)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 sectiontramitesimple">
+                        <div class="ibox ">
+                            <div id="contentTitle" class="ibox-title" style="min-height: 84px;" >
+                               
+                                @*dinamico*@
+                                <div id="divSectionFormatos ">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">
+                                        <h4 class="colorLetraATU">
+                                            Importante:
+                                        </h4>
+                                        <h4 style="font-weight: 100;color:black;">
+                                            Debe llenar el formato correctamente y adjuntarlo a la ventanilla virtual para registrar su trámite.<br />
+                                            <a id="lblFormatoDescarga" target="popup" href="">Aqui puede descargar el formato </a>
+                                        </h4>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:right">
+                                        <label id="TIPO_TRAMITE" style="font-weight:bold; color:#ED7D31;font-size:17px"></label>
+                                    </div>
+                                </div>
+                            </div>
+                           <div class="ibox-content sectiontramitesimple">
+                               <div class="row">
+                                   <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div>
+                                            <h4 class="colorLetraATU" style="margin-left: 10px;" >Requisitos.</h4>
+                                            <ul id="listaRequisitos" class="todo-list m-t small-list ui-sortable" style="color: #ff0000e0;font-weight: bold;">
+                                               
+                                            </ul>
+                                        </div>
+                                       <br />
+                                       <div>
+                                           <h4 class="colorLetraATU" style="margin-left: 10px;">Documentos requeridos para evaluación.</h4>
+                                           <ul id="listaDeEvaluaciones" class="todo-list m-t small-list ui-sortable" style="color: #1543ad;font-weight: bold;"></ul>
+
+                                       </div>
+                                       <div class="fileinput fileinput-new" data-provides="fileinput">
+                                           <span class="btn btn-default btn-file">
+                                               <input type="file" id="flPDFS" onchange="changeFile(event)" accept="application/pdf" name="files" multiple />
+                                           </span>
+                                           <span class="fileinput-filename"></span>
+                                           <ul id="listaArchivos" class="todo-list m-t small-list ui-sortable">
+                                              
+                                           </ul>
+                                       </div> 
+                                       <h5 class="colorLetraATU" style="margin-left: 10px; font-size: 14px;">Subir Archivos</h5>
+                                       <h4 class="" style="font-weight: 100;color:black;margin-left: 10px; font-size: 13px;">
+                                           El tamaño máximo de archivo permitido es 6 MB, <br />
+                                           Tipo de archivos permitidos es PDF.
+                                       </h4>
+                                   </div>
+                               </div>
+                           </div> 
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 text-right">
+                        <button id="btnRegistrar" type="submit" class="btn btn-w-m btn-primary">Registrar</button>
+                    </div>
+                    <div class="col-lg-6 text-right" data-toggle="tooltip" data-placement="left"  data-original-title="Manual de uso">
+                        @*<h5 style="font-size: 16px;" class="colorLetraATU">
+                        <a target="_blank" href="~/Adjunto/formatos/MANUAL_VENTANILLA.pdf">
+                            <img src="~/Images/iconos/manual de uso.png" title="Manual de uso" style="width: 34px;"  alt="Manual de uso" /> </a></h5>*@
+                    </div>
+
+                    @*<div class="col-lg-3 text-center">
+                        <h5 style="font-size: 16px;" class="colorLetraATU">
+                            <a target="_blank" href="~/Adjunto/formatos/Formularios Solicitud.pdf">Formularios de solicitud</a>
+
+                        </h5>
+                    </div>*@
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="text-align: center;" >
+                <div class="modal-header" style="padding:0px;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="txtTituloModal" >¿Dónde encuentro el número del recibo?</h4>
+                </div>
+                <div class="modal-body">
+                    <img id="imgBancoAyuda" src="" />
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script type="text/javascript">
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+</script>*@
+<script>
+    var VOUCHER_VALIDO = false;
+    var url_base = 'ventanilla';
+    var FECHA_HOY = "@DateTime.Now.ToString("dd/MM/yyyy")";
+    var TIMESTAMP_FECHA_HOY = convertDatetoTimeStamp(FECHA_HOY + ' 00:00:00');
+
+
+    var MODALIDAD_SAT = {
+        PREVENTIVA: 8,
+        COACTIVA: 9,
+        FRACCIONAMIENTO : 10
+    }
+
+    var SANCION_SIN_DCTO = {
+        E01: 'E01',
+        N01: 'N01',
+        R01 : 'R01'
+    }
+
+    $(document).ready(function () {
+     
+        $('#selectInfraccion').select2();
+        $("#frmRegistroTramite").on("submit", function (e) {
+            e.preventDefault();
+            //$('#btnSubirArchivo').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Subiendo...');
+            //validando
+            var modalidadSeleccionada = Number($('#selectTipoModalidad').val());
+            //
+            if (Number($('#selectTipoPersona').val()) == 0) {
+                $('#selectTipoPersona').focus();
+                MensajeAlerta("error", "Es necesario seleccionar el tipo de persona.");
+                return false;
+            }
+
+            if (Number($('#selectTipoModalidad').val()) == 0) {
+                $('#selectTipoModalidad').focus();
+                MensajeAlerta("error", "Es necesario seleccionar el tipo de modalidad.");
+
+                return false;
+            }
+
+            if (    modalidadSeleccionada == MODALIDAD_SAT.COACTIVA ||
+                    modalidadSeleccionada == MODALIDAD_SAT.PREVENTIVA ||
+                    modalidadSeleccionada == MODALIDAD_SAT.FRACCIONAMIENTO) { // si son tramites SAT
+                // si son tramites SAT
+
+            } else { // si son los otros TRÁMITES
+                if (Number($('#selectTipoTramite').val()) == 0) {
+                    $('#selectTipoTramite').focus();
+                    MensajeAlerta("error", "Es necesario seleccionar el tipo de trámite.");
+
+                    return false;
+                }
+
+                if (Number($('#selectProcedimiento').val()) == 0) {
+                    $('#selectProcedimiento').focus();
+                    MensajeAlerta("error", "Es necesario seleccionar el tipo de procedimiento.");
+
+                    return false;
+                }
+            }
+
+         
+
+            var tipoDocumento = Number($('#selectTipoDocumento').val());
+        
+            if (tipoDocumento == 1) { // si es DNI
+                if ($('#txtNroDocumento').val().length == 0) {
+                    $('#txtNroDocumento').focus();
+                    MensajeAlerta("error", "Ingresar numero de documento.");
+
+                    return false;
+                }
+            } else if (tipoDocumento == 0) { // si son los otros documentos
+                $('#selectTipoDocumento').focus();
+                MensajeAlerta("error", "Seleccionar el tipo de documento.");
+                return false;
+            } else {
+                if ($('#txtNroDocumentoEXT').val().length == 0) {
+                    $('#txtNroDocumentoEXT').focus();
+                    MensajeAlerta("error", "Ingresar numero de documento.");
+                    return false;
+                }
+            }
+
+         
+
+            if ($('#txtApePat').val().length == 0) {
+                $('#txtApePat').focus();
+                MensajeAlerta("error", "Ingresar apellido paterno.");
+                return false;
+            }
+
+            if ($('#txtApeMat').val().length == 0) {
+                $('#txtApeMat').focus();
+                MensajeAlerta("error", "Ingresar apellido materno.");
+                return false;
+            }
+
+            if ($('#txtNombres').val().length == 0) {
+                $('#txtNombres').focus();
+                MensajeAlerta("error", "Ingresar nombres.");
+
+                return false;
+            }
+            
+            if ($('#txtEmail').val().length == 0) {
+                MensajeAlerta("error", "Ingresar un email.");
+                $('#txtEmail').focus();
+                return false;
+            } else {
+                //validando el correo
+                if (!validarEmail($('#txtEmail'))) {
+                    $('#txtEmail').focus();
+                
+                    return false;
+                }
+            }
+
+            if ($('#txtTelefono').val().length == 0) {
+                $('#txtTelefono').focus();
+                MensajeAlerta("error", "Ingresar el nro de contácto.");
+                return false;
+            }
+
+            //verifica que modalidad esta seleccionando 
+            if (modalidadSeleccionada == MODALIDAD_SAT.COACTIVA || modalidadSeleccionada == MODALIDAD_SAT.PREVENTIVA || modalidadSeleccionada == MODALIDAD_SAT.FRACCIONAMIENTO) { // si son tramites SAT
+                registrarTramiteSAT();
+            } else { // si son los otros TRÁMITES
+                registrarTramiteSimple();
+            }
+        });
+
+        //dataPrueba();
+    });
+
+    function registrarTramiteSAT() {
+        if ($('#txtNroActa').val().length == 0) {
+            $('#txtNroActa').focus();
+            MensajeAlerta("error", "Ingresar el nro de acta de control.");
+            return false;
+        }
+
+        if ($('#txtFechaActa').val().length == 0) {
+            $('#txtFechaActa').focus();
+            MensajeAlerta("error", "Ingresar la fecha del acta.");
+            return false;
+        }
+
+        if (Number($('#selectInfraccion').val()) == 0) {
+            $('#selectInfraccion').focus();
+            MensajeAlerta("error", "Debe seleccionar la infracción.");
+            return false;
+        }
+
+        if ($('#txtPlacaVehiculo').val().length == 0) {
+            $('#txtPlacaVehiculo').focus();
+            MensajeAlerta("error", "Es necesario ingresar la placa.");
+            return false;
+        }
+
+        //if (Number($('#selectBancoSAT').val()) == 0) {
+        //    $('#selectBancoSAT').focus();
+        //    MensajeAlerta("error", "Debe seleccionar el banco.");
+        //    return false;
+        //}
+
+        //if (Number($('#txtFechaPagoSAT').val().length) == 0) {
+        //    $('#txtFechaPagoSAT').focus();
+        //    MensajeAlerta("error", "Debe ingresar la fecha de pago.");
+        //    return false;
+        //}
+        
+        //if (Number($('#txtNroReciboSAT').val().length) == 0) {
+        //    $('#txtNroReciboSAT').focus();
+        //    MensajeAlerta("error", "Debe ingresar el nro de recibo.");
+        //    return false;
+        //}
+
+        //if ($('#fileVoucherPago').val().length == 0) {
+        //    MensajeAlerta("error", "Es necesario adjuntar el voucher de pago.");
+        //    return false;
+        //}
+
+        registroTramiteSAT();
+    }
+
+    function registrarTramiteSimple() {
+        if ($('.sectionpago').is(':visible')) {
+            if (Number($('#selectBanco').val()) == 0) {
+                MensajeAlerta("error", "Debe seleccionar el banco");
+                $('#selectBanco').focus();
+                return false;
+            }
+
+            if (Number($('#txtFechaPago').val().length) == 0) {
+                MensajeAlerta("error", "Debe ingresar la fecha.");
+                $('#txtFechaPago').focus();
+                return false;
+            }
+
+            if (Number($('#txtNroReciboPago').val().length) == 0) {
+                MensajeAlerta("error", "Debe ingresar el nro de recibo.");
+                $('#txtNroReciboPago').focus();
+                return false;
+            }
+        }
+
+        if (!$('.sectionpago').is(':visible')) {
+            $('#txtNroReciboPago').css({
+                'border': '1px solid #c1c2c3'
+            });
+
+            if ($('#flPDFS').val().length == 0) {
+                MensajeAlerta("error", "Es necesario cargar almenos 1 archivo.");
+                return false;
+            }
+            registrarTramite();
+        } else {
+            var selectReciboPago = Number($('#selectBanco').val());
+            switch (selectReciboPago) {
+                case 1: //banco de la nación
+                    validarVoucherBancoNacion();
+                    break;
+                case 2: //scotiabank 
+                    validarVoucherScotiabank();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    function mostrarModalImgBanco() {
+        var bancoSeleccionado = Number($('#selectBanco').val());
+        var time = "@DateTime.Now.ToString("HHmmss")";
+        var nuevaUrl = '';
+        //
+        if (Number($('#selectBanco').val()) == 0) {
+            MensajeAlerta("error", "Debe seleccionar el banco.");
+            $('#selectBanco').focus();
+            return false;
+        }
+
+        $('#imgBancoAyuda').attr('src', '');
+        if (bancoSeleccionado == 1) { //banco de la nación
+            nuevaUrl = url_base +  '/Images/banco_de_la_nacion.png?v=' + time;
+            $('#imgBancoAyuda').attr('src', nuevaUrl);
+        } else { // scotiabank
+            nuevaUrl = url_base + '/Images/scotiabank.png?v=' + time;
+            $('#imgBancoAyuda').attr('src', nuevaUrl);
+        }
+
+        $('#myModal5').modal('show');
+    }
+
+    function registrarTramite() {
+        var formularioDatos = new FormData(document.getElementById("frmRegistroTramite"));
+        var tipoDocumento = Number($('#selectTipoDocumento').val());
+        var nroDocumento = null;
+        var checkAutorizacionEmail = ($('#checkAutorizacionEmail').is(':checked') ? 1 : 0);
+
+        if (tipoDocumento == 1) { // si es DNI
+            nroDocumento = $('#txtNroDocumento').val().length > 0 ? $('#txtNroDocumento').val().split('-')[0] : null;
+        } else { // si son los otros documentos
+            nroDocumento = $('#txtNroDocumentoEXT').val();
+        }
+
+
+        if (!nroDocumento) {
+            MensajeAlerta("error", "Debe ingresar un número de documento válido.")
+         
+            if (tipoDocumento == 1) { // si es DNI
+                $('#txtNroDocumento').focus();
+            } else { // si son los otros documentos
+                $('#txtNroDocumentoEXT').focus();
+            }
+            return false;
+        }
+
+        //valida check
+        if (checkAutorizacionEmail == 0) {// si no está checkeado
+
+
+            swal({
+                title: "Información",
+                text: "¿Desea autorizar a la ATU a enviar a su correo " + $('#txtEmail').val() + " las notificaciones del trámite realizado?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+              
+                if (isConfirm) { // si desea (enviar correo y guardar estado )
+                        swal({
+                            title: "Información",
+                            text: "¿Está seguro de realizar el trámite?",
+                            type: "info",
+                            showCancelButton: true,
+                            confirmButtonColor: "#1ab394",
+                            confirmButtonText: "Si",
+                            cancelButtonText: "No",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        },
+                       function (confirm) {
+                           
+                           if (confirm) { // si reconfirma que quiere hacer el tramite
+                               confirmacionRegistroTramite(nroDocumento, formularioDatos, 1);
+                               swal.close();
+                           } else {
+                               swal.close();
+                           }
+                       });
+                } else {
+                    swal.close();
+                }
+            });
+        } else {//(no enviar correo y guardar estado)
+            swal({
+                title: "Información",
+                text: "¿Está seguro de realizar el trámite?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+
+                if (isConfirm) { // si reconfirma que quiere hacer el tramite
+                    confirmacionRegistroTramite(nroDocumento, formularioDatos, 0);
+                    swal.close();
+                } else {
+                    swal.close();
+                }
+            });
+        }
+        /******/
+    }
+
+    function registroTramiteSAT() {
+        var formularioDatos = new FormData(document.getElementById("frmRegistroTramite"));
+        var tipoDocumento = Number($('#selectTipoDocumento').val());
+        var nroDocumento = null;
+        var checkAutorizacionEmail = ($('#checkAutorizacionEmail').is(':checked') ? 1 : 0);
+
+        if (tipoDocumento == 1) { // si es DNI
+            nroDocumento = $('#txtNroDocumento').val().length > 0 ? $('#txtNroDocumento').val().split('-')[0] : null;
+        } else { // si son los otros documentos
+            nroDocumento = $('#txtNroDocumentoEXT').val();
+        }
+
+        if (!nroDocumento) {
+            MensajeAlerta("error", "Debe ingresar un número de documento válido.")
+
+            if (tipoDocumento == 1) { // si es DNI
+                $('#txtNroDocumento').focus();
+            } else { // si son los otros documentos
+                $('#txtNroDocumentoEXT').focus();
+            }
+            return false;
+        }
+
+        if (checkAutorizacionEmail == 0) {// si no está checkeado
+
+
+            swal({
+                title: "Información",
+                text: "¿Desea autorizar a la ATU a enviar a su correo " + $('#txtEmail').val() + " las notificaciones del trámite realizado?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+    
+                if (isConfirm) { // si desea (enviar correo y guardar estado )
+                    swal({
+                        title: "Información",
+                        text: "¿Está seguro de realizar el trámite?",
+                        type: "info",
+                        showCancelButton: true,
+                        confirmButtonColor: "#1ab394",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                   function (confirm) {
+
+                       if (confirm) { // si reconfirma que quiere hacer el tramite
+                           confirmacionRegistroTramiteSAT(nroDocumento, formularioDatos, 1);
+                           swal.close();
+                       } else {
+                           swal.close();
+                       }
+                   });
+                } else {
+                    swal.close();
+                }
+            });
+        } else {//(no enviar correo y guardar estado)
+            swal({
+                title: "Información",
+                text: "¿Está seguro de realizar el trámite?",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+
+                if (isConfirm) { // si reconfirma que quiere hacer el tramite
+                    confirmacionRegistroTramiteSAT(nroDocumento, formularioDatos, 0);
+                    swal.close();
+                } else {
+                    swal.close();
+                }
+            });
+        }
+
+    }
+
+    function confirmacionRegistroTramiteSAT(nroDocumento, formularioDatos, checkAutorizacionEmail) {
+        $('#btnRegistrar').text('Registrando...').prop('disabled', true);
+        $.ajax({
+            url: '@Url.Action("registrarTramiteSAT", "Tramite")' + '/?tipoPersona=' + $('#selectTipoPersona').val() +
+                                '&modalidad=' + $('#selectTipoModalidad').val() +
+                                '&tramite=' + $('#selectTipoTramite').val() +
+                                '&procedimiento=' + $('#selectProcedimiento').val() +
+                                '&tipoDocumento=' + $('#selectTipoDocumento').val() +
+                                '&nroDocumento=' + nroDocumento +
+                                '&apepat=' + $('#txtApePat').val() +
+                                '&apemat=' + $('#txtApeMat').val() +
+                                '&nombres=' + $('#txtNombres').val() +
+                                '&reciboPago=' + ($('.sectionpago').is(':visible') ? $('#txtNroReciboPago').val() : '') +
+                                '&email=' + $('#txtEmail').val() +
+                                '&ruc=' + $('#txtRUC').val() +
+                                '&autorizaEmail=' + checkAutorizacionEmail +
+                                '&nroTelefono=' + $('#txtTelefono').val() +
+                                '&direccion=' + $('#txtDireccion').val() + 
+                                '&nroactacontrol=' + $('#txtNroActa').val() +
+                                '&fechaacta=' + $('#txtFechaActa').val() +
+                                '&diashabiles=' + 1 + 
+                                '&idMulta=' + $('#selectInfraccion').val() +
+                                '&placa=' + $('#txtPlacaVehiculo').val() +
+                                '&nroressancion=' + $('#txtNroResolucion').val() +
+                                '&montoinresol=' + ($('#txtmontMultaResolucion').val().length == 0 ? 0 : $('#txtmontMultaResolucion').val()) +
+                                '&fechaResol=' + $('#txtFechaResolucion').val() +
+                                '&flagpresentorecurso=' + ($('#checkResolucion').is(':checked') ? 1: 0)  +
+                                '&idbanco=' + $('#selectBancoSAT').val() +
+                                '&fechapago=' + $('#txtFechaPagoSAT').val() +
+                                '&nrorecibo=' + $('#txtNroReciboSAT').val() +
+                                '&montocancelado=' + $('#txtMontoCancelado').val() +
+                                '&montoenresol=' + ($('#txtmontMultaResolucion').val().length == 0 ? 0 : $('#txtmontMultaResolucion').val()) +
+                                '&nrocuotas=' + $('#selectCantidadCuotas').val(),
+
+            type: "post",
+            dataType: "json",
+            data: formularioDatos,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (respuesta) {
+     
+            var codResultado = respuesta.codResultado;
+            var desResultado = respuesta.desResultado;
+            var codAuxiliar = respuesta.codAuxiliar;
+            swal({
+                title: (codResultado == 1 ? "Registro Correctamente" : "Error"),
+                text: (codResultado == 1 ? ("Su trámite fue registrado correctamente, en breve le llegará una notificación a su correo " + $('#txtEmail').val() + ".") : desResultado),
+                type: (codResultado == 1 ? "success" : "error"),
+                html: true,
+                showCancelButton: false,
+                //confirmButtonColor: '#1ab394',
+                confirmButtonText: 'Aceptar',
+            }, function (isConfirm) {
+                location.reload();
+                //if (isConfirm) {
+                //    $ID_PROCEDIMIENTO.val(0).trigger('change');
+                //    consultaProcedimiento();
+                //} else {
+
+                //}
+            });
+        });
+
+    }
+
+    function confirmacionRegistroTramite(nroDocumento, formularioDatos, checkAutorizacionEmail) {
+
+        $('#btnRegistrar').text('Registrando...').prop('disabled', true);
+        $.ajax({
+            url: '@Url.Action("registrarTramite", "Tramite")' + '/?tipoPersona=' + $('#selectTipoPersona').val() +
+                                            '&modalidad=' + $('#selectTipoModalidad').val() +
+                                            '&tramite=' + $('#selectTipoTramite').val() +
+                                            '&procedimiento=' + $('#selectProcedimiento').val() +
+                                            '&tipoDocumento=' + $('#selectTipoDocumento').val() +
+                                            '&nroDocumento=' + nroDocumento +
+                                            '&apepat=' + $('#txtApePat').val() +
+                                            '&apemat=' + $('#txtApeMat').val() +
+                                            '&nombres=' + $('#txtNombres').val() +
+                                            '&reciboPago=' + ($('.sectionpago').is(':visible') ? $('#txtNroReciboPago').val() : '') +
+                                            '&email=' + $('#txtEmail').val() +
+                                            '&ruc=' + $('#txtRUC').val() +
+                                            '&autorizaEmail=' + checkAutorizacionEmail +
+                                            '&nroTelefono=' + $('#txtTelefono').val() + 
+                                            '&direccion=' + $('#txtDireccion').val() +
+                                            '&idBanco=' + $('#selectBanco').val() +
+                                            '&fechaPago=' + $('#txtFechaPago').val(),
+            type: "post",
+            dataType: "json",
+            data: formularioDatos,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (respuesta) {
+            var codResultado = respuesta.codResultado;
+            var desResultado = respuesta.desResultado;
+            var codAuxiliar = respuesta.codAuxiliar;
+            swal({
+                title: (codResultado == 1 ? "Registro Correctamente" : "Error"),
+                text: (codResultado == 1 ? ("El expediente <strong>" + codAuxiliar + "</strong> fue registrado correctamente, en breve le llegará una notificación a su correo " + $('#txtEmail').val() + ".") : desResultado),
+                type: (codResultado == 1 ? "success" : "error"),
+                html: true,
+                showCancelButton: false,
+                //confirmButtonColor: '#1ab394',
+                confirmButtonText: 'Aceptar',
+            }, function (isConfirm) {
+                location.reload();
+                //if (isConfirm) {
+                //    $ID_PROCEDIMIENTO.val(0).trigger('change');
+                //    consultaProcedimiento();
+                //} else {
+
+                //}
+            });
+        });
+
+    }
+
+    function validarEmail(elemento) {
+        if ($(elemento).val().length == 0) {
+            MensajeAlerta("error", "Es necesario ingresar el correo electrónico.")
+            $(elemento).parent().addClass('has-error');
+            $(elemento).focus();
+            return false;
+        } else {
+
+            if (!SoloCorreo($(elemento).val())) {
+                MensajeAlerta("error", "Debe ingresar un correo válido.")
+                $(elemento).parent().addClass('has-error');
+                $(elemento).focus();
+                return false;
+            } else {
+                if ($(elemento).parent().hasClass('has-error')) {
+                    $(elemento).parent().removeClass('has-error');
+                }
+            }
+        }
+        return true;
+    }
+
+    function changeFile(e) {
+        var files = e.target.files;
+        $('#listaArchivos').empty();
+        var strHTMLLista = '';
+        var cantidad_max_kb = (2 * 1024);
+        var files_eliminar = [];
+        $.each(files, function (i) {
+            var pesoArchivo = (Number(this.size) / 1000);
+            //console.log(cantidad_max_kb , pesoArchivo)
+            //if (cantidad_max_kb > pesoArchivo) {
+                strHTMLLista += '<li>' +
+                              '<a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>' +
+                              '<span class="m-l-xs">' + this.name + ' <small class="label label-info">' + (Number(this.size) / 1000) + ' KB</small></span>' +
+                          '</li>';
+            //} else {
+              //  files_eliminar.push(i);
+            //}
+        });
+
+        //$.each(files_eliminar, function () {
+           
+        //});
+        //for (var i = 0; i < files_eliminar.length; i++) {
+        //    console.log(files_eliminar[i])
+        //    files.splice(files_eliminar[i], 1);
+        //}
+        //console.log("files eliminar -> ", files_eliminar);
+
+        $('#listaArchivos').append(strHTMLLista);
+    }
+
+    function validaRecibo() {
+        var selectReciboPago = Number($('#selectBanco').val());
+
+        if (Number($('#selectProcedimiento').val()) == 0) {
+            MensajeAlerta("error","Debe seleccionar el procedimiento");
+            $('#selectProcedimiento').focus();
+            return false;
+        }
+
+        if (Number($('#selectBanco').val()) == 0) {
+            MensajeAlerta("error", "Debe seleccionar el banco");
+            $('#selectBanco').focus();
+            return false;
+        }
+
+        if (Number($('#txtFechaPago').val().length) == 0) {
+            MensajeAlerta("error", "Debe ingresar la fecha.");
+            $('#txtFechaPago').focus();
+            return false;
+        }
+
+        if (Number($('#txtNroReciboPago').val().length) == 0) {
+            MensajeAlerta("error", "Debe ingresar el nro de recibo.");
+            $('#txtNroReciboPago').focus();
+            return false;
+        }
+
+
+        switch (selectReciboPago) {
+            case 1: //banco de la nación
+                validarVoucherBancoNacion();
+                break;
+            case 2: //scotiabank 
+                validarVoucherScotiabank();
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    function validarVoucherScotiabank() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("validaVoucherScotiabank", "Tramite")",
+            data: {
+                idModalidadServicio: $('#selectTipoModalidad').val(),
+                idProcedimiento: $('#selectProcedimiento').val(),
+                nroRecibo: $('#txtNroReciboPago').val(),
+                fecha: $('#txtFechaPago').val()
+            },
+            beforeSend: function () {
+                //laddaBtnIngresar.ladda('start');
+            },
+            success: function (data) {
+                //$('#btnValidaDatosPersonales').text('validar');
+                var rpta = JSON.parse(data);
+                if (rpta.CodResultado == 1) { // es valido
+             
+                    $('#txtNroReciboPago').css({
+                        'border': '1px solid #c1c2c3'
+                    });
+
+                    if ($('#flPDFS').val().length == 0) {
+                        MensajeAlerta("error", "Es necesario cargar almenos 1 archivo.");
+                        return false;
+                    }
+                    registrarTramite();
+                } else { // no es válido
+                    $('#txtNroReciboPago').focus().css({
+                        'border': '1px solid red'
+                    });
+                    MensajeAlerta("error", "El voucher no es válido.");
+                }
+                //$('#txtApePat').val(rpta.APELLIDO_PATERNO ? rpta.APELLIDO_PATERNO : '')
+                //$('#txtApeMat').val(rpta.APELLIDO_MATERNO ? rpta.APELLIDO_MATERNO : '')
+                //$('#txtNombres').val(rpta.NOMBRES ? rpta.NOMBRES : '')
+            },
+            complete: function (data) {
+                // laddaBtnIngresar.ladda('stop');
+            },
+        },JSON)
+    }
+
+    function validarVoucherBancoNacion() {
+        $('#btnValidaRecibo').text('Validando...');
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("validaVoucherBNacion", "Tramite")",
+            data: {
+                idProcedimiento: $('#selectProcedimiento').val(),
+                nroRecibo: $('#txtNroReciboPago').val(),
+                fecha: $('#txtFechaPago').val()
+            },
+            beforeSend: function () {
+                //laddaBtnIngresar.ladda('start');
+            },
+            success: function (data) {
+                //$('#btnValidaDatosPersonales').text('validar');
+                //registrarTramite();
+                //return false;
+                var rpta = JSON.parse(data);
+                if (rpta.CodResultado == 1) { // es valido
+               
+                    $('#txtNroReciboPago').css({
+                        'border': '1px solid #c1c2c3'
+                    });
+
+                    if ($('#flPDFS').val().length == 0) {
+                        MensajeAlerta("error", "Es necesario cargar almenos 1 archivo.");
+                        return false;
+                    }
+
+                    registrarTramite();
+                } else { // no es válido
+                    VOUCHER_VALIDO = false;
+                    $('#txtNroReciboPago').focus().css({
+                        'border' : '1px solid red'
+                    });
+                    MensajeAlerta("error", "El voucher no es válido.");
+                }
+
+                //$('#txtApePat').val(rpta.APELLIDO_PATERNO ? rpta.APELLIDO_PATERNO : '')
+                //$('#txtApeMat').val(rpta.APELLIDO_MATERNO ? rpta.APELLIDO_MATERNO : '')
+                //$('#txtNombres').val(rpta.NOMBRES ? rpta.NOMBRES : '')
+            },
+            complete: function (data) {
+                // laddaBtnIngresar.ladda('stop');
+            },
+            },JSON)
+    }
+
+    function getDatosReniec() {
+        
+        var nroDocumentoIngresado = $('#txtNroDocumento').val();
+        var DNI = nroDocumentoIngresado.split('-')[0];
+        var CODIGO_VERIFICACION = nroDocumentoIngresado.split('-')[1];
+        //
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getDatosReniec", "Tramite")",
+            data: {
+                nroDocumento: DNI
+            },
+            beforeSend: function () {
+                //laddaBtnIngresar.ladda('start');
+            },
+            success: function (data) {
+                
+                var ultimoDigito = "";
+                $('#btnValidaDatosPersonales').text('validar');
+                var rpta = JSON.parse(data);
+                if (!rpta.APELLIDO_PATERNO && !rpta.APELLIDO_PATERNO) {
+                    MensajeAlerta("error", rpta.ResultadoProcedimientoVM["NomResultado"]);
+                    return false;
+                }
+
+                ultimoDigito = Number(rpta.ULTIMO_DIGITO);
+                if (ultimoDigito != Number(CODIGO_VERIFICACION)) {
+                    MensajeAlerta("error", "El código de verificación no corresponde con el DNI.");
+                    return false;
+                }
+
+                $('#txtApePat').val(rpta.APELLIDO_PATERNO ? rpta.APELLIDO_PATERNO : '')
+                $('#txtApeMat').val(rpta.APELLIDO_MATERNO ? rpta.APELLIDO_MATERNO : '')
+                $('#txtNombres').val(rpta.NOMBRES ? rpta.NOMBRES : '')
+            },
+            complete: function (data) {
+                //laddaBtnIngresar.ladda('stop');
+            },
+        },JSON)
+    }
+
+
+    function mostrarFormatoPorProcedimiento(selectTextProcedimiento) {
+        var formatoPDF = '';
+        $('#lblFormatoDescarga').attr('href', '#')
+
+        //
+        //var formatoRegularPersona = false;
+        //var formatoSolicitudSeis = false;
+        //var formatoTrasporteRegular = false;
+        //var formatoSolicitudSiete = false;
+
+        var formatoTrasporteRegularPersonas = false;
+        var formatoSesis = false;
+        var formatoSiete = false;
+        var formatoUno = false;
+        var formatoDos = false;
+        var formatoTres = false;
+        var formatoCuatro = false;
+        var formatoCinco = false;
+
+
+    
+        if (selectTextProcedimiento.length > 0) {
+            //formatoRegularPersona = (selectTextProcedimiento.indexOf('1.0') != -1 ?  true :  false ) || 
+            //                        (selectTextProcedimiento.indexOf('1.1') != -1 ? true : false) || 
+            //                        (selectTextProcedimiento.indexOf('1.2') != -1 ? true : false) || 
+            //                        (selectTextProcedimiento.indexOf('1.3') != -1 ? true : false);
+
+            //formatoSolicitudSeis =  (selectTextProcedimiento.indexOf('2.0') != -1 ? true : false) ||
+            //                        (selectTextProcedimiento.indexOf('2.1') != -1 ? true : false) ||
+            //                        (selectTextProcedimiento.indexOf('2.2') != -1 ? true : false) ||
+            //                        (selectTextProcedimiento.indexOf('2.3') != -1 ? true : false);
+
+            formatoTrasporteRegularPersonas =   (selectTextProcedimiento.indexOf('1.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('1.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('1.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('1.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('3.6') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('5.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('5.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('5.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('5.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('7.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('7.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('7.2') != -1 ? true : false);
+
+            formatoSesis =                      (selectTextProcedimiento.indexOf('2.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('2.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('2.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('2.3') != -1 ? true : false);
+
+            formatoSiete =                      (selectTextProcedimiento.indexOf('4.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('4.6') != -1 ? true : false) || 
+
+                                                (selectTextProcedimiento.indexOf('6.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('6.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('6.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('6.3') != -1 ? true : false) ||
+                
+                                                (selectTextProcedimiento.indexOf('15.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('15.6') != -1 ? true : false);
+
+            formatoUno =                        (selectTextProcedimiento.indexOf('8.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('8.6') != -1 ? true : false);
+
+           formatoDos =                         (selectTextProcedimiento.indexOf('9.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('9.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('9.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('9.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('9.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('9.5') != -1 ? true : false);
+
+           formatoTres =                        (selectTextProcedimiento.indexOf('11.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('11.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('11.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('11.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('11.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('11.5') != -1 ? true : false);
+
+           formatoCuatro =                      (selectTextProcedimiento.indexOf('12.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.6') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.7') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.8') != -1 ? true : false);
+
+          formatoCinco =                        (selectTextProcedimiento.indexOf('12.0') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.1') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.2') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.3') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.4') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.5') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.6') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.7') != -1 ? true : false) ||
+                                                (selectTextProcedimiento.indexOf('12.8') != -1 ? true : false)
+
+          var nombrePDF = '';
+          if(formatoTrasporteRegularPersonas){ nombrePDF=  '/Adjunto/formatos/Formunlario T.Regular de Personas.pdf'}
+          if(formatoSesis){ nombrePDF   =  '/Adjunto/formatos/Formularios Solicitud-6.pdf'}
+          if(formatoSiete){ nombrePDF   =  '/Adjunto/formatos/Formularios Solicitud-7.pdf'}
+          if(formatoUno){ nombrePDF     =  '/Adjunto/formatos/Formularios Solicitud-1.pdf'}
+          if(formatoDos){ nombrePDF     =  '/Adjunto/formatos/Formularios Solicitud-2.pdf'}
+          if(formatoTres){ nombrePDF    =  '/Adjunto/formatos/Formularios Solicitud-3.pdf'}
+          if (formatoCuatro) { nombrePDF = '/Adjunto/formatos/Formato 4 y Formato 5.pdf' }
+          if (formatoCinco) { nombrePDF = '/Adjunto/formatos/Formato 4 y Formato 5.pdf' }
+
+          $('#lblFormatoDescarga').attr('href', url_base + nombrePDF);
+
+        }
+    }
+
+    function getRequisitosByProcedimiento(idProcedimiento) {
+        var dataEvaluacion = $('option:selected', $('#selectProcedimiento')).attr('data-devaluacion');
+        var dataMonto = $('option:selected', $('#selectProcedimiento')).attr('data-monto');
+        mostrarFormatoPorProcedimiento($("#selectProcedimiento option:selected").text());
+
+        //console.log('option-->', option);
+        var resultadoMonto = (!dataMonto || dataMonto.trim() == 'Gratuito' ? null : dataMonto.trim());
+        //console.log('resultadoMonto---->', resultadoMonto)
+        if (resultadoMonto) { // tiene costo
+            $('.sectionpago').removeAttr('hidden');
+        } else {
+            $('.sectionpago').prop('hidden', true);
+        }
+        //console.log('dataMonto', dataMonto);
+        mostrarDocumentosRequeridos(dataEvaluacion);
+        $('#listaRequisitos').empty();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getRequisitosByIdProcedimiento", "Tramite")",
+            data: {
+                idProcedimiento: $('#selectProcedimiento').val()
+            },
+        beforeSend: function () {
+            //laddaBtnIngresar.ladda('start');
+        },
+        success: function (data) {
+            var rpta = JSON.parse(data);
+            var strHTML = '';
+          
+            $.each(rpta, function () {
+                strHTML += '<li>' +
+                                '<i class="fa fa-exclamation-circle"></i>' +
+                                '<span class="m-l-xs">' + this.DESCRIPCION_REQUISITOS + '</span>' +
+                           '</li>';
+            });
+            $('#listaRequisitos').append(strHTML);
+            //if (rpta.length > 0) {
+            //    consultaProcedimiento();
+            //}
+            
+        },
+        complete: function (data) {
+            // laddaBtnIngresar.ladda('stop');
+        },
+        },JSON)
+    }
+
+    function verificarTeclas(e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+
+        if (keycode == 8) {
+            $('#txtApePat').val('');
+            $('#txtApeMat').val('');
+            $('#txtNombres').val('');
+        }
+    }
+
+    function cambioTipoDocumento() {
+        var tipoDocumentoSeleccionado = $('#selectTipoDocumento').val();
+        $('#txtNroDocumento').val('');
+        $('#txtNroDocumentoEXT').val('');
+        switch (Number(tipoDocumentoSeleccionado)) {
+            case 1: //DNI
+                $('.sectionPersonaExtranjera').css('display', 'none');
+                $('.sectionPersonaDNI').css('display', 'flex');
+                //
+                $('#tooltipNumDoc').attr('data-original-title', "Debe ingresar el número de documento seguido del código de verificación EJM:  [DNI-CODIGOVERIFICACION]")
+                $('#txtNroDocumento').attr('maxlength', 8);             
+                break;
+            case 2:
+                $('.sectionPersonaExtranjera').css('display', 'flex');
+                $('.sectionPersonaDNI').css('display', 'none');
+                //
+                $('#tooltipNumDoc').attr('data-original-title', "Ingresar el número de documento")
+                $('#txtNroDocumentoEXT').attr('maxlength', 9);
+                break;
+            case 3:
+                $('.sectionPersonaExtranjera').css('display', 'flex');
+                $('.sectionPersonaDNI').css('display', 'none');
+                //
+                $('#tooltipNumDoc').attr('data-original-title', "Ingresar el número de documento")        
+                $('#txtNroDocumentoEXT').attr('maxlength', 9);
+                break;
+        }
+    }
+
+    function getDatosPersonalesService() {
+       
+        if ($('#selectTipoDocumento').val() == 0) {
+            MensajeAlerta("error"," Debe seleccionar el tipo de documento.");
+            $('#selectTipoDocumento').focus();
+            return false;
+        }
+
+        var tipoDocumento = Number($('#selectTipoDocumento').val());
+
+        if (tipoDocumento == 1) { // si es DNI
+            if ($('#txtNroDocumento').val().length == 0) {
+                MensajeAlerta("error", " Debe ingresar un número de documento válido.");
+                $('#txtNroDocumento').focus();
+                return false;
+            }
+        } else { // si son los otros documentos
+            if ($('#txtNroDocumentoEXT').val().length == 0) {
+                MensajeAlerta("error", " Debe ingresar un número de documento válido.");
+                $('#txtNroDocumentoEXT').focus();
+                return false;
+            }
+        }
+
+
+        $('#btnValidaDatosPersonales').text('Validando...');
+        var tipoDocumentoSeleccionado = Number($('#selectTipoDocumento').val());
+        switch (tipoDocumentoSeleccionado) {
+            case 1:
+                $('#txtNroDocumento').attr('maxlength', 8);
+                getDatosReniec();
+                break;
+            case 2:
+                $('#txtNroDocumentoEXT').attr('maxlength', 9);
+                getDatosExtranj(4);
+                break;
+            case 3:
+                $('#txtNroDocumentoEXT').attr('maxlength', 9);
+                getDatosExtranj(14);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function getDatosExtranj(tipoDocumento) {
+
+        var nroDocumentoIngresado = $('#txtNroDocumentoEXT').val();
+        //var primeraParte = nroDocumentoIngresado.split('-')[0];
+        //var segundaParte = nroDocumentoIngresado.split('-')[1];
+        //var nroDocumentoIngresado = primeraParte + segundaParte;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getDatosExt", "Tramite")",
+            data: {
+                nroDocumento: nroDocumentoIngresado,
+                tipoDocumento: tipoDocumento
+            },
+        beforeSend: function () {
+            //laddaBtnIngresar.ladda('start');
+        },
+        success: function (data) {
+            $('#btnValidaDatosPersonales').text('validar');
+            var rpta = JSON.parse(data);
+            $('#txtApePat').val(rpta.APELLIDO_PATERNO ? rpta.APELLIDO_PATERNO : '')
+            $('#txtApeMat').val(rpta.APELLIDO_MATERNO ? rpta.APELLIDO_MATERNO : '')
+            $('#txtNombres').val(rpta.NOMBRES ? rpta.NOMBRES : '')
+        },
+        complete: function (data) {
+            // laddaBtnIngresar.ladda('stop');
+        },
+        },JSON)
+    }
+
+    function getProcedimientoByFiltro() {
+        //console.log($('#selectTipoPersona').val(), $('#selectTipoModalidad').val(), $('#selectTipoTramite').val());
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getProcedimientoByFiltro", "Tramite")",
+            data: {
+                tipoPersona: $('#selectTipoPersona').val(),
+                idModalidad: $('#selectTipoModalidad').val(),
+                tipoTramite: $('#selectTipoTramite').val()
+            },
+        beforeSend: function () {
+            //laddaBtnIngresar.ladda('start');
+        },
+        success: function (data) {
+            $('#selectProcedimiento').empty();
+            var rpta = JSON.parse(data);
+            var strOptionHTML = ('<option value="0">.:Seleccionar Procedimiento:.</option>');
+            //console.log("proc---->", rpta);
+            $.each(rpta, function () {
+                //if (this.ID_PROCEDIMIENTO == 1 ||
+                //    this.ID_PROCEDIMIENTO == 2 ||
+                //    this.ID_PROCEDIMIENTO == 4 ||
+                //    this.ID_PROCEDIMIENTO == 5) {
+
+                //} else {
+                strOptionHTML += '<option data-monto="' + this.MONTO + '" data-devaluacion="' + this.DOCUMENTACION_EVALUACION + '" value="' + this.ID_PROCEDIMIENTO + '">' + this.NOMBRE_PROCEDIMIENTO + '</option>';
+                //}
+            });
+            $('#selectProcedimiento').append(strOptionHTML);
+
+            getRequisitosByProcedimiento($('#selectProcedimiento').val());
+            mostrarFormatoPorProcedimiento($("#selectProcedimiento option:selected").text());
+            return false;
+            @*if (data.codresultado == 1) { //valido ok
+                $('#mensajeErrorAcceso').prop('hidden', true)
+                window.location.href = '@Url.Action("Index","Electronico")';
+            } else {
+                laddaBtnIngresar.ladda('stop');
+                MensajeAlerta("error", data.mensaje);
+                $('#mensajeErrorAcceso').text(data.mensaje);
+            }*@
+        },
+        complete: function (data) {
+            // laddaBtnIngresar.ladda('stop');
+        },
+        },JSON)
+    }
+
+    function mostrarDocumentosRequeridos(dataDcumentosRequeridos) {
+        $('#listaDeEvaluaciones').empty();
+        if (!dataDcumentosRequeridos) { return false; }
+        if (dataDcumentosRequeridos == 'null') { return false; }
+        var existeSplit = dataDcumentosRequeridos.indexOf('|');
+        var strHTMLevaluacion = '';
+        if (existeSplit != -1) { //EXISTE
+            var arrDocumentosRequeridos = dataDcumentosRequeridos.split('|');
+
+            for (var i = 0; i < arrDocumentosRequeridos.length; i++) {
+                strHTMLevaluacion += '<li>' +
+                                        '<i class="fa fa-exclamation-circle"></i>' +
+                                        '<span class="m-l-xs">' + arrDocumentosRequeridos[i].trim() + '</span>' +
+                                   '</li>';
+            }
+
+       
+           
+        } else { //no existe el split
+            strHTMLevaluacion += '<li>' +
+                                       '<i class="fa fa-exclamation-circle"></i>' +
+                                       '<span class="m-l-xs">' + dataDcumentosRequeridos.trim() + '</span>' +
+                                  '</li>';
+        }
+
+        $('#listaDeEvaluaciones').append(strHTMLevaluacion);
+    }
+
+
+    function cambioInfraccion() {
+        actualizarMontoCancelado();
+    }
+
+    function actualizarMontoCancelado() {
+        var montoMultaSancion = $('option:selected', $('#selectInfraccion')).attr('data-montomulta');
+        var porcentajeDescuento = Number($('#txtPorcentajeDescuento').val());
+        montoMultaSancion = Number(montoMultaSancion).toFixed(2);
+        $('#txtMontoInfraccion').val(isNaN(montoMultaSancion) ? '' : montoMultaSancion);
+        //
+        var montoaCancelar = 0;
+
+        if (Number($('#selectTipoModalidad').val()) == MODALIDAD_SAT.COACTIVA || Number($('#selectTipoModalidad').val()) == MODALIDAD_SAT.FRACCIONAMIENTO) { //coactiva y fraccionamiento
+            montoaCancelar = Number(montoMultaSancion).toFixed(2);
+        } else { //preventiva
+
+            if ($('#selectInfraccion').val() == SANCION_SIN_DCTO.E01 || $('#selectInfraccion').val() == SANCION_SIN_DCTO.N01 || $('#selectInfraccion').val() == SANCION_SIN_DCTO.R01) {
+                montoaCancelar = Number(montoMultaSancion).toFixed(2);
+            } else {
+                montoaCancelar = (Number(montoMultaSancion) - (montoMultaSancion * porcentajeDescuento)).toFixed(2);
+            }
+        }
+
+       
+        if (Number($('#selectTipoModalidad').val()) == MODALIDAD_SAT.FRACCIONAMIENTO) {
+            $('#txtMontoCancelado').removeAttr('readonly').val(isNaN(montoaCancelar) ? '' : montoaCancelar).select();
+            calcularCantidadCuotas(isNaN(montoaCancelar) ? 0 : montoaCancelar);
+        } else {
+            $('#txtMontoCancelado').prop('readonly', true).val(isNaN(montoaCancelar) ? '' : montoaCancelar);
+        }
+
+    }
+
+    function limpiarDatosSAT() {
+        $('#txtNroActa').val('');
+        $('#txtFechaActa').val('');
+        $('#selectInfraccion').val("0");
+        $('#selectInfraccion').select2();
+        $('#txtMontoInfraccion').val('');
+        $('#txtPlacaVehiculo').val('');
+        $('#selectBancoSAT').val(0);
+
+        $('#txtPlacaVehiculo').val('');
+        $('#txtFechaPagoSAT').val('');
+        $('#txtNroReciboSAT').val('');
+        $('#txtMontoCancelado').val('');
+
+
+    }
+    function cambioFechaActa(e, elementFecha) {
+        var textoFecha = elementFecha.val();
+        var existeGuion = textoFecha.indexOf('_');
+
+        var diaFechaActa = "";
+        var mesFechaActa = ""; 
+        var anioFechaActa = "";
+
+        var timestampFechaActa = 0;
+        var diferenciaTimestamp = 0;
+        var diasHabiles = null;
+        if (existeGuion == -1) {
+            diaFechaActa    = textoFecha.split('/')[0];
+            mesFechaActa    = textoFecha.split('/')[1];
+            anioFechaActa = textoFecha.split('/')[2];
+            //console.log(diaFechaActa, mesFechaActa, anioFechaActa);
+            timestampFechaActa = convertDatetoTimeStamp(diaFechaActa + '/' + mesFechaActa + '/' + anioFechaActa + ' 00:00:00');
+            diferenciaTimestamp = TIMESTAMP_FECHA_HOY - timestampFechaActa;
+            diasHabiles = ((((diferenciaTimestamp / 1000) / 60) / 60) / 24);
+        }
+
+        $('.sectionSegundaCondicion').prop('hidden', true);
+        var descuento = 0;
+        if (diasHabiles != null && Number($('#selectTipoModalidad').val()) == MODALIDAD_SAT.PREVENTIVA  ) { // aqui hace la validación para mostrar las condiciones 
+            if (diasHabiles <= 5) { // primera condición menor igual a 5 dias 
+                descuento = 0.5;
+                $('.sectionSegundaCondicion').prop('hidden', true);
+            }
+
+            if (diasHabiles > 5 && diasHabiles <= 15) { // segunda condición menor igual a 5 dias 
+                descuento = 0.3;
+                $('.sectionSegundaCondicion').removeAttr('hidden');
+            }
+
+            if (diasHabiles > 15) { //tercera condición mayor a 15 dias habiles
+                descuento = 0;
+                $('.sectionSegundaCondicion').prop('hidden', true);
+            }
+            //
+            $('#txtPorcentajeDescuento').val(isNaN(descuento) ? '' : descuento);
+            actualizarMontoCancelado();
+            //actualizarMontoCancelado();
+        } else {
+            $('.sectionSegundaCondicion').removeAttr('hidden');
+        }
+    }
+
+    function validarinpugnado() {
+        var checkInpugnado =  ($('#checkResolucion').is(':checked') ? true : false);
+        if (checkInpugnado) {
+            $('.sectionimpugnado').removeAttr('hidden');
+        } else {
+            $('.sectionimpugnado').prop('hidden', true);
+        }
+    }
+
+    function cambioTipoModalidad(idModalidad) {
+        limpiarDatosSAT();
+        $('.sectiongeneralsat').removeAttr('hidden');
+        $('.selecttramityproc').prop('disabled', true).val(0);
+        $('.sectiontramitesimple').prop('hidden', true);
+        $('.sectionSegundaCondicion').prop('hidden', true);
+
+        if (idModalidad == MODALIDAD_SAT.PREVENTIVA || idModalidad == MODALIDAD_SAT.COACTIVA) //SAT
+        {
+            return false;
+        }
+            
+        if (idModalidad == MODALIDAD_SAT.FRACCIONAMIENTO) {
+
+          //  $('.sectionReciboPago').prop('hidden', true);
+            $('.sectionSegundaCondicion').removeAttr('hidden');
+            return false;
+        }
+
+        $('.sectiongeneralsat').prop('hidden', true);
+        $('.sectiontramitesimple').removeAttr('hidden');
+        $('.selecttramityproc').prop('disabled', false);
+      
+        getProcedimientoByFiltro();
+    }
+
+    function cambioTipoPersona() {
+        getProcedimientoByFiltro();
+        var tipoPersona = Number($('#selectTipoPersona').val());
+        $('#sectionRuc').removeAttr('hidden');
+        switch (tipoPersona) {
+            case 1: //persona juridica
+                $('#sectionRuc').removeAttr('hidden');
+                break;
+            case 2://persona natural
+                $('#sectionRuc').prop('hidden', true);
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    function consultaProcedimiento() {
+        if ($('#selectProcedimiento').val() != 0) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ConsultarProcesoTUC", "Electronico")',
+                data: {
+                    ID_PROCEDIMIENTO: $('#selectProcedimiento').val(),
+                    ID_TIPO_PERSONA: $('#selectTipoPersona').val(),
+                },
+                success: function (data) {
+                    var resultado = data.modelo;
+                    var resultadoMonto = (!resultado.MONTO || resultado.MONTO.trim() == 'Gratuito' ? null :resultado.MONTO.trim());
+                    if (resultadoMonto) { // tiene costo
+                        $('.sectionpago').removeAttr('hidden');
+                    } else { 
+                        $('.sectionpago').prop('hidden', true);
+                    }
+                },
+            })
+        } 
+    }
+
+
+    function convertDatetoTimeStamp(fechahora) { //  hh:ss:ii to
+        if (!fechahora ? true : fechahora.length == 0) { return; }
+        var dateString = fechahora,
+        dateTimeParts = dateString.split(' '),
+        timeParts = dateTimeParts[1].split(':'),
+        dateParts = dateTimeParts[0].split('/'),
+        date;
+        date = new Date(dateParts[2], parseInt(dateParts[1], 10) - 1, dateParts[0], timeParts[0], timeParts[1], timeParts[2]);
+        var fechaentimestamp = date.getTime()
+        return fechaentimestamp;
+    };
+
+    function calcularCantidadCuotas(montoACancelar) {
+        
+        $('#selectCantidadCuotas').empty();
+        var valorUIT = 4200; //soles
+        var cantidadCuotas = 0;
+        if (montoACancelar <= valorUIT) {
+            cantidadCuotas = 6;
+        }
+
+        if (montoACancelar > valorUIT && montoACancelar <= (valorUIT*3)) {
+            cantidadCuotas = 12;
+        }
+
+        if (montoACancelar > (valorUIT*3) && montoACancelar <= (valorUIT * 5)) {
+            cantidadCuotas = 24;
+        }
+
+        if (montoACancelar > (valorUIT * 5)) {
+            cantidadCuotas = 36;
+        }
+
+        var strHTMLselectCuotas = '<option value="0" >.:Seleccionar cuotas:.</option>';
+        if (cantidadCuotas > 0) {
+            for (var i = 1; i <= cantidadCuotas; i++) {
+                strHTMLselectCuotas += '<option value="'+ i +'">'+ i +'</option>';
+            }
+        }
+        $('#selectCantidadCuotas').append(strHTMLselectCuotas);
+    }
+
+    function dataPrueba() {
+        $('#txtEmail').val("dasdasd@gmail.com");
+        $('#txtApePat').val("CUBAS");
+        $('#txtApeMat').val("ALEGRIA");
+        $('#txtNombres').val("WILLIAM");
+        $('#txtTelefono').val("3123123");
+        $('#txtDireccion').val("AV AVA AV");
+   
+
+
+        
+    }
+</script>

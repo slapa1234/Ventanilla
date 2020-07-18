@@ -1,0 +1,155 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">CITV</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Entidad">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-book"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.CERTIFICADORA_CITV, new { @class = "form-control", @readonly = "readonly", @placeholder = "Entidad" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Certificado">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-card-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.NRO_CERTIFICADO, new { @class = "form-control", @readonly = "readonly", @placeholder = "Certificado" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Inicio">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-check-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.FECHA_INICIO_CITV, new { @class = "form-control", @readonly = "readonly", @placeholder = "F. Inicio", @Value = DateTime.Now.ToString("dd/MM/yyyy") })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Fin">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-times-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.FECHA_FIN_CITV, new { @class = "form-control", @readonly = "readonly", @placeholder = "F. Fin", @Value = DateTime.Now.ToString("dd/MM/yyyy") })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/inspinia")
+
+<script>
+    var $CERTIFICADORA_CITV = $("#CERTIFICADORA_CITV");
+    var $NRO_CERTIFICADO = $("#NRO_CERTIFICADO");
+    var $FECHA_INICIO_CITV = $("#FECHA_INICIO_CITV");
+    var $FECHA_FIN_CITV = $("#FECHA_FIN_CITV");
+    $(function () {
+        $FECHA_INICIO_CITV.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+            //minDate: moment(Date.parse('01/01/2020')),
+            
+        });
+
+        $FECHA_FIN_CITV.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+    })
+
+
+    function ValidarCITV() {
+        var rptaValidacion = true;
+        var mensajeError = "";
+
+        if ($CERTIFICADORA_CITV.val() == "") {
+            $CERTIFICADORA_CITV.parent().addClass('has-error');
+            $CERTIFICADORA_CITV.focus();
+            mensajeError = "Ingresar Certificadora de CITV"
+            rptaValidacion = false;
+            EnviarMensaje(mensajeError);
+            return false;
+        } else {
+            if ($CERTIFICADORA_CITV.parent().hasClass('has-error')) {
+                $CERTIFICADORA_CITV.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+
+
+        if ($NRO_CERTIFICADO.val() == "") {
+            $NRO_CERTIFICADO.parent().addClass('has-error');
+            $NRO_CERTIFICADO.focus();
+            mensajeError = "Ingresar Certificado CITV."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($NRO_CERTIFICADO.parent().hasClass('has-error')) {
+                $NRO_CERTIFICADO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+
+        if ($FECHA_INICIO_CITV.val() == "") {
+            $FECHA_INICIO_CITV.parent().addClass('has-error');
+            $FECHA_INICIO_CITV.focus();
+            mensajeError = "Ingresar fecha inscripcion de CITV."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($FECHA_INICIO_CITV.parent().hasClass('has-error')) {
+                $FECHA_INICIO_CITV.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($FECHA_FIN_CITV.val() == "") {
+            $FECHA_FIN_CITV.parent().addClass('has-error');
+            $FECHA_FIN_CITV.focus();
+            mensajeError = "Ingresar fecha vencimiento de CITV."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($FECHA_FIN_CITV.parent().hasClass('has-error')) {
+                $FECHA_FIN_CITV.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if (parseFecha().getTime() > parseFecha($FECHA_FIN_CITV.val()).getTime()) {
+            $FECHA_FIN_CITV.parent().addClass('has-error');
+            $FECHA_FIN_CITV.focus();
+            mensajeError = "CITV Vehicular se encuentra vencido."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        }
+
+        return rptaValidacion;
+    }
+</script>

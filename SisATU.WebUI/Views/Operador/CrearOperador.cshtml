@@ -1,0 +1,1065 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/js/jasny-bootstrap.min.js"></script>
+
+<style>
+    .fileinput {
+        text-align: center !important;
+    }
+
+    .btn-file {
+        border: 1px solid #dedede !important;
+    }
+</style>
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Registro de Operador : Datos personales</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 2</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 no-padding">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                            @Html.HiddenFor(model => model.RUC_EMPRESA_OPERADOR)
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div id="divTipoDocumento" class="divTipoDocumento form-group">
+                                    @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO_OPERADOR, Model.SelectTipoDocumento, new { @class = "form-control", @onchange = "limpiarDatosOperadorTemp()" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.NRO_DOCUMENTO_OPERADOR, new { @class = "form-control", @onkeypress = "return soloNumeros(event)", @placeholder = "Nro. Documento", @autocomplete = "off", @maxlength = "8" })
+                                        <div class="input-group-btn">
+                                            <button type="button" id="btnConsultarReniecOper" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar Numero Documento">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-address-book"></i>
+                                        </span>
+                                        <input class="form-control datos-personal-oper operadorpersonal" id="apePatOperador" placeholder="Apellido Paterno" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-address-book"></i>
+                                        </span>
+                                        <input class="form-control datos-personal-oper operadorpersonal" id="apeMatOperador" placeholder="Apellido Materno" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-address-book"></i>
+                                        </span>
+                                        <input class="form-control datos-personal-oper operadorpersonal" id="nombresOperador" placeholder="Nombres" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+
+                                        </span>
+                                        @Html.TextBoxFor(model => model.FECHA_NACIMIENTO_OPERADOR, new { @class = "form-control operadorpersonal", @placeholder = "Fecha Nacimiento", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <select id="ID_SEXO" name="ID_SEXO" class="form-control" data-val="true">
+                                        <option selected="selected" value="0">.:Sexo:.</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-map-marker"></i>
+                                            </span>
+                                            @Html.TextBoxFor(modelo => modelo.DIRECCION_RENIEC_OPERADOR, new { @class = "form-control datos-personal-oper operadorpersonal", placeholder = "Domicio RENIEC", @readonly = "readonly" })
+                                            <span class="input-group-addon" title="Direccion RENIEC es igual a direccion Actual?">
+                                                <input type="checkbox" class="form-check-input" id="chckActualDomicilio"> Actual
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-map-marker"></i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.DIRECCION_OPERADOR, new { @class = "form-control operadorpersonal", @placeholder = "Domicio Actual", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.ID_DEPARTAMENTO_OPERADOR, Model.SelectDepartamento, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.ID_PROVINCIA_OPERADOR, Model.SelectProvincia, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.ID_DISTRITO_OPERADOR, Model.SelectDistrito, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.TELEFONO_CEL_OPERADOR, new { @maxlength = "9", @class = "form-control operadorpersonal telefonooper", @onkeypress = "return soloNumeros(event)", @placeholder = "Teléfono Celular", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.TELEFONO_CASA_OPERADOR, new { @class = "form-control operadorpersonal telefonooper", @onkeypress = "return soloNumeros(event)", @placeholder = "Teléfono Casa", @autocomplete = "off", @maxlength = "7" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8 col-md-3 col-sm-3 col-xs-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.CORREO_OPERADOR, new { @class = "form-control operadorpersonal", @placeholder = "E-mail", @autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                        @Html.HiddenFor(model => model.FOTO_OPERADOR)
+                        <div style="width:200px;" id="sectionFotoReniec">
+                            <img id="fotoPreviewOperador" src="https://dummyimage.com/200x200/b8b8b8/fff.png" style="width:100%;height: 200px;line-height: 1.42857143; background-color: #fff; border: 1px solid #ddd; border-radius: 4px;" accept="image/gif, image/jpeg, image/png" />
+                        </div>
+                        <div id="sectionSinFoto" class="fileinput fileinput-new" data-provides="fileinput" style="display:none;">
+                            <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                            <div>
+                                <span class="btn btn-outline-secondary btn-file">
+                                    <span class="fileinput-new">Agregar Imagen</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="file" id="imgTemporalOperador" name="..." accept="image/gif, image/jpeg, image/png">
+                                </span>
+                                <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Quitar</a>
+                                
+                            </div>
+                        </div>
+                        <div style="width:100%;padding:5px;color:red;font-weight:bold">Solo permite archivos de tipo .gif, .jpeg, .png con un peso máximo de 1 Megabyte (MB)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Datos del Operador</h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 2</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    @Html.HiddenFor(model => model.PUNTOS_FIRME)
+                    @Html.HiddenFor(model => model.MUY_GRAVE)
+                    @Html.HiddenFor(model => model.GRAVE)
+                    @Html.HiddenFor(model => model.ESTADO_LICENCIA)
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="divTipoDocumento form-group">
+                            @Html.DropDownList("ID_MODALIDAD_SERVICIO_OPERADOR", Model.SelectTipoModalidad, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div id="selectTipoOperador" class="divTipoDocumento form-group">
+                            @Html.DropDownListFor(model => model.ID_TIPO_OPERADOR, Model.SelectTipoOperador, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-address-card-o"></i>
+                                </span>
+                                <input class="form-control" id="txtNroLicenciaConducirOper" readonly="readonly" onkeypress="return soloNumeros(event)" placeholder="N° Licencia de Conducir" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                </span>
+                                <input class="form-control" id="txtFechaExpedicionOper" readonly="readonly" placeholder="F. Expedición" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar-times-o"></i>
+                                </span>
+                                <input class="form-control" id="txtFechaRevalidacionOper" readonly="readonly" placeholder="F. Revalidación" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input class="form-control" id="txtCategoriaOper" placeholder="Categoria" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-w-m btn-primary" onclick="AgregarOperadorTemp();">Agregar <span class="fa fa-plus"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Operadores</h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 2</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12" style="max-height: 260px; overflow: auto">
+                    <table id="tbOperadoresTemporal" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tipo Doc</th>
+                                <th>Tipo Oper</th>
+                                <th>N° Doc</th>
+                                <th>Apellidos y Nombres</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int NroRegistro = 1;
+                            }
+                            @foreach (var item in Model.OperadorVM)
+                            {
+                                item.NRO_ORDEN = NroRegistro++;
+                                Html.RenderPartial("_DetalleOperador", item);
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var $ID_TIPO_DOCUMENTO_OPERADOR = $("#ID_TIPO_DOCUMENTO_OPERADOR");
+    var $NRO_DOCUMENTO_OPERADOR = $("#NRO_DOCUMENTO_OPERADOR");
+    var $DIRECCION_OPERADOR = $("#DIRECCION_OPERADOR");
+    var $TELEFONO_CASA_OPERADOR = $("#TELEFONO_CASA_OPERADOR");
+    var $CORREO_OPERADOR = $("#CORREO_OPERADOR");
+    var $RUC_EMPRESA_OPERADOR = $("#RUC_EMPRESA_OPERADOR");
+    var $ID_TIPO_OPERADOR = $("#ID_TIPO_OPERADOR");
+    var $ID_DEPARTAMENTO_OPERADOR = $("#ID_DEPARTAMENTO_OPERADOR");
+    var $ID_PROVINCIA_OPERADOR = $("#ID_PROVINCIA_OPERADOR");
+    var $ID_DISTRITO_OPERADOR = $("#ID_DISTRITO_OPERADOR");
+    var $TELEFONO_CEL_OPERADOR = $("#TELEFONO_CEL_OPERADOR");
+    var $FECHA_NACIMIENTO_OPERADOR = $('#FECHA_NACIMIENTO_OPERADOR');
+    var $DIRECCION_RENIEC_OPERADOR = $('#DIRECCION_RENIEC_OPERADOR');
+    var $ID_SEXO = $("#ID_SEXO ");
+    var $PUNTOS_FIRME = $("#PUNTOS_FIRME");
+    var $MUY_GRAVE = $("#MUY_GRAVE");
+    var $GRAVE = $("#GRAVE");
+    var $ESTADO_LICENCIA = $("#ESTADO_LICENCIA");
+
+    var $text_tipo_documento = $('#ID_TIPO_DOCUMENTO_OPERADOR option:selected').text();
+    var $apellido_paterno = $('#apePatOperador').val();
+    var $apellido_materno = $('#apeMatOperador').val();
+    var $nombres = $('#nombresOperador').val();
+    var $tipo_operador = $('#selectTipoOperador').val();
+    var $text_tipo_operador = $('#selectTipoOperador option:selected').text();
+    var $modalidad_servicio = $('#ID_MODALIDAD_SERVICIO_OPERADOR').val();
+
+    var $nro_licencia_oper = $('#txtNroLicenciaConducirOper').val();
+    var $categoria_oper = $('#txtCategoriaOper').val();
+    var $fecha_expedicion = $('#txtFechaExpedicionOper').val();
+    var $txtFechaRevalidacionOper = $('#txtFechaRevalidacionOper');
+
+    $(function () {
+        $FECHA_NACIMIENTO_OPERADOR.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+            maxDate: moment(Date.parse('12/31/' + '@DateTime.Now.AddYears(-18).Year')),
+        });
+
+        $ID_DEPARTAMENTO_OPERADOR.select2();
+        $ID_PROVINCIA_OPERADOR.select2();
+        $ID_DISTRITO_OPERADOR.select2();
+
+        $ID_TIPO_DOCUMENTO_OPERADOR.change(function () {
+            if ($(this).val() == '@EnumParametro.DNI.ValorEntero()') {
+                $NRO_DOCUMENTO_OPERADOR.attr({ "placeholder": "Nro de Documento", "maxlength": "8" });
+                $("#chckActualDomicilio").attr('disabled', false);
+                $DIRECCION_OPERADOR.prop("readonly", false);
+
+                limpiarDatosOperadorTemp();
+
+            } else if ($(this).val() == '@EnumParametro.CE.ValorEntero()') {
+                $NRO_DOCUMENTO_OPERADOR.attr({ "placeholder": "Nro Carnet de Extranjería", "maxlength": "9" });
+                $("#chckActualDomicilio").attr('disabled', true);
+                $DIRECCION_OPERADOR.prop("readonly", false);
+                limpiarDatosOperadorTemp();
+
+            } else if ($(this).val() == '@EnumParametro.PTP.ValorEntero()') {
+                $NRO_DOCUMENTO_OPERADOR.attr({ "placeholder": "Nro de PTP", "maxlength": "9" });
+                $("#chckActualDomicilio").attr('disabled', true);
+                $DIRECCION_OPERADOR.prop("readonly", false);
+                limpiarDatosOperadorTemp();
+            }
+            $("#apePatOperador").prop("readonly", true);
+            $("#apeMatOperador").prop("readonly", true);
+            $("#nombresOperador").prop("readonly", true);
+
+        })
+
+        $NRO_DOCUMENTO_OPERADOR.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                consultarDocumentoOperador();
+            } else if (keycode == '8') {
+                limpiarDatosOperadorTemp();
+            }
+        })
+
+        $("#btnConsultarReniecOper").click(function () {
+            consultarDocumentoOperador();
+        })
+
+        $ID_DEPARTAMENTO_OPERADOR.change(function () {
+            consultarProvinciaOperador($(this).val());
+        });
+
+        $ID_PROVINCIA_OPERADOR.change(function () {
+            consultarDistritoOperador($(this).val());
+        });
+
+        $ID_DISTRITO_OPERADOR.change(function () {
+            if ($ID_DISTRITO_OPERADOR.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                $ID_DISTRITO_OPERADOR.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+            }
+        })
+    })
+
+
+    function AgregarOperadorTemp() {
+        //validando numero de documento
+        if (!ValidarTipoDocumento($ID_TIPO_DOCUMENTO_OPERADOR)) {
+            return false;
+        }
+
+        if (!ValidarNumeroDocumento($NRO_DOCUMENTO_OPERADOR)) {
+            return false;
+        }
+
+        if ($('.datos-personal-oper').val() == "") {
+            MensajeAlerta("error", "Debe consultar los datos personales.");
+            $('.datos-personal-oper').parent().addClass('has-error');
+            return false;
+        }
+        $('.datos-personal-oper').parent().removeClass('has-error');
+
+        //validando fecha de nacimiento
+        if ($FECHA_NACIMIENTO_OPERADOR.val() == "") {
+            MensajeAlerta("error", "Debe ingresar la fecha de nacimiento.");
+            $FECHA_NACIMIENTO_OPERADOR.parent().addClass('has-error');
+            $FECHA_NACIMIENTO_OPERADOR.focus();
+            return false;
+        }
+        $FECHA_NACIMIENTO_OPERADOR.parent().removeClass('has-error');
+
+        //validando genero del operador
+        if (Number($ID_SEXO.val()) == 0) {
+            MensajeAlerta("error", "Debe elegir el tipo de sexo.");
+            $ID_SEXO.parent().addClass('has-error');
+            $ID_SEXO.focus();
+            return false;
+        }
+        $ID_SEXO.parent().removeClass('has-error');
+
+        //validando domicilio
+        if (!ValidarDireccion($DIRECCION_OPERADOR)) {
+            return false;
+        }
+
+        if ($ID_DEPARTAMENTO_OPERADOR.val() == 0) {
+            MensajeAlerta("error", "Seleccionar un Departamento");
+            $ID_DEPARTAMENTO_OPERADOR.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+            return false;
+        }
+
+        if ($ID_PROVINCIA_OPERADOR.val() == 0) {
+            MensajeAlerta("error", "Seleccionar una Provincia");
+            $ID_PROVINCIA_OPERADOR.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+            return false;
+        }
+
+        if ($ID_DISTRITO_OPERADOR.val() == 0) {
+            MensajeAlerta("error", "Seleccionar un Distrito");
+            $ID_DISTRITO_OPERADOR.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+            return false;
+        }
+
+        if ($TELEFONO_CEL_OPERADOR.val().length > 0) {
+            if (!ValidarCelular($TELEFONO_CEL_OPERADOR, false)) {
+                return false;
+            }
+        }
+        //validando telefono operador
+        var cantidadTelefonoIngresado = 0;
+        $.each($('.telefonooper'), function () {
+            if ($(this).val().length > 0) {
+                cantidadTelefonoIngresado++;
+            }
+        });
+
+        if (cantidadTelefonoIngresado == 0) {
+            MensajeAlerta("error", "Debe ingresar almenos un número de teléfono.");
+            $('.telefonooper').parent().addClass('has-error');
+            return false;
+        }
+        $('.telefonooper').parent().removeClass('has-error');
+
+        //validando Correo
+        if (!validarEmail($CORREO_OPERADOR)) {
+            return false;
+        }
+        //validar telefono
+
+        if (Number($ID_TIPO_OPERADOR.val()) == 0) {
+            MensajeAlerta("error", "Debe seleccionar el tipo de operador.");
+            $ID_TIPO_OPERADOR.parent().addClass('has-error')
+            $ID_TIPO_OPERADOR.focus();
+            return false;
+        }
+
+        $ID_TIPO_OPERADOR.parent().removeClass('has-error');
+
+        //validando licencia de conducir
+        if (Number($ID_TIPO_OPERADOR.val()) != 2) {
+            if ($('#txtNroLicenciaConducirOper').val() == "") {
+                MensajeAlerta("error", "Operador no cuenta con licencia de conducir.");
+                $('#txtNroLicenciaConducirOper').parent().addClass('has-error');
+                return false;
+            }
+        }
+
+        $('#txtNroLicenciaConducirOper').parent().removeClass('has-error');
+
+        if (!ValidarDireccion($DIRECCION_OPERADOR)) {
+            return false;
+        }
+
+        //valida que haya agregado la foto
+        if ($('#sectionSinFoto').is(':visible')) { //si aparecio la carga de foto
+            var imgCargada = $('#sectionSinFoto').find('img')[0];
+            if (!imgCargada) { //si no cargaron una imagen
+                MensajeAlerta("error", "Es necesario cargar la foto del operador.");
+                $('#FOTO_OPERADOR').attr('src', '');
+                return false;
+            } else { //si cargaron la imagen
+
+                var base64imagenCargada = $('#sectionSinFoto').find('img').attr('src');
+                var base64String = '';
+                if (base64imagenCargada.indexOf("base64") != -1) {
+                    console.log("encontro imagen en base64")
+                    base64String = base64imagenCargada.split('base64,')[1];
+                    $('#FOTO_OPERADOR').val(base64String);
+                }
+            }
+        }
+
+        //valida si el dni ya fue ingresado
+        var EncuentraRegistro = ValidaRegistroDuplicado($NRO_DOCUMENTO_OPERADOR.val(), $("#tbOperadoresTemporal tbody"));
+        if (EncuentraRegistro == 1) {
+            MensajeAlerta("error", "Operador yá se encuentra registrado.");
+            return false;
+        }
+
+        if ($ID_TIPO_OPERADOR.val() != '@EnumParametroTipoOperador.COBRADOR.ValorEntero()') {
+            if (parseFecha($txtFechaRevalidacionOper.val()) < parseFecha()) {
+                MensajeAlerta("error", "Fecha de revalidación esta vencida.");
+                $txtFechaRevalidacionOper.parent().addClass('has-error');
+                return false;
+            } else {
+                if ($txtFechaRevalidacionOper.parent().hasClass('has-error')) {
+                    $txtFechaRevalidacionOper.parent().removeClass('has-error')
+                }
+            }
+        }
+        
+
+        var categoriaClaseConductor = $('#txtCategoriaOper').val();
+        var claseConductor = (categoriaClaseConductor.length > 0 ? categoriaClaseConductor.split(' ')[0] : '');
+        var categoriaConductor = (categoriaClaseConductor.length > 0 ? categoriaClaseConductor.split(' ')[1] : '');
+        //
+        if ($ID_TIPO_PERSONA.val() == '@EnumParametroTipoPersona.PersonaJuridica.ValorEntero()') {
+            if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                if ($ID_TIPO_OPERADOR.val() != '@EnumParametroTipoOperador.COBRADOR.ValorEntero()') { //si no es cobrador
+                    if (claseConductor == "A") {
+                        if (!(categoriaConductor.toUpperCase() == "IIB") && !(categoriaConductor.toUpperCase() == "IIIA") && !(categoriaConductor.toUpperCase() == "IIIB") && !(categoriaConductor.toUpperCase() == "IIIC")) {
+                            MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                            $('#txtCategoriaOper').parent().addClass('has-error');
+                            return false;
+                        }
+                    }
+                    else {
+                        MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                        $('#txtCategoriaOper').parent().addClass('has-error');
+                        return false;
+                    }
+                }
+            } else if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.ServicioTaxiRemisse.ValorEntero()' || $ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.ServicioTaxiEstacion.ValorEntero()') {
+                if ($ID_TIPO_OPERADOR.val() == '@EnumParametroTipoOperador.CONDUCTOR.ValorEntero()') {
+                    {
+                        if (claseConductor == "A") {
+                            if (!(categoriaConductor.toUpperCase() == "IIA") && !(categoriaConductor.toUpperCase() == "IIB") && !(categoriaConductor.toUpperCase() == "IIIA") && !(categoriaConductor.toUpperCase() == "IIIB") && !(categoriaConductor.toUpperCase() == "IIIC")) {
+                                MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                                $('#txtCategoriaOper').parent().addClass('has-error');
+                                return false;
+                            }
+                        }
+                        else {
+                            MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                            $('#txtCategoriaOper').parent().addClass('has-error');
+                            return false;
+                        }
+                    }
+                }
+
+            } else if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransporteEstudianteEscolar.ValorEntero()' || $ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransporteTuristico.ValorEntero()' || $ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransportePersona.ValorEntero()') {
+                if ($ID_TIPO_OPERADOR.val() == '@EnumParametroTipoOperador.CONDUCTOR.ValorEntero()') {
+                    {
+                        if (claseConductor == "A") {
+                            if (!(categoriaConductor.toUpperCase() == "IIB") && !(categoriaConductor.toUpperCase() == "IIIA") && !(categoriaConductor.toUpperCase() == "IIIB") && !(categoriaConductor.toUpperCase() == "IIIC")) {
+                                MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                                $('#txtCategoriaOper').parent().addClass('has-error');
+                                return false;
+                            }
+                        }
+                        else {
+                            MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                            $('#txtCategoriaOper').parent().addClass('has-error');
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else if ($ID_TIPO_PERSONA.val() == '@EnumParametroTipoPersona.PersonaNatural.ValorEntero()') {
+            if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.ServicioTaxiIndependiente.ValorEntero()') {
+                if ($ID_TIPO_OPERADOR.val() == '@EnumParametroTipoOperador.CONDUCTOR.ValorEntero()') {
+                    {
+                        if (claseConductor == "A") {
+                            if (!(categoriaConductor.toUpperCase() == "IIA") && !(categoriaConductor.toUpperCase() == "IIB") && !(categoriaConductor.toUpperCase() == "IIIA") && !(categoriaConductor.toUpperCase() == "IIIB") && !(categoriaConductor.toUpperCase() == "IIIC")) {
+                                MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                                $('#txtCategoriaOper').parent().addClass('has-error');
+                                return false;
+                            }
+                        }
+                        else {
+                            MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                            $('#txtCategoriaOper').parent().addClass('has-error');
+                            return false;
+                        }
+                    }
+                }
+            } else if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransporteEstudianteEscolar.ValorEntero()') {
+                if ($ID_TIPO_OPERADOR.val() == '@EnumParametroTipoOperador.CONDUCTOR.ValorEntero()') {
+                    {
+                        if (claseConductor == "A") {
+                            if (!(categoriaConductor.toUpperCase() == "IIB") && !(categoriaConductor.toUpperCase() == "IIIA") && !(categoriaConductor.toUpperCase() == "IIIB") && !(categoriaConductor.toUpperCase() == "IIIC")) {
+                                MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                                $('#txtCategoriaOper').parent().addClass('has-error');
+                                return false;
+                            }
+                        }
+                        else {
+                            MensajeAlerta("error", "La Categoría de la Licencia de Conducir no es válida para este registro.");
+                            $('#txtCategoriaOper').parent().addClass('has-error');
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($PUNTOS_FIRME.val() >= 100) {
+            MensajeAlerta("error", "Usted ha llegado al limite máximo establecido de puntos firmes acumulados, no puede proceder.");
+            rptaValidacion = false;
+            return false;
+        }
+
+        if ($MUY_GRAVE.val() >= 2) {
+            MensajeAlerta("error", "Usted ha llegado al limite máximo establecido de faltas muy graves, no puede proceder.");
+            rptaValidacion = false;
+            return false;
+        }
+
+        if ($GRAVE.val() >= 5) {
+            MensajeAlerta("error", "Usted ha llegado al limite máximo establecido de faltas graves, no puede proceder.");
+            rptaValidacion = false;
+            return false;
+        }
+
+        if (($MUY_GRAVE.val() >= 1) && ($GRAVE.val() >= 3)) {
+            MensajeAlerta("error", "Usted ha llegado al limite máximo establecido de faltas muy graves y graves, no puede proceder.");
+            rptaValidacion = false;
+            return false;
+        }
+
+        if ($ESTADO_LICENCIA.val().toUpperCase() == "SUSPENDIDO" || $ESTADO_LICENCIA.val().toUpperCase() == "EXPIRADO") {
+            MensajeAlerta("error", "Licencia se encuentra suspendida.");
+            rptaValidacion = false;
+            return false;
+        }
+
+        $('#txtCategoriaOper').parent().removeClass('has-error');
+        ValidaRegistroDuplicado();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("_DetalleOperador", "Operador")',
+            data: {
+                NumeroRegistro: $("#tbOperadoresTemporal tbody tr").length,
+                NRO_DOCUMENTO: $NRO_DOCUMENTO_OPERADOR.val(),
+                APELLIDO_PATERNO: $('#apePatOperador').val(),
+                APELLIDO_MATERNO: $('#apeMatOperador').val(),
+                NOMBRE: $('#nombresOperador').val(),
+                TIPO_DOCUMENTO: $ID_TIPO_DOCUMENTO_OPERADOR.val(),
+                DIRECCION: $('#DIRECCION_OPERADOR').val(),
+                TELEFONO_CEL: $TELEFONO_CEL_OPERADOR.val(),
+                TELEFONO_CASA: $('#TELEFONO_CASA_OPERADOR').val(),
+                CORREO: $CORREO_OPERADOR.val(),
+                TIPO_OPERADOR: $ID_TIPO_OPERADOR.val(),
+                NRO_LICENCIA: $('#txtNroLicenciaConducirOper').val(),
+                CATEGORIA: $('#txtCategoriaOper').val(),
+                FECHA_EXPEDICION: $('#txtFechaExpedicionOper').val(),
+                FECHA_REVALIDACION: $('#txtFechaRevalidacionOper').val(),
+                NOMBRE_TIPO_DOCUMENTO: $('#ID_TIPO_DOCUMENTO_OPERADOR option:selected').text(),
+                NOMBRE_TIPO_OPERADOR: $('#selectTipoOperador option:selected').text().toUpperCase(),
+                FOTO: $("#FOTO_OPERADOR").val(),
+                ID_SEXO: $ID_SEXO.val(),
+                FECHA_NACIMIENTO: $FECHA_NACIMIENTO_OPERADOR.val(),
+                ID_DEPARTAMENTO_OPERADOR: $ID_DEPARTAMENTO_OPERADOR.val(),
+                ID_PROVINCIA_OPERADOR: $ID_PROVINCIA_OPERADOR.val(),
+                ID_DISTRITO_OPERADOR: $ID_DISTRITO_OPERADOR.val(),
+                REGISTRO_AGREGADO: true,
+            },
+            success: function (data) {
+                MensajeAlerta("success", "Agregó Correctamente el operador.");
+                $ID_TIPO_DOCUMENTO_OPERADOR.val(0);
+                limpiarDatosOperadorTemp();
+            }
+        }).done(function (data) {
+            $("#tbOperadoresTemporal tbody").append(data);
+        })
+    }
+
+    function verificaOperadorEnTabla(nroDocumento) {
+        var rpta = false;
+        $.each(JSON_TEMP_OPERADOR, function () {
+            if (this.nro_documento == nroDocumento) {
+                rpta = true;
+            }
+        });
+        return rpta;
+    }
+
+    function keyUpDNI(e, elemento) {
+        var codeKey = e.keyCode;
+        switch (codeKey) {
+            case 13: //enter
+                consultarDocumentoOperador();
+                break;
+            default:
+                break;
+        }
+    }
+
+    $("#chckActualDomicilio").click(function () {
+        if ($(this).is(':checked')) {
+            $DIRECCION_OPERADOR.val($DIRECCION_RENIEC_OPERADOR.val());
+            $DIRECCION_OPERADOR.attr('readonly', true);
+        } else {
+            $DIRECCION_OPERADOR.val("");
+            $DIRECCION_OPERADOR.attr('readonly', false);
+        }
+    })
+
+
+    function consultarDocumentoOperador() {
+        var l = $('#btnConsultarReniecOper').ladda();
+        var urlAccion = '@Url.Action("consultaDatosPersonaYLic", "Operador")';
+        var dataSend = {
+            tipoDocumento: 0,
+            nroDocumento: $NRO_DOCUMENTO_OPERADOR.val(),
+            ID_TIPO_PERSONA: $ID_TIPO_PERSONA.val(),
+            ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+        }
+        if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.DNI.ValorEntero()') {
+            dataSend.tipoDocumento = "2";
+        } else if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.CE.ValorEntero()') {
+            dataSend.tipoDocumento = "4";
+        } else if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.PTP.ValorEntero()') {
+            dataSend.tipoDocumento = "14";
+        } else {
+            MensajeAlerta("error", "No se puede procesar informacion con el tipo de documento seleccionado.");
+            $ID_TIPO_DOCUMENTO_OPERADOR.parent().addClass('has-error');
+            return false;
+        }
+        $ID_TIPO_DOCUMENTO_OPERADOR.parent().removeClass('has-error');
+
+        $.ajax({
+            type: "POST",
+            url: urlAccion,
+            data: dataSend,
+            beforeSend: function () {
+                l.ladda('start');
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                console.log(resultado);
+                if (resultado.NOMBRES != null && resultado.NOMBRES != "") {
+                    if ($ID_MODALIDAD_SERVICIO.val() == '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                        if (resultado.RUC_EMPRESA_OPERADOR != null) {
+                            if (resultado.RUC_EMPRESA_OPERADOR != $RUC.val()) {
+                                limpiarDatosOperadorTemp();
+                                MensajeAlerta("error", "Operador ya se encuentra registrado en otra Empresa");
+                                $NRO_DOCUMENTO_OPERADOR.parent().addClass('has-error');
+                                $NRO_DOCUMENTO_OPERADOR.focus();
+                                return false;
+                            }
+                        }
+                    }
+                    MensajeAlerta("success", "Se cargo informacion correctamente.");
+                    $('#nombresOperador').val(resultado.NOMBRES);
+                    $('#apePatOperador').val(resultado.APELLIDO_PATERNO);
+                    $('#apeMatOperador').val(resultado.APELLIDO_MATERNO);
+                    $FECHA_NACIMIENTO_OPERADOR.val(resultado.FECHA_NACIMIENTO);
+                    if (resultado.ID_SEXO != 0) {
+                        $ID_SEXO.val(resultado.ID_SEXO);
+                    }
+                    $PUNTOS_FIRME.val(resultado.PUNTOS_FIRME);
+                    $MUY_GRAVE.val(resultado.MUY_GRAVE);
+                    $GRAVE.val(resultado.GRAVE);
+                    $ESTADO_LICENCIA.val(resultado.ESTADO_LICENCIA);
+                    $TELEFONO_CASA_OPERADOR.val(resultado.TELEFONO_CASA);
+                    $TELEFONO_CEL_OPERADOR.val(resultado.TELEFONO_CEL);
+
+                    if (resultado.ID_DEPARTAMENTO_OPERADOR != 0) {
+                        $ID_DEPARTAMENTO_OPERADOR.select2('destroy');
+                        $ID_DEPARTAMENTO_OPERADOR.val(resultado.ID_DEPARTAMENTO_OPERADOR);
+                        $ID_DEPARTAMENTO_OPERADOR.select2();
+
+                        if (resultado.ID_PROVINCIA_OPERADOR != 0) {
+                            consultarProvinciaOperador(resultado.ID_DEPARTAMENTO_OPERADOR, resultado.ID_PROVINCIA_OPERADOR);
+                            if (resultado.ID_DISTRITO_OPERADOR != 0) {
+                                consultarDistritoOperador(resultado.ID_PROVINCIA_OPERADOR, resultado.ID_DISTRITO_OPERADOR)
+                            }
+                        }
+                    }
+
+                    $('#DIRECCION_RENIEC_OPERADOR').val(resultado.DIRECCION).prop('readonly', true);
+                    $("#apePatOperador").prop('readonly', true);
+                    $("#apeMatOperador").prop('readonly', true);
+                    $("#nombresOperador").prop('readonly', true);
+
+                    $RUC_EMPRESA_OPERADOR.val(resultado.RUC_EMPRESA_OPERADOR);
+                    var strDataImgBase64Oper = "data:image/png; base64, ";
+                    if (resultado.FOTO_BASE64) {
+
+                        $('#sectionFotoReniec').css('display', 'block')
+                        $('#sectionSinFoto').css('display', 'none')
+                        //
+                        strDataImgBase64Oper += resultado.FOTO_BASE64;
+                        $("#FOTO_OPERADOR").val(resultado.FOTO_BASE64);
+                        $('#fotoPreviewOperador').attr('src', strDataImgBase64Oper)
+                    } else {
+                        $('#sectionFotoReniec').css('display', 'none')
+                        $('#sectionSinFoto').css('display', 'block')
+                    }
+
+                    if (resultado.NRO_LICENCIA) {
+
+                        $('#txtNroLicenciaConducirOper').val(resultado.NRO_LICENCIA).prop("readonly", true);
+                        $('#txtFechaExpedicionOper').val(resultado.FECHA_EXPEDICION).prop("readonly", true);;
+                        $('#txtFechaRevalidacionOper').val(resultado.FECHA_REVALIDACION).prop("readonly", true);;
+                        $('#txtCategoriaOper').val(resultado.CATEGORIA).prop("readonly", true);;
+                    } else {
+
+                        $('#txtNroLicenciaConducirOper').val('').prop('readonly', true);
+                        $('#txtFechaExpedicionOper').val('').prop('readonly', true);
+                        $('#txtFechaRevalidacionOper').val('').prop('readonly', true);
+                        $('#txtCategoriaOper').val('').prop('readonly', true);
+                    }
+                } else {
+
+                    if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.PTP.ValorEntero()') {
+                        MensajeAlerta("warning", "La persona consultada no cuenta con carné PTP, ingrese sus datos manualmente.");
+                        $('.operadorpersonal').val('');
+                        $("#apePatOperador").prop('readonly', false);
+                        $("#apeMatOperador").prop('readonly', false);
+                        $("#nombresOperador").prop('readonly', false);
+                        $('#sectionFotoReniec').css('display', 'none')
+
+                        $('#sectionSinFoto').css('display', 'block')
+                        $NRO_DOCUMENTO_OPERADOR.focus();
+
+                    }
+                    else if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.CE.ValorEntero()') {
+                        MensajeAlerta("error", "La persona consultada no se encuetran registrada en migraciones, no puede continuar con el trámite.");
+                        $('.datos-personales').val('')
+                        $('.datos-personales').prop("readonly", true);
+                        $DIRECCION.prop('readonly', true);
+                        $NRO_DOCUMENTO_OPERADOR.focus();
+                    } else {
+
+                        MensajeAlerta("error", "No se ha encontrado informacion de la persona.");
+                        $('.operadorpersonal').val('');
+                        $('#fotoPreviewOperador').attr('src', 'https://dummyimage.com/200x200/b8b8b8/fff.png');
+                        $('#sectionFotoReniec').css('display', 'block');
+                        $('#sectionSinFoto').css('display', 'none');
+                        $('#DIRECCION_RENIEC_OPERADOR').val('').prop('readonly', true);
+                    }
+                }
+            },
+            complete: function (data) {
+                l.ladda('stop');
+            },
+        })
+    }
+
+    function limpiarDatosOperadorTemp() {
+        $NRO_DOCUMENTO_OPERADOR.val('');
+        $('.operadorpersonal').val('');
+        $FECHA_NACIMIENTO_OPERADOR.val('');
+        $ID_SEXO.val(0);
+        //
+        $ID_TIPO_OPERADOR.val(0);
+        $('#txtNroLicenciaConducirOper').val('');
+        $('#txtFechaExpedicionOper').val('');
+        $('#txtFechaRevalidacionOper').val('');
+        $('#txtCategoriaOper').val('');
+
+        $ID_DEPARTAMENTO_OPERADOR.val(0).trigger('change');
+        consultarProvinciaOperador(0);
+        $ID_PROVINCIA_OPERADOR.val(0).trigger('change');
+        consultarDistritoOperador(0);
+        $ID_DISTRITO_OPERADOR.val(0).trigger('change');
+
+        document.getElementById('chckActualDomicilio').checked = false;
+        if ($ID_TIPO_DOCUMENTO_OPERADOR.val() == '@EnumParametro.DNI.ValorEntero()') {
+            $DIRECCION_OPERADOR.prop('readonly', false);
+        }
+        $('#fotoPreviewOperador').attr('src', 'https://dummyimage.com/200x200/b8b8b8/fff.png');
+        $('#sectionSinFoto').css('display', 'none');
+        $('#sectionFotoReniec').css('display', 'block');
+
+    }
+
+    function validacionRegistroOperador() {
+        var cantidadOperadoresAgregados = 0;
+        var rptaValidacion = true;
+        $.each($('#tbOperadoresTemporal tbody > tr'), function () {
+            var iOper = Number($(this).attr('data-ioper'));
+            if (iOper == 0) {
+                cantidadOperadoresAgregados++;
+            }
+        });
+        if (cantidadOperadoresAgregados == 0) {
+            MensajeAlerta("error", "Debe ingresar almenos un operador para registrar el trámite.");
+            $('#NRO_DOCUMENTO_OPERADOR').parent().addClass('has-error');
+            $('#NRO_DOCUMENTO_OPERADOR').focus();
+            return false;
+        }
+        $('#NRO_DOCUMENTO_OPERADOR').parent().removeClass('has-error');
+
+
+        return rptaValidacion;
+    }
+
+    function consultarProvinciaOperador(ID_DEPARTAMENTO, ID_PROVINCIA) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ConsultarProvinica", "Electronico")',
+            data: {
+                Id_Departamento: ID_DEPARTAMENTO
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                $ID_PROVINCIA_OPERADOR.empty();
+                $.each(resultado, function (index, valor) {
+                    $ID_PROVINCIA_OPERADOR.append('<option value= ' + valor.ID_PROVINCIA + '> ' + valor.NOMBRE_PROVINCIA + '</option>')
+                })
+                if (ID_PROVINCIA != null) {
+                    $ID_PROVINCIA_OPERADOR.select2('destroy');
+                    $ID_PROVINCIA_OPERADOR.val(ID_PROVINCIA);
+                    $ID_PROVINCIA_OPERADOR.select2();
+                } else {
+                    if ($ID_DEPARTAMENTO_OPERADOR.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                        $ID_DEPARTAMENTO_OPERADOR.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                    }
+                    $ID_PROVINCIA_OPERADOR.trigger('change')
+                }
+            }
+        })
+    }
+
+    function consultarDistritoOperador(ID_PROVINCIA, ID_DISTRITO) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ConsultarDistrito", "Electronico")',
+            data: {
+                Id_Provincia: ID_PROVINCIA
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                $ID_DISTRITO_OPERADOR.empty();
+                $.each(resultado, function (index, valor) {
+                    $ID_DISTRITO_OPERADOR.append('<option value= ' + valor.ID_DISTRITO + '> ' + valor.NOMBRE_DISTRITO + '</option>')
+                })
+                if (ID_DISTRITO != null) {
+                    $ID_DISTRITO_OPERADOR.select2('destroy');
+                    $ID_DISTRITO_OPERADOR.val(ID_DISTRITO);
+                    $ID_DISTRITO_OPERADOR.select2();
+                } else {
+                    if ($ID_PROVINCIA_OPERADOR.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                        $ID_PROVINCIA_OPERADOR.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                    }
+                    $ID_DISTRITO_OPERADOR.trigger('change');
+                }
+
+            }
+        })
+    }
+</script>

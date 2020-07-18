@@ -1,0 +1,343 @@
+﻿@model SisATU.Base.ViewModel.BackOfficeVM
+@{
+    ViewBag.Title = "BackOffice";
+}
+@*<style>
+        .sa-button-container {
+            display: inline-flex !important;
+        }
+
+        .select-error {
+            border-color: #ed5565 !important;
+        }
+    </style>*@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <h2 style="font-weight: bold;margin-top:10px" class="colorLetraATU">Plataforma de Atenciones</h2>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-12" id="DivBackOffice">
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+
+                            <div class="filtrar row">
+                                <div class="col-sm-12">
+                                    <label style="margin-right:15px">
+                                        Fecha: <input class="form-control input-sm" placeholder="Fecha Registro" id="fechaRegistro" value="@DateTime.Now.ValorFechaCorta()">
+                                    </label>
+
+                                    <label style="margin-right:15px">
+                                        Expediente: <input class="form-control input-sm" placeholder="Expediente" id="expediente">
+                                    </label>
+
+                                    <label style="margin-right:15px">
+                                        Nroº Documento: <input class="form-control input-sm" placeholder="Nro Documento" id="NroDocumento">
+                                    </label>
+
+                                    <label style="margin-right:15px">
+                                        Persona: <input class="form-control input-sm" placeholder="Persona" id="persona">
+                                    </label>
+
+                                    <label style="margin-right:15px">
+                                        Modalidad: @Html.DropDownList("ID_MODALIDAD_SERVICIO", ViewBag.SelectModalidad as SelectList, new { @class = "form-control input-sm" })
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="DivAtencion">
+                                    <h4 class="colorLetraATU">Lista de Atenciones</h4>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover" id="TbListaExpediente" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th hidden></th>
+                                                    <th>Trámite</th>
+                                                    <th>Nro Docu.</th>
+                                                    <th>Persona</th>
+                                                    <th>Tipo Proceso</th>
+                                                    <th>Modalidad</th>
+                                                    <th>Procedimiento / Asunto</th>
+                                                    <th>Fecha Registro</th>
+                                                    <th>Estado</th>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var $fechaRegistro = $("#fechaRegistro");
+    var $expediente = $("#expediente");
+    var $persona = $("#persona");
+    var $ID_MODALIDAD_SERVICIO = $("#ID_MODALIDAD_SERVICIO");
+    var $NroDocumento = $("#NroDocumento");
+
+    $(function () {
+        var info = PageInfo;
+
+        var dataTable = null;
+        $fechaRegistro.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+        }).on('dp.change', function (e) {
+            dataTable.draw(true);
+        });;
+
+
+        var opciones = {
+            "processing": true,
+            language: mensajesDTable,
+            "autoWidth": true,
+            "responsive": true,
+            "sPaginationType": "full_numbers",
+            "aLengthMenu": MenuLongitud,
+            "iDisplayLength": 10,
+            "bRetrieve": true,
+            "bServerSide": true,
+            "filter": false,
+            //"orderMulti": false,
+            //"scrollY": 410,
+            "ajax": {
+                "type": "POST",
+                "url": URL_BASE + 'BackOffice/Buscar_Pag',
+                "contentType": 'application/json; charset=utf-8',
+                'data': function (data) {
+                    data.page = info;
+                    data.expediente = $expediente.val();
+                    data.NroDocumento = $NroDocumento.val();
+                    data.persona = $persona.val();
+                    data.id_modalidad_servicio = $ID_MODALIDAD_SERVICIO.val();
+                    data.fechaRegistro = $fechaRegistro.val();
+                    return data = JSON.stringify(data);
+                }
+            },
+            "order": [[1, "desc"]],
+            "columns": [
+                {
+                    data: "NROREG",
+                    name: "NROREG",
+                    orderable: false,
+                    sWidth: "3%",
+                    className: "t-c"
+                },
+                {
+                    data: "ID_EXPEDIENTE",
+                    name: "ID_EXPEDIENTE",
+                    visible: false,
+                },
+
+                {
+                    data: "TRAMITE",
+                    name: "TRAMITE",
+                    sWidth: "7%"
+                },
+                {
+                    data: "NUMERO_DOCUMENTO",
+                    name: "NUMERO_DOCUMENTO",
+                    sWidth: "7%",
+                },
+                {
+                    data: "PERSONA",
+                    name: "PERSONA",
+                    sWidth: "15%",
+                    className: "puntosSuspensivosTD"
+                },
+
+                {
+                    data: "PARNOM",
+                    name: "PARNOM",
+                    sWidth: "15%",
+                },
+                {
+                    data: "MODALIDAD_SERVICIO",
+                    name: "MODALIDAD_SERVICIO",
+                    sWidth: "15%"
+                },
+                {
+                    data: "NOMBRE_PROCEDIMIENTO",
+                    name: "NOMBRE_PROCEDIMIENTO",
+                    sWidth: "15%",
+                    className: "puntosSuspensivosTD"
+                },
+                {
+                    data: "FECHA_REG",
+                    name: "FECHA_REG",
+                    //sWidth: "10%"
+                },
+               {
+                   data: "ESTADO",
+                   name: "ESTADO",
+                   //sWidth: "10%"
+               },
+                {
+                    data: "btnEditar",
+                    name: "btnEditar",
+                    sWidth: "5%",
+                    render: function (data, type, fila) {
+
+                        if (fila.ID_PROCEDIMIENTO == 51 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiIndependiente.ValorEntero()') {
+                            return '<button onclick="MuestraResolucion(' + fila.IDDOC + ');" type="button" title="Resolución"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
+                        }
+                        else if (fila.ID_PROCEDIMIENTO == 26 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                            return '<button onclick="MuestraPadron(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Registro Padron"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
+                        }
+                        else if (fila.ID_PROCEDIMIENTO == 55 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiIndependiente.ValorEntero()') {
+                            return '<button onclick="MuestraTUC(' + fila.IDDOC + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="TUC"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
+                        }
+                            //***** INICIO CREDENCIALES ******//
+                            //***** INICIO OBTENCION - RENOVACION ******//
+                        else if (fila.ID_PROCEDIMIENTO == 1 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiEstacion.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiRemisse.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteEstudianteEscolar.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransportePersona.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteTuristico.ValorEntero()') {
+
+                            var html = '<button onclick="MuestraConstancia(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Constancia Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> <button onclick="MuestraCredencial(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Imprimir Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
+                            return html;
+                        }
+                        else if (fila.ID_PROCEDIMIENTO == 4 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiIndependiente.ValorEntero()') {
+                            var html = '<button onclick="MuestraConstanciaTaxi(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Constancia Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> <button onclick="MuestraCredencialTaxi(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Imprimir Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>'
+                            return html;
+                        }
+                            //*** FIN OBTENCION - RENOVACION ***//
+                            //***** INICIO DUPLICADO ******//
+                        else if (fila.ID_PROCEDIMIENTO == 2 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiEstacion.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiRemisse.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteEstudianteEscolar.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransportePersona.ValorEntero()' || fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.TransporteTuristico.ValorEntero()') {
+
+                            var html = '<button onclick="MuestraConstancia(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Constancia Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> <button onclick="MuestraCredencial(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Imprimir Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>';
+                            return html;
+                        }
+                        else if (fila.ID_PROCEDIMIENTO == 5 && fila.ID_MODALIDAD_SERVICIO == '@EnumModalidadServicio.ServicioTaxiIndependiente.ValorEntero()') {
+                            var html = '<button onclick="MuestraConstanciaTaxi(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Constancia Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> <button onclick="MuestraCredencialTaxi(' + fila.ID_EXPEDIENTE + ',' + fila.ID_MODALIDAD_SERVICIO + ');" type="button" title="Imprimir Credencial"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>'
+                            return html;
+                        }
+                            //*** FIN DUPLICADO ***//
+                        //*** FIN CREDENCIALES ***//
+                        else {
+                            return '';
+                        }
+
+                    },
+                    orderable: false,
+                },
+                 {
+                     data: "btnEliminar",
+                     name: "btnEliminar",
+                     sWidth: "3%",
+                     render: function (data, type, fila) {
+                         if (fila.ID_PROCEDIMIENTO == 1 || fila.ID_PROCEDIMIENTO == 4 || fila.ID_PROCEDIMIENTO == 26 || fila.ID_PROCEDIMIENTO == 51 || fila.ID_PROCEDIMIENTO == 55 || fila.ID_PROCEDIMIENTO == 2 || fila.ID_PROCEDIMIENTO == 5) {
+                             return '<button onclick="MuestraDetalle(' + fila.ID_EXPEDIENTE + ', ' + fila.ID_PROCEDIMIENTO + ', ' + fila.ID_MODALIDAD_SERVICIO + ' )" type="button" title="Detalle"><i class="fa fa-eye" aria-hidden="true"></i></button>'
+                         }
+                         else {
+                             return '<button onclick="Detalles(' + fila.ID_EXPEDIENTE + ')" type="button" title="Detalle"><i class="fa fa-eye" aria-hidden="true"></i></button>'
+                         }
+                     },
+                     orderable: false,
+                 }
+            ],
+        },
+
+
+        dataTable = $("#TbListaExpediente").DataTable(opciones);
+        //https://datatables.net/forums/discussion/45130/get-page-number-that-clicked-on
+        $("#TbListaExpediente").on('page.dt', function () {
+            info = dataTable.page.info();
+        });
+
+        $expediente.on('keyup', function () {
+            dataTable.draw();
+        });
+
+        $NroDocumento.on('keyup', function () {
+            dataTable.draw();
+        })
+
+        $persona.on('keyup', function () {
+            dataTable.draw();
+        })
+
+        $ID_MODALIDAD_SERVICIO.on('change', function () {
+            dataTable.draw();
+        })
+    })
+
+    function Detalles(id_Expediente) {
+        modal("modalDetalle", URL_BASE + "BackOffice/ConsultarDetalleCabecera/?idexpediente=" + id_Expediente, 1, 1, "", "modal-lg2", 0, 0)
+
+    }
+    function MuestraDetalle(id_Expediente) {
+
+        swal({
+            title: "IMPORTANTE",
+            text: "<p style='text-align:justify;margin:0 62px'> El Trámite fue notificado y cerrado atomáticamente.</p>",
+            type: "warning",
+
+            html: true,
+            confirmButtonColor: "#1ab394",
+            confirmButtonText: "Aceptar",
+            //cancelButtonText: "Cancelar",
+            closeOnConfirm: false
+
+        }, function (isConfirm) {
+            if (isConfirm) {
+                swal.close();
+            }
+        });
+
+    }
+
+    function MuestraResolucion(IDDOC) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/ImprimirResolucion/?IDDOC=" + IDDOC, 1, 1, "", "modal-lg2", 0, 0)
+    }
+
+    function MuestraPadron(ID_EXPEDIENTE, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/ImpReportePadron/?ID_EXPEDIENTE=" + ID_EXPEDIENTE + "&ID_MODALIDAD_SERVICIO=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+    function MuestraTUC(IDDOC, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/ImprimirTUC/?IDDOC=" + IDDOC + "&tipoModalidad=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+    function MuestraConstancia(ID_EXPEDIENTE, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/ImprimirCredencial/?ID_EXPEDIENTE=" + ID_EXPEDIENTE + "&tipoModalidad=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+    function MuestraCredencial(ID_EXPEDIENTE, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/Imprimir_Tarjeta/?ID_EXPEDIENTE=" + ID_EXPEDIENTE + "&tipoModalidad=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+
+    function MuestraConstanciaTaxi(ID_EXPEDIENTE, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/ImprimirCredencialTaxi/?ID_EXPEDIENTE=" + ID_EXPEDIENTE + "&tipoModalidad=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+    function MuestraCredencialTaxi(ID_EXPEDIENTE, ID_MODALIDAD_SERVICIO) {
+        modal("modalCrearCuenta", URL_BASE + "BackOffice/Imprimir_TarjetaTaxi/?ID_EXPEDIENTE=" + ID_EXPEDIENTE + "&tipoModalidad=" + ID_MODALIDAD_SERVICIO, 1, 1, "", "modal-lg2", 0, 0)
+    }
+    //function imprimir_certificado(_modelo) {
+    //    var param = ko.toJSON({ modelo: _modelo });
+    //    $.ajax({
+    //        url: urlSitio + 'BackOfficeController/Imprimir',
+    //        type: "POST",
+    //        data: param,
+    //        contentType: "application/json",
+    //        success: function (result) {
+    //            if (EvaluarResultado(result)) {
+    //                $("#ifrImprimir").attr("src", urlSitio + result.modelo);
+    //            } else {
+    //                $('#ifrImprimir').modal('hide');
+    //            }
+    //        },
+    //        error: msgErrorAjax
+    //    });
+    //}
+
+</script>

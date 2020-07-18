@@ -1,0 +1,111 @@
+﻿
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Detalle</h4>
+</div>
+
+@using (Html.BeginForm("registrarAdministrado", "Acceso", FormMethod.Post, new { @Class = "form-vertical", @id = "FromCrearCuenta" }))
+{
+    <div class="modal-body">
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.ID_TIPO_PERSONA, Model.SelectTipoPersona, new { @class = "form-control" })
+                        </div>
+
+                        @*section persona juridica*@
+                        <div class="form-group section-persona-natural" style="display:none;">
+                            @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO, Model.SelectTipoDocumento, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group" style="width:100%">
+                                @Html.TextBoxFor(model => model.NRO_DOCUMENTO, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. Documento", @maxlength = "8" })
+                                <div class="input-group-btn">
+                                    <button type="button" id="btnConsultarDocumento" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group section-persona-juridica" style="display:none;">
+                            <div class="input-group" style="width:100%">
+                                <span class="input-group-addon" title="Ingresar razon social">
+                                    <i class="fa fa-address-book"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.RAZON_SOCIAL, new { @class = "form-control datos-personal-oper", @placeholder = "razon social", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        @*persona natural*@
+
+                        <div class="form-group section-persona-natural" style="display:none;">
+                            <div class="input-group" style="width: 100%;">
+                                <span class="input-group-addon" title="Apellido paterno">
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.APEPAT, new { @class = "form-control datos-personal-oper", @placeholder = "Apellido paterno", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group section-persona-natural" style="display:none;">
+                            <div class="input-group" style="width: 100%;">
+                                <span class="input-group-addon" title="Apellido materno">
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.APEMAT, new { @class = "form-control datos-personal-oper", @placeholder = "Apellido Materno", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group section-persona-natural" style="display:none;">
+                            <div class="input-group" style="width: 100%;">
+                                <span class="input-group-addon" title="Nombres">
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.NOMBRES, new { @class = "form-control datos-personal-oper", @placeholder = "Nombres", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon" title="Teléfono">
+                                    <span class="fas fa-phone" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.TELEFONO, new { @class = "form-control datos-personal-oper", @placeholder = "Telefono", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @maxlength = "9" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon" title="Email">
+                                    <span class="fas fa-mail-bulk" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.CORREO, new { @class = "form-control datos-personal-oper", @placeholder = "Email" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon" title="Dirección">
+                                    <span class="fas fa-home" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.DIRECCION, new { @class = "form-control datos-personal-oper", @placeholder = "Dirección" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="ladda-button btn btn-primary" id="btnGuardar" data-style="expand-left" onclick="registrarUsuario();"><i class="fa fa-check"></i>&nbsp;Guardar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" title="Cerrar" id="btnCancelar"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+    </div>
+}
+

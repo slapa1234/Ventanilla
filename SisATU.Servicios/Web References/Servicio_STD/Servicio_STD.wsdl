@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="BuscarProveedor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Proveedor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Proveedor">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDPROVEE" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDPERTIP" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="RAZON_SOCIAL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RUC" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPAIS" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDPTO" nillable="true" type="s:short" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPROV" nillable="true" type="s:short" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDIST" nillable="true" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="DIRECCION" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BuscarProveedorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscarProveedorResult" type="tns:Proveedor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscarPersona">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Persona" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Usuario">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="USULOG" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="USUCON" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Persona">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDPERSON" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="APELLIDO_PATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="APELLIDO_MATERNO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NOMBRES" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SEXO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DNI" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPAIS" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDPTO" nillable="true" type="s:short" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPROV" nillable="true" type="s:short" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDIST" nillable="true" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="DIRECCION" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BuscarPersonaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscarPersonaResult" type="tns:Persona" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarProveedor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Proveedor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarProveedorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgregarProveedorResult" type="tns:Proveedor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarPersona">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Persona" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarPersonaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgregarPersonaResult" type="tns:Persona" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarHojaRuta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:HojaRuta" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="HojaRuta">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUMERO_SID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUMERO_ANIO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUMERO_DOC" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_DOCUMENTO" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDCLASE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FOLIOS_INI" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FOLIOS_FIN" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ASUNTO" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDPROC" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TIEMPOESTADIA" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDPERSON" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDPROVEE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PRIORIDAD" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TIPOEXPEDIENTE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDSERIE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUBIFIS" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDARCHMUEB" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDARCHMED" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUNIDAD" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_CREA" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_MODIF" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUSER_CREA" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUSER_MODIF" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ESTADO" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUMERO_DOC_FIN" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_DOC_FIN" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDCLASE_FIN" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TIPO_FIN" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_SUSP_INICIO" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_SUSP_FIN" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC_ANEXADO" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SUBTIPOEXPEDIENTE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="UNIDADPROVEE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FECHA_COMPLETO" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPAIS" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDPTO" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODPROV" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CODDIST" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DIRECCION" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OBSERV_DOC_FIN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="INSTITUCION_NO_REG" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ANEXOS" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDFLUJO" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="mensaje" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AgregarHojaRutaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgregarHojaRutaResult" type="tns:HojaRuta" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActualizarHojaRuta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:cerrar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="cerrar">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="IDUNIDAD" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OBSERVACION" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ActualizarHojaRutaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ActualizarHojaRutaResult" type="tns:cerrar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarProcedimiento">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="0" maxOccurs="1" name="TIPO" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarProcedimientoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarProcedimientoResult" type="tns:ArrayOfProcedimiento" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfProcedimiento">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Procedimiento" nillable="true" type="tns:Procedimiento" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Procedimiento">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDPROC" nillable="true" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="PROCEDIMIENTO" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUNIDAD" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="PORCENTAJE_UIT" nillable="true" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="TIPO_EVALUACION" nillable="true" type="s:short" />
+          <s:element minOccurs="1" maxOccurs="1" name="TOTAL_POSITIVO" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CuentaPasos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="tns:Usuario" />
+            <s:element minOccurs="1" maxOccurs="1" name="IDDOC" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CuentaPasosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CuentaPasosResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgregarAcumulador">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Acumulador" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Acumulador">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC_PADRE" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC_HIJO" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDFLUJO_HIJO" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AgregarAcumuladorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgregarAcumuladorResult" type="tns:Acumulador" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Generar_Resolucion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objeto" type="tns:Resolucion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Resolucion">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IDUNIDAD" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDCLASE" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="NUMEROCLASE" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NUMEROANIO" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ASUNTO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="COMENTARIO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECHA_DOC" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PARA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PARAFUNCIONARIO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="REFERENCIA" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDDOC" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDFLUJO" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUSER_PROYECTO_DOC" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDUSER_CREA" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ESTADO" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IDCRTLNUM" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Generar_ResolucionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Generar_ResolucionResult" type="tns:Resolucion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BuscarProveedorSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscarProveedor" />
+  </wsdl:message>
+  <wsdl:message name="BuscarProveedorSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscarProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscarPersonaSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscarPersona" />
+  </wsdl:message>
+  <wsdl:message name="BuscarPersonaSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscarPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgregarProveedorSoapIn">
+    <wsdl:part name="parameters" element="tns:AgregarProveedor" />
+  </wsdl:message>
+  <wsdl:message name="AgregarProveedorSoapOut">
+    <wsdl:part name="parameters" element="tns:AgregarProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgregarPersonaSoapIn">
+    <wsdl:part name="parameters" element="tns:AgregarPersona" />
+  </wsdl:message>
+  <wsdl:message name="AgregarPersonaSoapOut">
+    <wsdl:part name="parameters" element="tns:AgregarPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgregarHojaRutaSoapIn">
+    <wsdl:part name="parameters" element="tns:AgregarHojaRuta" />
+  </wsdl:message>
+  <wsdl:message name="AgregarHojaRutaSoapOut">
+    <wsdl:part name="parameters" element="tns:AgregarHojaRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarHojaRutaSoapIn">
+    <wsdl:part name="parameters" element="tns:ActualizarHojaRuta" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarHojaRutaSoapOut">
+    <wsdl:part name="parameters" element="tns:ActualizarHojaRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarProcedimientoSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarProcedimiento" />
+  </wsdl:message>
+  <wsdl:message name="ListarProcedimientoSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarProcedimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CuentaPasosSoapIn">
+    <wsdl:part name="parameters" element="tns:CuentaPasos" />
+  </wsdl:message>
+  <wsdl:message name="CuentaPasosSoapOut">
+    <wsdl:part name="parameters" element="tns:CuentaPasosResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgregarAcumuladorSoapIn">
+    <wsdl:part name="parameters" element="tns:AgregarAcumulador" />
+  </wsdl:message>
+  <wsdl:message name="AgregarAcumuladorSoapOut">
+    <wsdl:part name="parameters" element="tns:AgregarAcumuladorResponse" />
+  </wsdl:message>
+  <wsdl:message name="Generar_ResolucionSoapIn">
+    <wsdl:part name="parameters" element="tns:Generar_Resolucion" />
+  </wsdl:message>
+  <wsdl:message name="Generar_ResolucionSoapOut">
+    <wsdl:part name="parameters" element="tns:Generar_ResolucionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Servicio_STDSoap">
+    <wsdl:operation name="BuscarProveedor">
+      <wsdl:input message="tns:BuscarProveedorSoapIn" />
+      <wsdl:output message="tns:BuscarProveedorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPersona">
+      <wsdl:input message="tns:BuscarPersonaSoapIn" />
+      <wsdl:output message="tns:BuscarPersonaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgregarProveedor">
+      <wsdl:input message="tns:AgregarProveedorSoapIn" />
+      <wsdl:output message="tns:AgregarProveedorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgregarPersona">
+      <wsdl:input message="tns:AgregarPersonaSoapIn" />
+      <wsdl:output message="tns:AgregarPersonaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgregarHojaRuta">
+      <wsdl:input message="tns:AgregarHojaRutaSoapIn" />
+      <wsdl:output message="tns:AgregarHojaRutaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHojaRuta">
+      <wsdl:input message="tns:ActualizarHojaRutaSoapIn" />
+      <wsdl:output message="tns:ActualizarHojaRutaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProcedimiento">
+      <wsdl:input message="tns:ListarProcedimientoSoapIn" />
+      <wsdl:output message="tns:ListarProcedimientoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CuentaPasos">
+      <wsdl:input message="tns:CuentaPasosSoapIn" />
+      <wsdl:output message="tns:CuentaPasosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgregarAcumulador">
+      <wsdl:input message="tns:AgregarAcumuladorSoapIn" />
+      <wsdl:output message="tns:AgregarAcumuladorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Generar_Resolucion">
+      <wsdl:input message="tns:Generar_ResolucionSoapIn" />
+      <wsdl:output message="tns:Generar_ResolucionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Servicio_STDSoap" type="tns:Servicio_STDSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BuscarProveedor">
+      <soap:operation soapAction="http://tempuri.org/BuscarProveedor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPersona">
+      <soap:operation soapAction="http://tempuri.org/BuscarPersona" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarProveedor">
+      <soap:operation soapAction="http://tempuri.org/AgregarProveedor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarPersona">
+      <soap:operation soapAction="http://tempuri.org/AgregarPersona" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarHojaRuta">
+      <soap:operation soapAction="http://tempuri.org/AgregarHojaRuta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHojaRuta">
+      <soap:operation soapAction="http://tempuri.org/ActualizarHojaRuta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProcedimiento">
+      <soap:operation soapAction="http://tempuri.org/ListarProcedimiento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CuentaPasos">
+      <soap:operation soapAction="http://tempuri.org/CuentaPasos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarAcumulador">
+      <soap:operation soapAction="http://tempuri.org/AgregarAcumulador" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Generar_Resolucion">
+      <soap:operation soapAction="http://tempuri.org/Generar_Resolucion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Servicio_STDSoap12" type="tns:Servicio_STDSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BuscarProveedor">
+      <soap12:operation soapAction="http://tempuri.org/BuscarProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPersona">
+      <soap12:operation soapAction="http://tempuri.org/BuscarPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarProveedor">
+      <soap12:operation soapAction="http://tempuri.org/AgregarProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarPersona">
+      <soap12:operation soapAction="http://tempuri.org/AgregarPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarHojaRuta">
+      <soap12:operation soapAction="http://tempuri.org/AgregarHojaRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHojaRuta">
+      <soap12:operation soapAction="http://tempuri.org/ActualizarHojaRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProcedimiento">
+      <soap12:operation soapAction="http://tempuri.org/ListarProcedimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CuentaPasos">
+      <soap12:operation soapAction="http://tempuri.org/CuentaPasos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarAcumulador">
+      <soap12:operation soapAction="http://tempuri.org/AgregarAcumulador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Generar_Resolucion">
+      <soap12:operation soapAction="http://tempuri.org/Generar_Resolucion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Servicio_STD">
+    <wsdl:port name="Servicio_STDSoap" binding="tns:Servicio_STDSoap">
+      <soap:address location="http://sistemas.atu.gob.pe/ServiciosATU2/Servicio_STD.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Servicio_STDSoap12" binding="tns:Servicio_STDSoap12">
+      <soap12:address location="http://sistemas.atu.gob.pe/ServiciosATU2/Servicio_STD.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

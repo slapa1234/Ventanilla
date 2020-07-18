@@ -1,0 +1,828 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 b-r no-padding">
+                <h5 class="colorLetraATU">Vehiculo</h5>
+            </div>
+
+            @if (Model.ID_PROCEDIMIENTO == 55 || Model.ID_PROCEDIMIENTO == 51)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 b-r">
+                    <div class="checkbox checkbox-circle m-t-none m-b-none tooltip-demo" style="display:flex">
+                        @Html.RadioButtonFor(model => model.ObtencionRenovacion, "Renovacion", new { @class = "i-checks", @Id = "Renovacion", @Checked = "checked" })
+                        <label for="Renovacion" data-toggle="tooltip" data-placement="top" title="RENOVACIÓN DE LA AUTORIZACIÓN PARA PRESTAR EL SERVICIO DE TAXI" style="width: 95%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-wrap: break-word;padding-left: 5px;font-weight: 600;color:#ff8602">Renovación de la autorización para prestar el servicio de taxi</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="checkbox checkbox-circle m-t-none m-b-none tooltip-demo" style="display:flex">
+                        @Html.RadioButtonFor(model => model.ObtencionRenovacion, "Obtencion", new { @class = "i-checks", @Id = "Obtencion" })
+                        <label class="colorLetraATU" for="Obtencion" data-toggle="tooltip" data-placement="top" title="OBTENCIÓN DE LA AUTORIZACIÓN PARA PRESTAR EL SERVICIO DE TAXI" style="width: 95%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-wrap: break-word;padding-left: 5px;font-weight: 600;color:#ff8602">Obtención de la autorización para prestar el servicio de taxi</label>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        @Html.HiddenFor(model => model.ID_VEHICULO)
+                        <div class="form-group">
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.NroPlaca, new { @class = "form-control", @autocomplete = "off", @placeholder = "Nro Placa", @maxlength = "6", @Style = "text-transform: uppercase", })
+
+
+                                <div class="input-group-btn">
+                                    <button type="button" id="btnConsultarPlaca" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar MTC">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo b-r">
+                        <div class="form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Modalidad">
+                            @Html.DropDownListFor(model => model.ID_MODALIDAD_SERVICIO, Model.SelectTipoModalidad, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                        <div class="form-group" data-toggle="tooltip" data-placement="top" title="Categoria del Vehículo">
+                            @Html.DropDownListFor(model => model.ID_CATEGORIA_VEHICULO, Model.SelectCategoriaVehiculo, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo b-r">
+                        <div class="form-group " data-toggle="tooltip" data-placement="right" title="Marca del Vehículo">
+                            @Html.DropDownListFor(model => model.ID_MARCA, Model.SelectMarca, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                        <div class="form-group " data-toggle="tooltip" data-placement="bottom" title="Modelo del Vehículo">
+                            @Html.DropDownListFor(model => model.ID_MODELO, Model.SelectModelo, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo b-r">
+                        <div class="form-group" data-toggle="tooltip" data-placement="bottom" title="Clase del Vehículo">
+                            @Html.DropDownListFor(model => model.ID_CLASE_VEHICULO, Model.SelectClaseVehiculo, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Serie Motor">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-microchip"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.SERIE_MOTOR, new { @class = "form-control", @placeholder = "Serie Motor", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo b-r">
+                        <div class="form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Combustible">
+                            @Html.DropDownListFor(model => model.ID_TIPO_COMBUSTIBLE, Model.SelectTipoCombustible, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Serie">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-ticket"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.SERIE, new { @class = "form-control", @placeholder = "Serie", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Año de Fabricación">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.ANIO_FABRICACION, new { @class = "form-control", @readonly = "readonly", @placeholder = "Año de Fabricación" })
+                                @Html.HiddenFor(model => model.ANIO_RENOVACION)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Numero de Eje">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-link"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.NUMERO_EJE, new { @class = "form-control", @placeholder = "Numero Eje", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Nro. Asiento">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-wheelchair"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.NUMERO_ASIENTOS, new { @class = "form-control", @placeholder = "Nro. Asiento", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Capacidad de Pasajero">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-group"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.CAPACIDAD_PASAJERO, new { @class = "form-control", @placeholder = "Capacidad Pasajero", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Nro. Rueda">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-support"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.NUMERO_RUEDA, new { @class = "form-control", @placeholder = "Nro. Rueda", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Cilindrada">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-database"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.CILINDRADA, new { @class = "form-control", @placeholder = "Cilindrada", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Peso Bruto">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-cube"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.PESO_BRUTO, new { @class = "form-control", @placeholder = "Peso Bruto", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Peso Seco">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-cube"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.PESO_SECO, new { @class = "form-control", @placeholder = "Peso Seco", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Carga Util">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-hdd-o"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.CARGA_UTIL, new { @class = "form-control", @placeholder = "Carga Util", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Longitud">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-rotate-right"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.LONGITUD, new { @class = "form-control", @placeholder = "Longitud", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 b-r">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Altura">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-arrows-v"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.ALTURA, new { @class = "form-control", @placeholder = "Altura", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Ancho">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-arrows-h"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.ANCHO, new { @class = "form-control", @placeholder = "Ancho", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="left" title="Numero de Puerta">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.NUMERO_PUERTA, new { @class = "form-control", @placeholder = "Numero de Puerta", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group tooltip-demo">
+                            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Vencimiento TUC">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.FECHA_VENC_TUC, new { @class = "form-control", @placeholder = "Vencimiento TUC", @readonly = "readonly", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/inspinia")
+@Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+@Scripts.Render("~/plugins/iCheck")
+
+@Styles.Render("~/plugins/jasnyBootstrapStyles")
+@Scripts.Render("~/plugins/jasnyBootstrap")
+
+<script>
+    var $btnConsultarPlaca = $("#btnConsultarPlaca");
+    var $NroPlaca = $("#NroPlaca");
+    var $ANIO_FABRICACION = $("#ANIO_FABRICACION");
+    var $NRO_TARJETA_PROPIETARIO = $("#NRO_TARJETA_PROPIETARIO");
+    var $ID_CLASE_VEHICULO = $("#ID_CLASE_VEHICULO");
+    var $ID_TIPO_COMBUSTIBLE = $("#ID_TIPO_COMBUSTIBLE")
+    var $ID_MARCA = $("#ID_MARCA");
+    var $ID_MODELO = $("#ID_MODELO");
+    var $CILINDRADA = $("#CILINDRADA");
+    var $SERIE = $("#SERIE");
+    var $SERIE_MOTOR = $("#SERIE_MOTOR");
+    var $PESO_SECO = $("#PESO_SECO");
+    var $PESO_BRUTO = $("#PESO_BRUTO");
+    var $LONGITUD = $("#LONGITUD");
+    var $ALTURA = $("#ALTURA");
+    var $ANCHO = $("#ANCHO");
+    var $CARGA_UTIL = $("#CARGA_UTIL");
+    var $CAPACIDAD_PASAJERO = $("#CAPACIDAD_PASAJERO");
+    var $NUMERO_ASIENTOS = $("#NUMERO_ASIENTOS");
+    var $NUMERO_RUEDA = $("#NUMERO_RUEDA");
+    var $NUMERO_EJE = $("#NUMERO_EJE");
+    var $NUMERO_PUERTA = $("#NUMERO_PUERTA");
+    var $ID_VEHICULO = $("#ID_VEHICULO");
+    var $ID_CATEGORIA_VEHICULO = $("#ID_CATEGORIA_VEHICULO");
+    var $FECHA_VENC_TUC = $("#FECHA_VENC_TUC");
+    var $NUMERO_DOCUMENTO_PROPIEDAD = $("#NUMERO_DOCUMENTO_PROPIEDAD");
+    var $ANIO_RENOVACION = $("#ANIO_RENOVACION");
+    //var $NOMBRE_TIPO_COMBUSTIBLE = $("#NOMBRE_TIPO_COMBUSTIBLE");
+
+    var bool_pertenece_solicitante = false;
+
+    $(function () {
+
+        $('#Renovacion, #Obtencion').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+
+        $ANIO_FABRICACION.datetimepicker({
+            format: 'YYYY',
+            locale: 'es'
+        });
+
+        $btnConsultarPlaca.click(function () {
+            ConsultarPlaca();
+        })
+
+
+
+        $NroPlaca.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+
+            if (keycode == '13') {
+                $btnConsultarPlaca.click()
+            } else if (keycode == '8') {
+                limpiarVehiculo();
+            }
+        })
+
+        $ID_MARCA.change(function () {
+            ObtenerModelo();
+        })
+
+        //$('input').on('ifChanged', function (event) {
+        //    alert();
+        //});
+
+        $('input[name="ObtencionRenovacion"]').on('ifClicked', function (event) {
+            ConsultarTipoTramite($(this));
+        });
+
+        //$('input[name="ObtencionRenovacion"]').click(function () {
+        //    alert();
+        //    ConsultarTipoTramite($(this));
+        //});
+
+        function ConsultarPlaca() {
+
+            var l = $('#btnConsultarPlaca').ladda();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ObtenerDatosVehiculo", "Vehiculo")',
+                data: {
+                    nroPlaca: $NroPlaca.val(),
+                },
+                beforeSend: function () {
+                    l.ladda('start');
+                },
+                success: function (data) {
+                    var resultado = data.modelo;
+                    console.log(resultado);
+                    if (resultado.ResultadoProcedimientoVM.CodResultado == 1) {
+                        if (pertenece_solicitante()) {
+                            $ID_VEHICULO.val(resultado.ID_VEHICULO);
+                            $ID_MARCA.val(resultado.ID_MARCA);
+                            if (resultado.ID_MARCA != 0) {
+                                $ID_MARCA.attr('readonly', true);
+                            } else {
+                                $ID_MARCA.attr('readonly', false);
+                            }
+                            ObtenerModelo(resultado.ID_MODELO);
+                            $ID_MODELO.val(resultado.ID_MODELO);
+                            if (resultado.ID_MODELO != 0) {
+                                $ID_MODELO.attr('readonly', true);
+                            } else {
+                                $ID_MODELO.attr('readonly', false);
+                            }
+                            $ID_CATEGORIA_VEHICULO.val(resultado.ID_CATEGORIA_VEHICULO);
+
+                            if (resultado.ID_CATEGORIA_VEHICULO != 0) {
+                                $ID_CATEGORIA_VEHICULO.attr('readonly', true);
+                            } else {
+                                $ID_CATEGORIA_VEHICULO.attr('readonly', false);
+                            }
+
+                            $ID_CLASE_VEHICULO.val(resultado.ID_CLASE_VEHICULO);
+
+                            if (resultado.ID_CLASE_VEHICULO != 0) {
+                                $ID_CLASE_VEHICULO.attr('readonly', true);
+                            } else {
+                                $ID_CLASE_VEHICULO.attr('readonly', false);
+                            }
+
+                            if (resultado.ID_TIPO_COMBUSTIBLE != 0) {
+                                $ID_TIPO_COMBUSTIBLE.attr('readonly', true);
+                            } else {
+                                $ID_TIPO_COMBUSTIBLE.attr('readonly', false);
+                            }
+                            $ID_TIPO_COMBUSTIBLE.val(resultado.ID_TIPO_COMBUSTIBLE);
+
+                            ConsultarAnioRenovacion(resultado.ANIO_FABRICACION);
+
+                            $ANIO_FABRICACION.val(resultado.ANIO_FABRICACION);
+
+                            $CILINDRADA.val(resultado.CILINDRADA);
+                            $SERIE.val(resultado.SERIE);
+                            $SERIE_MOTOR.val(resultado.SERIE_MOTOR);
+                            $PESO_SECO.val(resultado.PESO_SECO);
+                            $PESO_BRUTO.val(resultado.PESO_BRUTO);
+                            $LONGITUD.val(resultado.LONGITUD);
+                            $ALTURA.val(resultado.ALTURA);
+                            $ANCHO.val(resultado.ANCHO);
+                            $CARGA_UTIL.val(resultado.CARGA_UTIL);
+                            $CAPACIDAD_PASAJERO.val(resultado.CAPACIDAD_PASAJERO);
+                            $NUMERO_ASIENTOS.val(resultado.NUMERO_ASIENTOS);
+                            $NUMERO_RUEDA.val(resultado.NUMERO_RUEDA);
+                            $NUMERO_EJE.val(resultado.NUMERO_EJE);
+                            $NUMERO_PUERTA.val(resultado.NUMERO_PUERTA);
+                            $NOMBRE_PROPIETARIO.val(resultado.NOMBRE_PROPIETARIO);
+                            $NRO_TARJETA_PROPIETARIO.val(resultado.NRO_TARJETA_PROPIEDAD);
+                            $NUMERO_DOCUMENTO_PROPIEDAD.val(resultado.NUMERO_DOCUMENTO_PROPIEDAD);
+                            $ID_TIPO_DOCUMENTO_PROPIETARIO.val(resultado.ID_TIPO_DOCUMENTO);
+                            $FECHA_INICIO_PROPIETARIO.val(resultado.FECHA_INICIO_PROPIEDAD);
+
+                            if (resultado.NUMERO_DOCUMENTO_PROPIEDAD == null) {
+                                $NUMERO_DOCUMENTO_PROPIEDAD.prop('readonly', false);
+                            } else {
+                                $NUMERO_DOCUMENTO_PROPIEDAD.prop('readonly', true);
+                            }
+
+
+                            if (resultado.FECHA_INICIO_PROPIEDAD == "") {
+                                $FECHA_INICIO_PROPIETARIO.prop('readonly', false)
+                            } else {
+                                $FECHA_INICIO_PROPIETARIO.prop('readonly', true)
+                            }
+
+                            $FECHA_FIN_PROPIETARIO.val(resultado.FECHA_FIN_PROPIEDAD);
+                            if (resultado.FECHA_FIN_PROPIEDAD == null) {
+                                $FECHA_FIN_PROPIETARIO.prop('readonly', false)
+                            } else {
+                                $FECHA_FIN_PROPIETARIO.prop('readonly', true)
+                            }
+
+                            $ID_TIPO_SEGURO.val(resultado.ID_TIPO_SEGURO);
+                            $ID_TIPO_SEGURO.attr("readonly", true);
+
+                            $NOMBRE_ASEGURADORA.val(resultado.ASEGURADORA_NOMBRE);
+                            $POLIZA.val(resultado.ASEGURADORA_POLIZA);
+
+                            $SeguroFechaInicio.val(resultado.ASEGURADORA_FEC_INI_VIGENCIA);
+                            $SeguroFechaFin.val(resultado.ASEGURADORA_FEC_FIN_VIGENCIA);
+                            $FECHA_VENC_TUC.val(resultado.FECHA_VENC_TUC)
+
+                            if (resultado.ID_TIPO_SEGURO == '@EnumTipoSeguro.SOAT.ValorEntero()') {
+                                $DivContenedorSoat.show();
+                                $DivContenedorAfocat.hide();
+                                $POLIZA.prop('readonly', true);
+                                $SeguroFechaInicio.prop('readonly', true);
+                                $SeguroFechaFin.prop('readonly', true);
+                            } else {
+                                $DivContenedorAfocat.show();
+                                $DivContenedorSoat.hide();
+                                $POLIZA.prop('readonly', false);
+                                $SeguroFechaInicio.prop('readonly', false);
+                                $SeguroFechaFin.prop('readonly', false)
+                            }
+
+                            $CERTIFICADORA_CITV.val(resultado.CITV_NOMBRE);
+                            $NRO_CERTIFICADO.val(resultado.CITV_POLIZA);
+                            $FECHA_INICIO_CITV.val(resultado.CITV_FEC_INI_VIGENCIA);
+                            $FECHA_FIN_CITV.val(resultado.CITV_FEC_FIN_VIGENCIA);
+
+                            toastr.success(resultado.ResultadoProcedimientoVM.NomResultado, 'Información');
+                        }
+                    } else {
+                        limpiarVehiculo();
+                        toastr.warning(resultado.ResultadoProcedimientoVM.NomResultado, 'Información');
+                        return;
+                    }
+                },
+                complete: function (data) {
+                    l.ladda('stop');
+                },
+            })
+        }
+    })
+
+    function ConsultarAnioRenovacion(ANIO_FABRICACION) {
+        if (ANIO_FABRICACION != "") {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("MaestroMatriz", "Vehiculo")',
+                data: {
+                    ID_TIPO_PERSONA: $ID_TIPO_PERSONA.val(),
+                    ANIO_PERIODO: '@DateTime.Now.Year',
+                    ID_MODALIDAD_SERVICIO: $ID_MODALIDAD_SERVICIO.val(),
+                    ANIO_FABRICACION: ANIO_FABRICACION,
+                },
+                success: function (data) {
+                    var resultado = data.resultado;
+                    $ANIO_RENOVACION.val(resultado.ANIOS)
+                }
+            })
+        }
+    }
+
+    function ConsultarTipoTramite($elemento) {
+        if ($($elemento).val() == "Renovacion") {
+            $ID_CLASE_VEHICULO.attr('readonly', true);
+            $ANIO_FABRICACION.prop('readonly', true);
+            $CILINDRADA.prop('readonly', true);
+            $ID_MARCA.attr('readonly', true);
+            $ID_MODELO.attr('readonly', true);
+            $SERIE.prop('readonly', true);
+            $SERIE_MOTOR.prop('readonly', true);
+            $PESO_SECO.prop('readonly', true);
+            $PESO_BRUTO.prop('readonly', true);
+            $LONGITUD.prop('readonly', true);
+            $ALTURA.prop('readonly', true);
+            $ANCHO.prop('readonly', true);
+            $CARGA_UTIL.prop('readonly', true);
+            $CAPACIDAD_PASAJERO.prop('readonly', true);
+            $NUMERO_ASIENTOS.prop('readonly', true);
+            $NUMERO_RUEDA.prop('readonly', true);
+            $NUMERO_EJE.prop('readonly', true);
+            $NUMERO_PUERTA.prop('readonly', true);
+            $NOMBRE_PROPIETARIO.prop('readonly', true);
+            $NRO_TARJETA_PROPIETARIO.prop('readonly', true);
+            $FECHA_INICIO_PROPIETARIO.prop('readonly', true);
+            $FECHA_FIN_PROPIETARIO.prop('readonly', true);
+            $CERTIFICADORA_CITV.prop('readonly', true);
+            $NRO_CERTIFICADO.prop('readonly', true);
+            $FECHA_INICIO_CITV.prop('readonly', true);
+            $FECHA_FIN_CITV.prop('readonly', true);
+            $POLIZA.prop('readonly', true);
+            $SeguroFechaInicio.prop('readonly', true);
+            $SeguroFechaFin.prop('readonly', true);
+            $NOMBRE_ASEGURADORA.prop('readonly', true);
+            $ID_TIPO_SEGURO.prop('readonly', true);
+            $ID_TIPO_COMBUSTIBLE.attr('readonly', true);
+            $ID_TIPO_DOCUMENTO_PROPIETARIO.attr('readonly', true);
+            $NUMERO_DOCUMENTO_PROPIEDAD.prop('readonly', true);
+            $ID_CATEGORIA_VEHICULO.attr('readonly', true);
+            $FECHA_VENC_TUC.prop('readonly', true);
+            limpiarVehiculo();
+        } else {
+            $ID_CLASE_VEHICULO.attr('readonly', false);
+            $ANIO_FABRICACION.prop('readonly', false);
+            $CILINDRADA.prop('readonly', false);
+            $ID_MARCA.attr('readonly', false);
+            $ID_MODELO.attr('readonly', false);
+            $SERIE.prop('readonly', false);
+            $SERIE_MOTOR.prop('readonly', false);
+            $PESO_SECO.prop('readonly', false);
+            $PESO_BRUTO.prop('readonly', false);
+            $LONGITUD.prop('readonly', false);
+            $ALTURA.prop('readonly', false);
+            $ANCHO.prop('readonly', false);
+            $CARGA_UTIL.prop('readonly', false);
+            $CAPACIDAD_PASAJERO.prop('readonly', false);
+            $NUMERO_ASIENTOS.prop('readonly', false);
+            $NUMERO_RUEDA.prop('readonly', false);
+            $NUMERO_EJE.prop('readonly', false);
+            $NUMERO_PUERTA.prop('readonly', false);
+            $NOMBRE_PROPIETARIO.prop('readonly', false);
+            $NRO_TARJETA_PROPIETARIO.prop('readonly', false);
+            $FECHA_INICIO_PROPIETARIO.prop('readonly', false);
+            $FECHA_FIN_PROPIETARIO.prop('readonly', false);
+            $CERTIFICADORA_CITV.prop('readonly', false);
+            $NRO_CERTIFICADO.prop('readonly', false);
+            $FECHA_INICIO_CITV.prop('readonly', false);
+            $FECHA_FIN_CITV.prop('readonly', false);
+            $POLIZA.prop('readonly', false);
+            $SeguroFechaInicio.prop('readonly', false);
+            $SeguroFechaFin.prop('readonly', false);
+            $NOMBRE_ASEGURADORA.prop('readonly', false);
+            $ID_TIPO_SEGURO.prop('readonly', false);
+            $ID_TIPO_COMBUSTIBLE.attr('readonly', false);
+            $ID_TIPO_DOCUMENTO_PROPIETARIO.attr('readonly', false);
+            $NUMERO_DOCUMENTO_PROPIEDAD.prop('readonly', false);
+            $ID_CATEGORIA_VEHICULO.attr('readonly', false);
+            $FECHA_VENC_TUC.prop('readonly', false);
+            limpiarVehiculo();
+        }
+    }
+
+    function ObtenerModelo(ID_MODELO) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ObtieneModelo", "Vehiculo")',
+            data: {
+                ID_MARCA: $ID_MARCA.val()
+            },
+            success: function (data) {
+                var resultado = data.resultado
+                $ID_MODELO.empty();
+                $.each(resultado, function (index, valor) {
+                    $ID_MODELO.append('<option value=' + valor.ID_MODELO + '>' + valor.NOMBRE + '</option>');
+                })
+                $ID_MODELO.val(ID_MODELO == null ? 0 : ID_MODELO);
+            }
+        })
+    }
+
+    function limpiarVehiculo() {
+        $NroPlaca.val("");
+        $ANIO_FABRICACION.val("");
+        $NRO_TARJETA_PROPIETARIO.val("");
+        $ID_CLASE_VEHICULO.val(0);
+        $ID_MARCA.val(0);
+        $ID_MODELO.val(0);
+        $CILINDRADA.val("");
+        $SERIE.val("");
+        $SERIE_MOTOR.val("");
+        $PESO_SECO.val("");
+        $PESO_BRUTO.val("");
+        $LONGITUD.val("");
+        $ALTURA.val("");
+        $ANCHO.val("");
+        $CARGA_UTIL.val("");
+        $CAPACIDAD_PASAJERO.val("");
+        $NUMERO_ASIENTOS.val("");
+        $NUMERO_RUEDA.val("");
+        $NUMERO_EJE.val("");
+        $NUMERO_PUERTA.val("");
+        $ID_VEHICULO.val("");
+        $ID_TIPO_COMBUSTIBLE.val(0);
+        $ID_CATEGORIA_VEHICULO.val(0);
+        $ID_TIPO_DOCUMENTO_PROPIETARIO.val(0);
+        $NUMERO_DOCUMENTO_PROPIEDAD.val("");
+        $NOMBRE_PROPIETARIO.val("");
+        $FECHA_INICIO_PROPIETARIO.val("");
+        $FECHA_FIN_PROPIETARIO.val("");
+        $FECHA_VENC_TUC.val("");
+        $ID_TIPO_SEGURO.val(0);
+        $NOMBRE_ASEGURADORA.val("");
+        $POLIZA.val("");
+        $SeguroFechaInicio.val("");
+        $SeguroFechaFin.val("");
+        $CERTIFICADORA_CITV.val("");
+        $NRO_CERTIFICADO.val("");
+        $FECHA_INICIO_CITV.val("");
+        $FECHA_FIN_CITV.val("");
+    }
+
+    function validacionVehiculo() {
+        var rptaValidacion = true;
+        var mensajeError = "";
+
+        //var fechaVencimiento = moment($FECHA_VENC_TUC.val())//.format('DD/MM/YYYY');
+        //moment().format('DD/MM/YYYY');
+
+        var fechaVencimiento = moment($FECHA_VENC_TUC.val(), 'DD/MM/YYYY', true).format('DD/MM/YYYY');
+        var mesPasadoVencimiento = moment(fechaVencimiento, 'DD/MM/YYYY', true).add(-1, 'M').format('DD/MM/YYYY');
+
+        //if (parseFecha(mesPasadoVencimiento) > parseFecha()) {
+        //    $FECHA_VENC_TUC.parent().addClass('has-error');
+        //    $FECHA_VENC_TUC.focus();
+        //    mensajeError = "Este procedimiento se puede solicitar faltando 1 mes para el vencimiento de TUC."
+        //    EnviarMensaje(mensajeError);
+        //    rptaValidacion = false;
+        //    return false;
+        //} else {
+        //    if ($FECHA_VENC_TUC.parent().hasClass('has-error')) {
+        //        $FECHA_VENC_TUC.parent().removeClass('has-error');
+        //        rptaValidacion = true;
+        //    }
+        //}
+
+        if ($NroPlaca.val() == "") {
+            $NroPlaca.parent().addClass('has-error');
+            $NroPlaca.focus();
+            mensajeError = "Debe ingresar una placa."
+
+            if ($ID_TIPO_COMBUSTIBLE.val() == 0) {
+                $ID_TIPO_COMBUSTIBLE.parent().addClass('has-error');
+            }
+
+            if ($ID_CATEGORIA_VEHICULO.val() == 0) {
+                $ID_CATEGORIA_VEHICULO.parent().addClass('has-error');
+            }
+
+            if ($ID_MARCA.val() == 0) {
+                $ID_MARCA.parent().addClass('has-error');
+            }
+
+            if ($ID_MODELO.val() == 0) {
+                $ID_MODELO.parent().addClass('has-error');
+            }
+
+            if ($ID_CLASE_VEHICULO.val() == 0) {
+                $ID_CLASE_VEHICULO.parent().addClass('has-error');
+            }
+            rptaValidacion = false;
+            EnviarMensaje(mensajeError);
+            return false;
+        } else {
+            if ($NroPlaca.parent().hasClass('has-error')) {
+                $NroPlaca.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($FECHA_VENC_TUC.val() == "") {
+            $FECHA_VENC_TUC.parent().addClass('has-error');
+            $FECHA_VENC_TUC.focus();
+            mensajeError = "Debe ingresar fecha Vencimiento TUC."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($FECHA_VENC_TUC.parent().hasClass('has-error')) {
+                $FECHA_VENC_TUC.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_MARCA.val() == 0) {
+            $ID_MARCA.parent().addClass('has-error');
+            $ID_MARCA.focus();
+            mensajeError = "Debe ingresar una Marca."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($ID_MARCA.parent().hasClass('has-error')) {
+                $ID_MARCA.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_MODELO.val() == 0) {
+            $ID_MODELO.parent().addClass('has-error');
+            $ID_MODELO.focus();
+            mensajeError = "Debe ingresar el Modelo del Vehículo."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($ID_MODELO.parent().hasClass('has-error')) {
+                $ID_MODELO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_CLASE_VEHICULO.val() == 0) {
+            $ID_CLASE_VEHICULO.parent().addClass('has-error');
+            $ID_CLASE_VEHICULO.focus();
+            mensajeError = "Debe ingresar la Clase del Vehículo."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($ID_CLASE_VEHICULO.parent().hasClass('has-error')) {
+                $ID_CLASE_VEHICULO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_TIPO_COMBUSTIBLE.val() == 0) {
+            $ID_TIPO_COMBUSTIBLE.parent().addClass('has-error');
+            $ID_TIPO_COMBUSTIBLE.focus();
+            mensajeError = "Debe ingresar el Tipo de Combustible del Vehículo."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($ID_TIPO_COMBUSTIBLE.parent().hasClass('has-error')) {
+                $ID_TIPO_COMBUSTIBLE.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_CATEGORIA_VEHICULO.val() == 0) {
+            $ID_CATEGORIA_VEHICULO.parent().addClass('has-error');
+            $ID_CATEGORIA_VEHICULO.focus();
+            mensajeError = "Debe ingresar la categoría del Vehículo."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($ID_CATEGORIA_VEHICULO.parent().hasClass('has-error')) {
+                $ID_CATEGORIA_VEHICULO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        return rptaValidacion;
+    }
+
+    function pertenece_solicitante() {
+        var resultado = true;
+        //alert(bool_pertenece_solicitante);
+        if (bool_pertenece_solicitante) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PerteneceSolicitante", "Vehiculo")',
+                async: false,
+                data: {
+                    nroPlaca: $NroPlaca.val(),
+                    nroSolicitante: $NRO_DOCUMENTO.val()
+                },
+                success: function (data) {
+                    switch (data.modelo) {
+                        case 0: { toastr.warning("El vehiculo no pertenece al solicitante", 'Información'); resultado = false; } break;
+                        case 1: { toastr.warning("El vehiculo no tiene TUC activa o vigente", 'Información'); resultado = false; } break;
+                        case 2: { resultado = true } break;
+                        default: { resultado = false; }
+
+                    }
+                    //alert(JSON.stringify(data));
+                }
+            });
+        } else {
+            return true;
+        }
+        return resultado;
+    }
+</script>

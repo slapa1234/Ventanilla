@@ -1,0 +1,20 @@
+﻿@model SisATU.Base.ViewModel.DetalleSolicitudVM
+
+<tr>
+    @using (Html.BeginCollectionItem("DetalleSolicitudVM"))
+    {
+        <td class="vertical-align">
+            @Html.HiddenFor(model => model.DATO_REGISTRO)
+            @Html.HiddenFor(model => model.DESCRIPCION)
+            @Html.HiddenFor(model => model.NUMERO_RECIBO)
+            @Html.HiddenFor(model => model.ID_ENTIDAD_BANCARIA)
+            @Model.DATO_REGISTRO
+        </td>
+        <td class="text-navy"><i class="@(Model.PorcentajeDocumento>= 50 ? "fa fa-level-up" : "fa fa-level-down" )"></i> @Model.PorcentajeDocumento% </td>
+        <td class="vertical-align">@Model.NUMERO_RECIBO</td>
+        <td class="vertical-align">
+            <a class="btn btn-white btn-bitbucket" onclick="EliminarDetalle($(this).parent().parent())"><i class="fa fa-trash"></i></a>
+        </td>
+    }
+</tr>
+ 

@@ -1,0 +1,533 @@
+﻿@model SisATU.Base.ViewModel.UsuarioVM
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Registrar Cuenta</h4>
+</div>
+
+@using (Html.BeginForm("registrarAdministrado", "Acceso", FormMethod.Post, new { @Class = "form-vertical", @id = "FromCrearCuenta" }))
+{
+    <div class="modal-body">
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group" title="Tipo de Persona">
+                            @Html.DropDownListFor(model => model.ID_TIPO_PERSONA, Model.SelectTipoPersona, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @*section persona juridica*@
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section-persona-natural" style="display:none;">
+                        <div class="form-group" title="Tipo de Documento">
+                            @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO, Model.SelectTipoDocumento, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 select-numero-documento">
+                        <div class="form-group">
+                            <div class="input-group" style="width:100%" title="Numero de Documento">
+                                @Html.TextBoxFor(model => model.NRO_DOCUMENTO, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. Documento", @maxlength = "8" })
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar" onclick="BuscarDocumento($(this))" id="btnConsultaDocumento">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 select-dni" style="display:none">
+                        <div class="col-sm-9 no-padding">
+                            <div class="form-group" title="Documento Nacional de Identidad">
+                                @Html.TextBoxFor(model => model.DNI, new { @class = "form-control", @autocomplete = "off", @placeholder = "Nro. Documento", @maxlength = "8" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3 no-padding-right">
+                            <div class="form-group">
+                                <div class="input-group" title="Dígito Verificador">
+                                    @Html.TextBoxFor(model => model.DIGITO_VERIFICADOR, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Dígito Verificador", @maxlength = "1" })
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar Reniec" onclick="BuscarDocumento($(this))" id="btnDNI">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 select-representante-legal" style="display:none;">
+                        <div class="form-group"  title="Tipo de Documento del Representante legal">
+                            @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL, Model.SelectTipoDocumento, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 select-representante-legal" style="display:none;">
+                        <div class="form-group"  title="Numero de Representante Legal">
+                            @Html.TextBoxFor(model => model.NRO_DOCUMENTO_REPRESENTANTE_LOCAL, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. Documento Representante Legal", @maxlength = "8" })
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section-persona-juridica" style="display:none;">
+                        <div class="form-group">
+                            <div class="input-group" style="width:100%"  title="Documento Nacional de Identidad">
+                                <span class="input-group-addon" title="Ingresar razon social">
+                                    <i class="fa fa-address-book"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.RAZON_SOCIAL, new { @class = "form-control datos-personal-oper", @placeholder = "razon social", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    @*persona natural*@
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section-persona-natural" style="display:none;">
+                        <div class="form-group">
+                            <div class="input-group" style="width: 100%;" title="Apellido paterno">
+                                <span class="input-group-addon" >
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.APEPAT, new { @class = "form-control datos-personal-oper", @placeholder = "Apellido paterno", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section-persona-natural" style="display:none;">
+                        <div class="form-group">
+                            <div class="input-group" style="width: 100%;" title="Apellido materno">
+                                <span class="input-group-addon">
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.APEMAT, new { @class = "form-control datos-personal-oper", @placeholder = "Apellido Materno", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 section-persona-natural" style="display:none;">
+                        <div class="form-group">
+                            <div class="input-group" style="width: 100%;" title="Nombres">
+                                <span class="input-group-addon">
+                                    <span class="fas fa-user" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.NOMBRES, new { @class = "form-control datos-personal-oper", @placeholder = "Nombres", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="input-group" title="Teléfono">
+                                <span class="input-group-addon" title="Teléfono">
+                                    <span class="fas fa-phone" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.TELEFONO, new { @class = "form-control datos-personal-oper", @placeholder = "Telefono", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @maxlength = "9" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="input-group" title="Email">
+                                <span class="input-group-addon" title="Email">
+                                    <span class="fas fa-mail-bulk" aria-hidden="true"></span>
+                                </span>
+                                @Html.TextBoxFor(model => model.CORREO, new { @class = "form-control datos-personal-oper", @placeholder = "Email", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display:none">
+                        <div class="form-group">
+                            <div class="input-group" title="Dirección">
+                                <span class="input-group-addon" title="Dirección">
+                                    <span class="fas fa-home" aria-hidden="true"></span>
+                                </span>
+                                @Html.HiddenFor(model => model.DIRECCION, new { @class = "form-control datos-personal-oper", @placeholder = "Dirección" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="ladda-button btn btn-primary" id="btnGuardar" data-style="expand-left" onclick="registrarUsuario();"><i class="fa fa-check"></i>&nbsp;Guardar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" title="Cerrar" id="btnCancelar"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+    </div>
+}
+
+<script>
+    var $ID_TIPO_PERSONA = $("#ID_TIPO_PERSONA");
+    var $NRO_DOCUMENTO = $("#NRO_DOCUMENTO");
+    var $btnConsultarDocumento = $("#btnConsultarDocumento");
+    var $RAZON_SOCIAL = $("#RAZON_SOCIAL");
+    var $ID_TIPO_DOCUMENTO = $("#ID_TIPO_DOCUMENTO");
+    var $APEPAT = $("#APEPAT");
+    var $APEMAT = $("#APEMAT");
+    var $NOMBRES = $("#NOMBRES");
+    var $TELEFONO = $("#TELEFONO");
+    var $CORREO = $("#CORREO");
+    var $DIRECCION = $("#DIRECCION");
+    var $DIGITO_VERIFICADOR = $("#DIGITO_VERIFICADOR");
+    var $DNI = $("#DNI");
+    var $NRO_DOCUMENTO_REPRESENTANTE_LOCAL = $("#NRO_DOCUMENTO_REPRESENTANTE_LOCAL");
+    var $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL = $("#ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL");
+
+    $(function () {
+        //$btnConsultarDocumento.click(function () {
+        //    BuscarDocumento();
+        //})
+
+        $DNI.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+
+            if (keycode == '13') {
+                $DIGITO_VERIFICADOR.focus();
+            } else if (keycode == '8') {
+                LimpiarUsuario();
+            }
+        })
+
+        $NRO_DOCUMENTO.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+
+            if (keycode == '13') {
+                BuscarDocumento($("#btnConsultaDocumento"));
+            } else if (keycode == '8') {
+                LimpiarUsuario();
+            } else {
+                if (($NRO_DOCUMENTO.val().length == 2) || ($NRO_DOCUMENTO.val().length == 11)) {
+                    MuestraRepresentanteLocal();
+                }
+
+            }
+        })
+
+        $DIGITO_VERIFICADOR.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                BuscarDocumento($("#btnDNI"));
+            }
+        })
+
+        $ID_TIPO_PERSONA.change(function () {
+            switch (Number($ID_TIPO_PERSONA.val())) {
+                case 0:
+                    $(".select-numero-documento").show();
+                    $(".select-dni").hide();
+                    $('.section-persona-natural').css('display', 'none');
+                    $('.section-persona-juridica').css('display', 'none');
+                    LimpiarUsuario();
+                    break;
+                case 1:// juridica
+                    $(".select-numero-documento").show();
+                    $(".select-dni").hide();
+
+                    $('.section-persona-natural').css('display', 'none');
+                    $('.section-persona-juridica').css('display', 'block');
+                    $NRO_DOCUMENTO.attr({ "placeholder": "Nro de Documento", "maxlength": "11" });
+                    LimpiarUsuario();
+                    break;
+                case 2: //natural
+                    if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()') {
+                        $(".select-numero-documento").hide();
+                        $(".select-dni").show();
+                    }
+                    $('.section-persona-natural').css('display', 'block');
+                    $('.section-persona-juridica').css('display', 'none');
+                    $(".select-representante-legal").hide();
+                    LimpiarUsuario();
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        $ID_TIPO_DOCUMENTO.change(function () {
+            if ($(this).val() == '@EnumParametro.DNI.ValorEntero()') {
+                $(".select-numero-documento").hide();
+                $(".select-dni").show();
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro de Documento", "maxlength": "8" });
+
+            } else if ($(this).val() == '@EnumParametro.CE.ValorEntero()') {
+                $(".select-numero-documento").show();
+                $(".select-dni").hide();
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro Carnet de Extranjería", "maxlength": "9" });
+
+            } else if ($(this).val() == '@EnumParametro.PTP.ValorEntero()') {
+                $(".select-numero-documento").show();
+                $(".select-dni").hide();
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro de PTP", "maxlength": "9" });
+
+            }
+        })
+
+        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.change(function () {
+            if ($(this).val() == '@EnumParametro.DNI.ValorEntero()') {
+                $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.attr({ "placeholder": "Nro de Documento", "maxlength": "8" });
+
+            } else if ($(this).val() == '@EnumParametro.CE.ValorEntero()') {
+                $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.attr({ "placeholder": "Nro Carnet de Extranjería", "maxlength": "9" });
+            } else if ($(this).val() == '@EnumParametro.PTP.ValorEntero()') {
+                $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.attr({ "placeholder": "Nro de PTP", "maxlength": "9" });
+            }
+
+        })
+    })
+
+    function BuscarDocumento($elemento) {
+        var l = $elemento.ladda();
+        var urlAccion = "";
+        if ($ID_TIPO_PERSONA.val() == '@EnumParametro.PersonaJuridica.ValorEntero()') {
+            var tipo = $NRO_DOCUMENTO.val().substring(0, 2)
+            if (tipo == 20) {
+                if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val() == 0) {
+                    MensajeAlerta("error", 'Ingresar Tipo de documento del representante legal')
+                    $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.focus();
+                    $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().addClass('has-error');
+                    return false
+                } else if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val() == '@EnumParametro.DNI.ValorEntero()') {
+                    if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().hasClass('has-error')) {
+                        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().removeClass('has-error');
+                    }
+
+                    if ($NRO_DOCUMENTO_REPRESENTANTE_LOCAL.val().length <= 7) {
+                        MensajeAlerta("error", 'La cantidad de digitos no es valido');
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.focus();
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.parent().addClass('has-error');
+                        return false
+                    }
+
+                } else if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val() == '@EnumParametro.CE.ValorEntero()') {
+                    if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().hasClass('has-error')) {
+                        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().removeClass('has-error');
+                    }
+                    if ($NRO_DOCUMENTO_REPRESENTANTE_LOCAL.val().length <= 8) {
+                        MensajeAlerta("error", 'La cantidad de digitos no es valido');
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.focus();
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.parent().addClass('has-error');
+                        return false
+                    }
+
+                } else if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val() == '@EnumParametro.PTP.ValorEntero()') {
+                    if ($ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().hasClass('has-error')) {
+                        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.parent().removeClass('has-error');
+                    }
+                    if ($NRO_DOCUMENTO_REPRESENTANTE_LOCAL.val().length <= 8) {
+                        MensajeAlerta("error", 'La cantidad de digitos no es valido');
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.focus();
+                        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.parent().addClass('has-error');
+                        return false
+                    }
+                }
+
+                if (!ValidarNumeroDocumento($NRO_DOCUMENTO_REPRESENTANTE_LOCAL)) {
+                    return false;
+                }
+            }
+            urlAccion = '@Url.Action("ConsultaRUC", "Empresa")';
+
+        } else {
+            if (!ValidarTipoDocumento($ID_TIPO_DOCUMENTO)) {
+                return false
+            }
+            if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()') {
+                urlAccion = '@Url.Action("ConsultaDNI", "Conductor")'
+            } else if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.CE.ValorEntero()') {
+                urlAccion = '@Url.Action("ConsultaCE", "Conductor")'
+            } else if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.PTP.ValorEntero()') {
+                urlAccion = '@Url.Action("ConsultaPTP", "Conductor")'
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: urlAccion,
+            data: {
+                RUC: $NRO_DOCUMENTO.val(),
+                DNI: ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()' ? $("#DNI").val() : $NRO_DOCUMENTO.val()),
+                NRO_DOCUMENTO_REPRESENTANTE_LEGAL: $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.val(),
+                ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL: $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val(),
+                Representante: true,
+            },
+            beforeSend: function () {
+                l.ladda('start');
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                console.log(resultado);
+                if ($ID_TIPO_PERSONA.val() == '@EnumParametro.PersonaJuridica.ValorEntero()') {
+                    if ($NRO_DOCUMENTO.val().substring(0, 2) == 20) {
+                        if (data.representante == 1) {
+                            if (resultado.RAZON_SOCIAL != "") {
+                                $RAZON_SOCIAL.val((resultado.RAZON_SOCIAL ? resultado.RAZON_SOCIAL.trim() : ''))
+                                $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.attr('readonly', 'readonly');
+                                $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.prop('readonly', true);
+                                MensajeAlerta("success", "cargo Correctamente");
+                            }
+                        } else {
+                            LimpiarUsuario();
+                            MensajeAlerta("error", "la información ingresada es incorrecta");
+                            return false;
+
+                        }
+                    } else {
+                        if (resultado.RAZON_SOCIAL != "") {
+                            $RAZON_SOCIAL.val((resultado.RAZON_SOCIAL ? resultado.RAZON_SOCIAL.trim() : ''))
+                            MensajeAlerta("success", "cargo Correctamente");
+                        }
+                    }
+
+
+                } else if ($ID_TIPO_PERSONA.val() == '@EnumParametro.PersonaNatural.ValorEntero()') {
+                    if (resultado.ResultadoProcedimientoVM.CodResultado == 1) {
+                        if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()') {
+                            if ($DIGITO_VERIFICADOR.val() != resultado.ULTIMO_DIGITO) {
+                                LimpiarUsuario();
+                                MensajeAlerta("error", "la información ingresada es incorrecta");
+                                return false;
+                            }
+                        }
+                        var NOMBRES = (resultado.NOMBRES ? resultado.NOMBRES : '');
+                        var APEPAT = (resultado.APELLIDO_PATERNO ? resultado.APELLIDO_PATERNO : '');
+                        var APEMAT = (resultado.APELLIDO_MATERNO ? resultado.APELLIDO_MATERNO : '');
+                        var DIRECCION = (resultado.DIRECCION ? resultado.DIRECCION : '');
+
+                        if (NOMBRES == '' || APEPAT == '' || APEMAT == '') {
+                            $APEPAT.val('');
+                            $APEMAT.val('');
+                            $NOMBRES.val('');
+                            $DIRECCION.val('');
+                            if ($ID_TIPO_DOCUMENTO.val() != 1) {
+                                $APEPAT.removeAttr('readonly');
+                                $APEMAT.removeAttr('readonly');
+                                $NOMBRES.removeAttr('readonly');
+                                $DIRECCION.removeAttr('readonly');
+                            }
+                            return false;
+                        }
+                        $APEPAT.val(APEPAT);
+                        $APEMAT.val(APEMAT);
+                        $NOMBRES.val(NOMBRES);
+                        $DIGITO_VERIFICADOR.prop('readonly', true);
+
+                        if (NOMBRES != "") {
+                            $NOMBRES.val(NOMBRES).prop('readonly', true);
+                        } else {
+                            $NOMBRES.val(NOMBRES).prop('readonly', false);
+                        }
+
+                        if (APEPAT != "") {
+                            $APEPAT.val(APEPAT).prop('readonly', true);
+                        } else {
+                            $APEPAT.val(APEPAT).prop('readonly', false);
+                        }
+
+                        if (APEMAT != "") {
+                            $APEMAT.val(APEMAT).prop('readonly', true);
+                        } else {
+                            $APEMAT.val(APEMAT).prop('readonly', false);
+                        }
+
+                        if ($DIRECCION != "") {
+                            $DIRECCION.val(DIRECCION).prop('readonly', true);
+                        } else {
+                            $DIRECCION.val(DIRECCION).prop('readonly', false);
+                        }
+
+                        MensajeAlerta("success", resultado.ResultadoProcedimientoVM.NomResultado);
+
+                    } else {
+                        MensajeAlerta("error", resultado.ResultadoProcedimientoVM.NomResultado);
+                    }
+
+                }
+
+            },
+            complete: function (data) {
+                l.ladda('stop');
+            },
+        })
+    }
+
+    function registrarUsuario() {
+        var l = $('#btnGuardar').ladda();
+        if ($ID_TIPO_DOCUMENTO.val() != '@EnumParametro.DNI.ValorEntero()') {
+            if (!ValidarNumeroDocumento($NRO_DOCUMENTO)) {
+                return false;
+            }
+        } else {
+            if (!ValidarNumeroDocumento($DNI)) {
+                return false;
+            }
+        }
+        if (!ValidarCelular($TELEFONO, true)) {
+            return false;
+        }
+
+        if (!validarEmail($CORREO)) {
+            return false;
+        }
+        //if (!ValidarDireccion($DIRECCION)) {
+        //    return false;
+        //}
+
+        var formData = $("#FromCrearCuenta").serializeArray();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("registrarAdministrado", "Acceso")',
+            data: formData,
+            beforeSend: function () {
+                l.ladda('start');
+            },
+            success: function (resultado) {
+                if (resultado.codresultado == 1) {
+                    $("#modalCrearCuenta").modal('hide');
+                    swal({
+                        title: "Registró Correctamente",
+                        text: "Se registró su cuenta correctamente, los datos de su cuenta fue enviada a su correo <strong>" + $CORREO.val() + "</strong>",
+                        type: "success",
+                        html: true,
+                        showCancelButton: false,
+                        confirmButtonColor: '#1ab394',
+                        confirmButtonText: 'Aceptar',
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+
+                        } else {
+
+                        }
+                    });
+                } else {
+                    MensajeAlerta("error", resultado.mensaje)
+                }
+            },
+            complete: function (data) {
+                l.ladda('stop')
+            },
+        })
+    }
+
+    function LimpiarUsuario() {
+        $DIRECCION.val('');
+        $CORREO.val('');
+        $TELEFONO.val('');
+        $NOMBRES.val('');
+        $APEMAT.val('');
+        $APEPAT.val('');
+        $DNI.val('');
+        $DIGITO_VERIFICADOR.prop('readonly', false);
+        $DIGITO_VERIFICADOR.val('');
+        $RAZON_SOCIAL.val('');
+        $NRO_DOCUMENTO.val('');
+        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.val(0);
+        $ID_TIPO_DOCUMENTO_REPRESENTANTE_LEGAL.removeAttr('readonly');
+        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.val('');
+        $NRO_DOCUMENTO_REPRESENTANTE_LOCAL.prop('readonly', false)
+    }
+
+    function MuestraRepresentanteLocal() {
+        var tipo = $NRO_DOCUMENTO.val().substring(0, 2)
+        if (($ID_TIPO_PERSONA.val() == '@EnumParametroTipoPersona.PersonaJuridica.ValorEntero()') && (tipo == 20)) {
+            $(".select-representante-legal").show();
+        } else {
+            $(".select-representante-legal").hide();
+        }
+    }
+</script>

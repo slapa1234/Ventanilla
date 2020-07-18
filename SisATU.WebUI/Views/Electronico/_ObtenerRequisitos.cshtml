@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SisATU.Base.ViewModel.ComboRequisitosProcedimientosVM>
+
+@{
+    ViewBag.Title = "ObtenerRequisitos";
+    int NumeroRegistro = 0;
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+    <div class="form-group">
+        @foreach (var item in Model)
+        {
+            <div class="checkbox i-checks">
+                <label>@Html.TextBox("ComboRequisitosProcedimientosVM[" + (NumeroRegistro) + "].Requisito", item.REQUISITOS, new { @class = "i-checks", @type = "checkbox", @Value = "false" }) @item.DESCRIPCION_REQUISITOS</label>
+                @Html.Hidden("ComboRequisitosProcedimientosVM[" + (NumeroRegistro) + "].IDDET", item.ID_REQUISITOS_PROCEDIMIENTOS)
+            </div>
+            NumeroRegistro++;
+        }
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+        });
+
+        $('input').on('ifChanged', function (event) {
+            esCheckeado(this);
+        });
+    })
+</script>

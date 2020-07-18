@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dtsRenovacion" targetNamespace="http://tempuri.org/dtsRenovacion.xsd" xmlns:mstns="http://tempuri.org/dtsRenovacion.xsd" xmlns="http://tempuri.org/dtsRenovacion.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dtsRenovacion" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dtsRenovacion" msprop:Generator_UserDSName="dtsRenovacion">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Renovacion_Autorizacion" msprop:Generator_TableClassName="Renovacion_AutorizacionDataTable" msprop:Generator_TableVarName="tableRenovacion_Autorizacion" msprop:Generator_RowChangedName="Renovacion_AutorizacionRowChanged" msprop:Generator_TablePropName="Renovacion_Autorizacion" msprop:Generator_RowDeletingName="Renovacion_AutorizacionRowDeleting" msprop:Generator_RowChangingName="Renovacion_AutorizacionRowChanging" msprop:Generator_RowEvHandlerName="Renovacion_AutorizacionRowChangeEventHandler" msprop:Generator_RowDeletedName="Renovacion_AutorizacionRowDeleted" msprop:Generator_RowClassName="Renovacion_AutorizacionRow" msprop:Generator_UserTableName="Renovacion_Autorizacion" msprop:Generator_RowEvArgName="Renovacion_AutorizacionRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NUM_RESOLUCION" msprop:Generator_ColumnVarNameInTable="columnNUM_RESOLUCION" msprop:Generator_ColumnPropNameInRow="NUM_RESOLUCION" msprop:Generator_ColumnPropNameInTable="NUM_RESOLUCIONColumn" msprop:Generator_UserColumnName="NUM_RESOLUCION" type="xs:string" minOccurs="0" />
+              <xs:element name="FECHA" msprop:Generator_ColumnVarNameInTable="columnFECHA" msprop:Generator_ColumnPropNameInRow="FECHA" msprop:Generator_ColumnPropNameInTable="FECHAColumn" msprop:Generator_UserColumnName="FECHA" type="xs:string" minOccurs="0" />
+              <xs:element name="NUM_EXPEDIENTE" msprop:Generator_ColumnVarNameInTable="columnNUM_EXPEDIENTE" msprop:Generator_ColumnPropNameInRow="NUM_EXPEDIENTE" msprop:Generator_ColumnPropNameInTable="NUM_EXPEDIENTEColumn" msprop:Generator_UserColumnName="NUM_EXPEDIENTE" type="xs:string" minOccurs="0" />
+              <xs:element name="EMPRESA" msprop:Generator_ColumnVarNameInTable="columnEMPRESA" msprop:Generator_ColumnPropNameInRow="EMPRESA" msprop:Generator_ColumnPropNameInTable="EMPRESAColumn" msprop:Generator_UserColumnName="EMPRESA" type="xs:string" minOccurs="0" />
+              <xs:element name="MODALIDAD_SERVICIO" msprop:Generator_ColumnVarNameInTable="columnMODALIDAD_SERVICIO" msprop:Generator_ColumnPropNameInRow="MODALIDAD_SERVICIO" msprop:Generator_ColumnPropNameInTable="MODALIDAD_SERVICIOColumn" msprop:Generator_UserColumnName="MODALIDAD_SERVICIO" type="xs:string" minOccurs="0" />
+              <xs:element name="CANT_ANIOS" msprop:Generator_ColumnVarNameInTable="columnCANT_ANIOS" msprop:Generator_ColumnPropNameInRow="CANT_ANIOS" msprop:Generator_ColumnPropNameInTable="CANT_ANIOSColumn" msprop:Generator_UserColumnName="CANT_ANIOS" type="xs:string" minOccurs="0" />
+              <xs:element name="PERIODO_NOMBRE" msprop:Generator_ColumnVarNameInTable="columnPERIODO_NOMBRE" msprop:Generator_ColumnPropNameInRow="PERIODO_NOMBRE" msprop:Generator_ColumnPropNameInTable="PERIODO_NOMBREColumn" msprop:Generator_UserColumnName="PERIODO_NOMBRE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

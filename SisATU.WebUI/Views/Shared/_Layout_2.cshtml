@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATU | @ViewBag.Title</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Add jQuery Style direct - used for jQGrid plugin -->
+    <link href="@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+
+    <!-- Primary Inspinia style -->
+    @Styles.Render("~/plugins/toastrStyles")
+    <link href="~/Scripts/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/font-awesome/css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jqueryui")*@
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Scripts.Render("~/plugins/select2")
+    @*@Styles.Render("~/plugins/select2Styles")*@
+
+    @Styles.Render("~/plugins/datetimepickerStyles")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="top-navigation">
+    <script>
+        var URL_BASE = "@Url.Content("~/ ")";
+    </script>
+    <!-- Skin configuration box -->
+    @*@Html.Partial("_SkinConfig")*@
+
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="@Html.PageClass()">
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            @Html.Partial("_TopNavbar")
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+
+        </div>
+        <!-- End page wrapper-->
+
+    </div>
+    <!-- End wrapper-->
+    <!-- Section for main scripts render -->
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/ladda")
+    @Scripts.Render("~/plugins/sweetAlert")
+
+    <script src="~/Scripts/Util.js"></script>
+    <!-- Skin config script - only for demo purpose-->
+    @Scripts.Render("~/bundles/skinConfig")
+    <script src="~/Scripts/plugins/jquery.form.js"></script>
+    @Scripts.Render("~/plugins/bootstrap-datetimepicker")
+
+    @*<script src="~/Scripts/plugins/bootstrap-datetimepicker/moment.js"></script>*@
+    @*<link href="~/Content/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>*@
+    @*<script src="~/Scripts/plugins/bootstrap-datetimepicker/es.js"></script>*@
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

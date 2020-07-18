@@ -1,0 +1,328 @@
+﻿@model SisATU.Base.DatosVentanaPrincipalVM
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+@{
+    Layout = "~/Views/Shared/_Layout_2.cshtml";
+}
+
+<style>
+    .divSeleccionado:hover {
+        background-color: #3460a9; /*#154390;*/
+        color: white;
+        border-color: #4a74bb;
+        box-shadow: 6px 5px 1px 0px #c7c7c7;
+    }
+
+    .divActivo {
+        background-color: #154390;
+        color: white;
+        border-color: #4a74bb;
+        box-shadow: 6px 5px 1px 0px #c7c7c7;
+    }
+
+    .bloquearDiv {
+        color: #80808063;
+        cursor: not-allowed;
+    }
+
+        .bloquearDiv:hover {
+            background-color: #fff; /*#154390;*/
+            color: #80808063;
+            border-color: #e7eaec;
+            box-shadow: none;
+        }
+</style>
+
+<div class="wrapper wrapper-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 no-padding">
+                @foreach (var item in Model.ListaTipoPersona)
+                {
+                    <div class="col-lg-6 cursor-hand">
+                        <div class="widget style1 white-bg divSeleccionado" onclick="getPersonaTipo(@item.PARSEC, $(this))">
+                            <div class="row vertical-center">
+                                <div class="col-xs-3 text-center">
+                                    <i class="@item.ICONO fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h2 class="font-bold">@item.PARNOM</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="col-lg-12 white-bg no-padding">
+                    <h2 class="colorLetraATU" style="padding-top: 10px; padding-bottom: 10px; font-weight: 600; text-align: center">Modalidad de Servicio</h2>
+                </div>
+
+                @foreach (var item in Model.ListaModalidadServicio)
+                {
+
+                    <div class="col-lg-6 white-bg">
+                        <div class="widget white-bg text-center border-top-bottom border-left-right cursor-hand divSeleccionado bloquearDiv divModalidadServicio @(item.ID_MODALIDAD_SERVICIO == EnumModalidadServicio.TransporteRegularPersona.ValorEntero() || item.ID_MODALIDAD_SERVICIO == EnumModalidadServicio.NoTupa.ValorEntero() ? "m-b-xl" : "")" data-codmodalidadservicio="@item.ID_MODALIDAD_SERVICIO" style="height: 124px;padding:15px 10px" onclick="getModalidadServicio(@item.ID_MODALIDAD_SERVICIO,$(this))">
+                            <div>
+                                <i class="@item.ICONO fa-4x"></i>
+                                <h4 class="m-xs" style="font-weight:normal">@item.NOMBRE</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="col-lg-12 white-bg no-padding">
+                    <h2 class="colorLetraATU" style="padding-top:10px;padding-bottom:10px;font-weight:600;text-align:center">Trámite</h2>
+                </div>
+                @foreach (var item in Model.ListaTramite)
+                {
+                    <div class="col-lg-6 white-bg">
+                        <div class="widget white-bg text-center border-top-bottom border-left-right cursor-hand divSeleccionado bloquearDiv divTramite" style="height:124px;padding: 15px 10px" onclick="getTramite(@item.ID_TIPO_TRAMITE, $(this))">
+                            <div>
+                                <i class="@item.ICONO fa-4x"></i>
+                                <h4 class="m-xs divSeleccionadoTramite" style="font-weight: normal">
+                                    @item.NOMBRE_TRAMITE
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-md-12 white-bg">
+                    <h2 class="colorLetraATU" style="font-weight:600;text-align:center">Ingreso</h2>
+                    <div class="middle-box text-center loginscreen no-padding" style="margin-top: 0;">
+                        <div class="m-b-xl">
+                            <form class="m-t" role="form" action="#">
+                                <div class="form-group tipodocumento" hidden>
+                                    @Html.DropDownList("selectTipoDocumento", Model.SelectTipoDocumento, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="txtUsuario" class="form-control" placeholder="Nro de documento" autocomplete="off" required="" onkeypress="return soloNumeros(event)">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" id="txtContrasenia" class="form-control text-uppercase" placeholder="Clave" autocomplete="off" required="" maxlength="6">
+                                </div>
+
+                                <button type="button" class="btn btn-primary block full-width m-b ladda-button" data-style="zoom-out" id="btnIngresar" onclick="ingresar();">Ingresar</button>
+                                <a href="#" id="btnRecuperarContrasenia"><small>¿Se te olvidó tu contraseña?</small></a>
+                                <p class="text-muted text-center"><small>¿No tiene una cuenta?</small></p>
+                                <a class="btn btn-sm btn-white btn-block" href="#" id="btnCrearCuenta">Crea una cuenta</a>
+                            </form>
+                            <p class="m-t"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var TipoPersona = 0;
+    var ModalidadServicio = 0;
+    var TipoTramite = 0
+    var $txtUsuario = $("#txtUsuario");
+    var $txtContrasenia = $("#txtContrasenia")
+    var $btnIngresar = $("#btnIngresar");
+    var $btnCrearCuenta = $("#btnCrearCuenta");
+    var $btnRecuperarContrasenia = $("#btnRecuperarContrasenia");
+    var $selectTipoDocumento = $("#selectTipoDocumento");
+
+    $(function () {
+        $btnCrearCuenta.click(function () {
+            modal("modalCrearCuenta", URL_BASE + "Acceso/RegistrarCuenta", 1, 1, "", "modal-dialog", 0, 0)
+        })
+
+        $btnRecuperarContrasenia.click(function () {
+            modal("modalRecuperarContrasenia", URL_BASE + "Acceso/RecuperarContrasenia", 1, 1, "", "modal-dialog ", 0, 0)
+        })
+
+        $txtContrasenia.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+
+            if (keycode == '13') {
+                $btnIngresar.click()
+            }
+        })
+
+        $selectTipoDocumento.change(function () {
+            if ($(this).val() == '@EnumParametro.DNI.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 8);
+            } else if ($(this).val() == '@EnumParametro.PTP.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 9);
+            } else if ($(this).val() == '@EnumParametro.CE.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 9);
+            }
+        })
+
+    });
+
+    function getPersonaTipo(idTipoPersona, $elemento) {
+        var arrModalidadesActivas = [];
+        var tarjetaTipoPersona = $($elemento).parent().parent();
+
+        tarjetaTipoPersona.children().each(function () {
+            $(this).children().removeClass('divActivo');
+        });
+
+        $(".divModalidadServicio, .divTramite").removeClass('divActivo');
+        $(".divModalidadServicio").addClass('bloquearDiv');
+
+        $($elemento).addClass('divActivo');
+        if (idTipoPersona == '@EnumParametro.PersonaJuridica.ValorEntero()') {
+            $('.tipodocumento').prop('hidden', true);
+            //$txtUsuario.val('20520808354');
+            //$txtContrasenia.val('123456');
+            $(".divSeleccionadoTramite").eq(0).text("PERSONA JURÍDICA");
+            $txtUsuario.attr('maxlength', 11)
+        } else if (idTipoPersona == '@EnumParametro.PersonaNatural.ValorEntero()') {
+            $('.tipodocumento').prop('hidden', false);
+
+            if ($selectTipoDocumento.val() == '@EnumParametro.DNI.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 8);
+            } else if ($selectTipoDocumento.val() == '@EnumParametro.PTP.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 9);
+            } else if ($selectTipoDocumento.val() == '@EnumParametro.CE.ValorEntero()') {
+                $txtUsuario.attr('maxlength', 9);
+            }
+
+
+            //$txtUsuario.val('09705393');
+            //$txtContrasenia.val('123456');
+            $(".divSeleccionadoTramite").eq(0).text("PERSONA NATURAL");
+        }
+
+        TipoPersona = idTipoPersona;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("getModalidades", "ModalidadServicio")",
+            data: {
+                idTipoPersona: Number(idTipoPersona)
+            },
+            success: function (data) {
+
+                $.each(data.resultado, function () {
+                    arrModalidadesActivas.push(this.ID_MODALIDAD_SERVICIO);
+                });
+
+                $.each($('.divModalidadServicio'), function () {
+                    var idModalidadServicio = Number($(this).attr('data-codmodalidadservicio'));
+                    if (arrModalidadesActivas.indexOf(idModalidadServicio) != -1) {
+                        $(this).removeClass('bloquearDiv');
+                    }
+                });
+            }
+        })
+    }
+
+    function getModalidadServicio(idModalidadServicio, $elemento) {
+        if (!$($elemento).hasClass('bloquearDiv')) {
+            var tarjetaModalidadServicio = $($elemento).parent().parent();
+
+            tarjetaModalidadServicio.children().each(function () {
+                $(this).children().removeClass('divActivo');
+            });
+
+            $($elemento).addClass('divActivo');
+            ModalidadServicio = idModalidadServicio;
+
+            if (idModalidadServicio == 0) {
+                $(".divTramite").removeClass('divActivo').addClass('bloquearDiv');
+                TipoTramite = 0;
+            } else {
+                $(".divTramite").removeClass('bloquearDiv');
+            }
+        }
+    }
+
+    function getTramite(idTipoTramite, $elemento) {
+        if (!$($elemento).hasClass('bloquearDiv')) {
+            var tarjetaTipoTramite = $($elemento).parent().parent();
+
+            tarjetaTipoTramite.children().each(function () {
+                $(this).children().removeClass('divActivo');
+            });
+
+            $($elemento).addClass('divActivo');
+            TipoTramite = idTipoTramite;
+        }
+    }
+
+    function ingresar() {
+        var laddaBtnIngresar = $btnIngresar.ladda();
+        var encuentraModalidadRegistro = 0;
+        if (TipoPersona == 0) {
+            MensajeAlerta("error", "Para Ingresar a la Plataforma Virtual debe seleccionar la opción de Persona Natural o Persona Jurídica .");
+            return false;
+        }
+
+        if (ModalidadServicio == 0) {
+            $(".divModalidadServicio").each(function () {
+                if ($(this).hasClass('divActivo')) {
+                    encuentraModalidadRegistro = 1
+                }
+            })
+            if (encuentraModalidadRegistro == 0) {
+                MensajeAlerta("error", "Para Ingresar a la Plataforma Virtual debe seleccionar la modalidad de servicio.");
+                return false;
+            }
+
+        } else {
+
+            if (TipoTramite == 0) {
+                MensajeAlerta("error", "Para Ingresar a la Plataforma Virtual debe Seleccionar el tipo de trá mite a realizar.");
+                return false;
+            }
+        }
+
+        if (TipoPersona == 2) {
+            if ($('#selectTipoDocumento').val() == 0) {
+                MensajeAlerta("error", "Debe Seleccionar el tipo de documento.");
+                $('#selectTipoDocumento').focus();
+                $('#selectTipoDocumento').parent().addClass('has-error');
+                return false;
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Ingresar", "Acceso")",
+            data: {
+                nroDocumento: $txtUsuario.val(),
+                pw: $txtContrasenia.val(),
+                idTipoPersona: TipoPersona,
+                idModalidad: ModalidadServicio,
+                idTipoTramite: TipoTramite,
+                idTipodocumento: TipoPersona == '@EnumParametro.PersonaJuridica.ValorEntero()' ? 1 : $('#selectTipoDocumento').val() //si es persona juridica entonces envia 1 CORREGIR
+            },
+            beforeSend: function () {
+                laddaBtnIngresar.ladda('start');
+            },
+            success: function (data) {
+
+                if (data.codresultado == 1) { //valido ok
+                    $('#mensajeErrorAcceso').prop('hidden', true)
+                    window.location.href = '@Url.Action("Index","Electronico")';
+                } else {
+                    laddaBtnIngresar.ladda('stop');
+                    MensajeAlerta("error", data.mensaje);
+                    $('#mensajeErrorAcceso').text(data.mensaje);
+                    //$('#mensajeErrorAcceso').prop('hidden', false)
+                }
+            },
+            complete: function (data) {
+                // laddaBtnIngresar.ladda('stop');
+            },
+        })
+
+    }
+</script>

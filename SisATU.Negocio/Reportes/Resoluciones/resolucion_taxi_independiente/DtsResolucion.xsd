@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DtsResolucion" targetNamespace="http://tempuri.org/DtsResolucion.xsd" xmlns:mstns="http://tempuri.org/DtsResolucion.xsd" xmlns="http://tempuri.org/DtsResolucion.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DtsResolucion" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DtsResolucion" msprop:Generator_UserDSName="DtsResolucion">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Resolucion_Obtencion" msprop:Generator_TableClassName="Resolucion_ObtencionDataTable" msprop:Generator_TableVarName="tableResolucion_Obtencion" msprop:Generator_TablePropName="Resolucion_Obtencion" msprop:Generator_RowDeletingName="Resolucion_ObtencionRowDeleting" msprop:Generator_RowChangingName="Resolucion_ObtencionRowChanging" msprop:Generator_RowEvHandlerName="Resolucion_ObtencionRowChangeEventHandler" msprop:Generator_RowDeletedName="Resolucion_ObtencionRowDeleted" msprop:Generator_UserTableName="Resolucion_Obtencion" msprop:Generator_RowChangedName="Resolucion_ObtencionRowChanged" msprop:Generator_RowEvArgName="Resolucion_ObtencionRowChangeEvent" msprop:Generator_RowClassName="Resolucion_ObtencionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_EXPEDIENTE_PADRE" msprop:Generator_ColumnVarNameInTable="columnID_EXPEDIENTE_PADRE" msprop:Generator_ColumnPropNameInRow="ID_EXPEDIENTE_PADRE" msprop:Generator_ColumnPropNameInTable="ID_EXPEDIENTE_PADREColumn" msprop:Generator_UserColumnName="ID_EXPEDIENTE_PADRE" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_EXPEDIENTE_HIJO" msprop:Generator_ColumnVarNameInTable="columnID_EXPEDIENTE_HIJO" msprop:Generator_ColumnPropNameInRow="ID_EXPEDIENTE_HIJO" msprop:Generator_ColumnPropNameInTable="ID_EXPEDIENTE_HIJOColumn" msprop:Generator_UserColumnName="ID_EXPEDIENTE_HIJO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECHA_REGISTRO" msprop:Generator_ColumnVarNameInTable="columnFECHA_REGISTRO" msprop:Generator_ColumnPropNameInRow="FECHA_REGISTRO" msprop:Generator_ColumnPropNameInTable="FECHA_REGISTROColumn" msprop:Generator_UserColumnName="FECHA_REGISTRO" type="xs:string" minOccurs="0" />
+              <xs:element name="PROPIETARIO" msprop:Generator_ColumnVarNameInTable="columnPROPIETARIO" msprop:Generator_ColumnPropNameInRow="PROPIETARIO" msprop:Generator_ColumnPropNameInTable="PROPIETARIOColumn" msprop:Generator_UserColumnName="PROPIETARIO" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMERO_DOC_SOLICITANTE" msprop:Generator_ColumnVarNameInTable="columnNUMERO_DOC_SOLICITANTE" msprop:Generator_ColumnPropNameInRow="NUMERO_DOC_SOLICITANTE" msprop:Generator_ColumnPropNameInTable="NUMERO_DOC_SOLICITANTEColumn" msprop:Generator_UserColumnName="NUMERO_DOC_SOLICITANTE" type="xs:string" minOccurs="0" />
+              <xs:element name="PLACA" msprop:Generator_ColumnVarNameInTable="columnPLACA" msprop:Generator_ColumnPropNameInRow="PLACA" msprop:Generator_ColumnPropNameInTable="PLACAColumn" msprop:Generator_UserColumnName="PLACA" type="xs:string" minOccurs="0" />
+              <xs:element name="ANIO" msprop:Generator_ColumnVarNameInTable="columnANIO" msprop:Generator_ColumnPropNameInRow="ANIO" msprop:Generator_ColumnPropNameInTable="ANIOColumn" msprop:Generator_UserColumnName="ANIO" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMERO_RESOLUCION" msprop:Generator_ColumnVarNameInTable="columnNUMERO_RESOLUCION" msprop:Generator_ColumnPropNameInRow="NUMERO_RESOLUCION" msprop:Generator_ColumnPropNameInTable="NUMERO_RESOLUCIONColumn" msprop:Generator_UserColumnName="NUMERO_RESOLUCION" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

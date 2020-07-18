@@ -1,0 +1,237 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Seguro</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Seguro">
+                        @Html.DropDownListFor(model => model.ID_TIPO_SEGURO, Model.SelectTipoSeguro, new { @class = "form-control", @placeholder = "Tipo de Seguro" })
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Aseguradora">
+                        <div id="DivContenedorSoat">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-address-book"></i>
+                                </span>
+                                @Html.TextBoxFor(model => model.NOMBRE_ASEGURADORA, new { @class = "form-control", @readonly = "readonly", @placeholder = "Aseguradora" })
+                            </div>
+                        </div>
+                        <div id="DivContenedorAfocat" style="display:none">
+                            @Html.DropDownListFor(model => model.ID_AFOCAT, Model.SelectAfocat, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="Nro Poliza">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-card-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.POLIZA, new { @class = "form-control", @readonly = "readonly", @autocomplete = "off", @placeholder = "Nro Poliza" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Inicio">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-check-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.SeguroFechaInicio, new { @class = "form-control", @readonly = "readonly", @autocomplete = "off", @Value = DateTime.Now.ToString("dd/MM/yyyy"), @placeholder = "F. Inicio" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Fin.">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-times-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.SeguroFechaFin, new { @class = "form-control", @readonly = "readonly", @autocomplete = "off", @Value = DateTime.Now.ToString("dd/MM/yyyy"), @placeholder = "F. Fin" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/inspinia")
+
+<script>
+    var $NOMBRE_ASEGURADORA = $("#NOMBRE_ASEGURADORA");
+    var $POLIZA = $("#POLIZA");
+    var $SeguroFechaInicio = $("#SeguroFechaInicio");
+    var $SeguroFechaFin = $("#SeguroFechaFin");
+    var $ID_TIPO_SEGURO = $("#ID_TIPO_SEGURO");
+    var $DivContenedorSoat = $("#DivContenedorSoat");
+    var $DivContenedorAfocat = $("#DivContenedorAfocat");
+    var $ID_AFOCAT = $("#ID_AFOCAT");
+
+    $(function () {
+        $SeguroFechaInicio.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $SeguroFechaFin.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $ID_TIPO_SEGURO.change(function () {
+            if ($(this).val() == '@EnumTipoSeguro.SOAT.ValorEntero()') {
+                $DivContenedorSoat.show();
+                $DivContenedorAfocat.hide();
+
+                $POLIZA.prop('readonly', true);
+                $SeguroFechaInicio.prop('readonly', true);
+                $SeguroFechaFin.prop('readonly', true);
+            } else if ($(this).val() == '@EnumTipoSeguro.AFOCAT.ValorEntero()') {
+                $DivContenedorAfocat.show();
+                $DivContenedorSoat.hide();
+                $POLIZA.prop('readonly', false);
+                $SeguroFechaInicio.prop('readonly', false);
+                $SeguroFechaFin.prop('readonly', false);
+            } else {
+                $DivContenedorSoat.show();
+                $DivContenedorAfocat.hide();
+                $POLIZA.prop('readonly', true);
+                $SeguroFechaInicio.prop('readonly', true);
+                $SeguroFechaFin.prop('readonly', true);
+            }
+        })
+    })
+
+    function ValidarSeguro() {
+        var rptaValidacion = true;
+        var mensajeError = "";
+
+
+        if ($ID_TIPO_SEGURO.val() == 0) {
+            $ID_TIPO_SEGURO.parent().addClass('has-error');
+            $ID_TIPO_SEGURO.focus();
+            mensajeError = "Ingresar el tipo de seguro"
+            rptaValidacion = false;
+            EnviarMensaje(mensajeError);
+            return false;
+        } else {
+            if ($ID_TIPO_SEGURO.parent().hasClass('has-error')) {
+                $ID_TIPO_SEGURO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($ID_TIPO_SEGURO.val() == '@EnumTipoSeguro.SOAT.ValorEntero()') {
+            if ($NOMBRE_ASEGURADORA.val() == "") {
+                $NOMBRE_ASEGURADORA.parent().addClass('has-error');
+                $NOMBRE_ASEGURADORA.focus();
+                mensajeError = "Ingresar Nombre de aseguradora";
+                rptaValidacion = false;
+                EnviarMensaje(mensajeError);
+                return false;
+            } else {
+                if ($NOMBRE_ASEGURADORA.parent().hasClass('has-error')) {
+                    $NOMBRE_ASEGURADORA.parent().removeClass('has-error');
+                    rptaValidacion = true;
+                }
+            }
+
+        } else {
+            if ($ID_AFOCAT.val() == 0) {
+                $ID_AFOCAT.parent().addClass('has-error');
+                $ID_AFOCAT.focus();
+                mensajeError = "Ingresar Afocat";
+                rptaValidacion = false;
+                EnviarMensaje(mensajeError);
+                return false;
+            } else {
+                if ($ID_AFOCAT.parent().hasClass('has-error')) {
+                    $ID_AFOCAT.parent().removeClass('has-error');
+                    rptaValidacion = true;
+                }
+            }
+        }
+
+        if ($POLIZA.val() == "") {
+            $POLIZA.parent().addClass('has-error');
+            $POLIZA.focus();
+            mensajeError = "Ingresar Tarjeta de Propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($POLIZA.parent().hasClass('has-error')) {
+                $POLIZA.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($SeguroFechaInicio.val() == "") {
+            $SeguroFechaInicio.parent().addClass('has-error');
+            $SeguroFechaInicio.focus();
+            mensajeError = "Ingresar fecha inscripcion de seguro."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($SeguroFechaInicio.parent().hasClass('has-error')) {
+                $SeguroFechaInicio.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($SeguroFechaFin.val() == "") {
+            $SeguroFechaFin.parent().addClass('has-error');
+            $SeguroFechaFin.focus();
+            mensajeError = "Ingresar fecha vencimiento de seguro."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($SeguroFechaFin.parent().hasClass('has-error')) {
+                $SeguroFechaFin.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($NRO_TARJETA_PROPIETARIO.val() == "") {
+            $NRO_TARJETA_PROPIETARIO.parent().addClass('has-error');
+            $NRO_TARJETA_PROPIETARIO.focus();
+            mensajeError = "Ingresar Tarjeta de Propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($NRO_TARJETA_PROPIETARIO.parent().hasClass('has-error')) {
+                $NRO_TARJETA_PROPIETARIO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if (parseFecha().getTime() > parseFecha($SeguroFechaFin.val()).getTime()) {
+            $SeguroFechaFin.parent().addClass('has-error');
+            $SeguroFechaFin.focus();
+            mensajeError = "Seguro Vehicular se encuentra vencido."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        }
+        //else {
+        //    console.log("2");
+        //}
+
+        return rptaValidacion;
+    }
+
+</script>

@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisATU.Base", "SisATU.Base\SisATU.Base.csproj", "{43192661-F741-4C31-A9B3-AF4EA6321199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisATU.Datos", "SisATU.Datos\SisATU.Datos.csproj", "{80F52CEF-7CA0-406E-8C87-F00ADA5600C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisATU.Negocio", "SisATU.Negocio\SisATU.Negocio.csproj", "{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisATU.WebUI", "SisATU.WebUI\SisATU.WebUI.csproj", "{459BFC36-2EA9-4BF3-BD16-EA167F0ECBD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisATU.Servicios", "SisATU.Servicios\SisATU.Servicios.csproj", "{046D1E37-D495-4425-A96E-2D7C71514F9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43192661-F741-4C31-A9B3-AF4EA6321199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43192661-F741-4C31-A9B3-AF4EA6321199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43192661-F741-4C31-A9B3-AF4EA6321199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43192661-F741-4C31-A9B3-AF4EA6321199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F52CEF-7CA0-406E-8C87-F00ADA5600C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F52CEF-7CA0-406E-8C87-F00ADA5600C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F52CEF-7CA0-406E-8C87-F00ADA5600C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F52CEF-7CA0-406E-8C87-F00ADA5600C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{459BFC36-2EA9-4BF3-BD16-EA167F0ECBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459BFC36-2EA9-4BF3-BD16-EA167F0ECBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459BFC36-2EA9-4BF3-BD16-EA167F0ECBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459BFC36-2EA9-4BF3-BD16-EA167F0ECBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{046D1E37-D495-4425-A96E-2D7C71514F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{046D1E37-D495-4425-A96E-2D7C71514F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{046D1E37-D495-4425-A96E-2D7C71514F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{046D1E37-D495-4425-A96E-2D7C71514F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://protransportemetropolitano.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SisATU.Base\\SisATU.Base.csproj
+		SccProjectName1 = SisATU.Base
+		SccLocalPath1 = SisATU.Base
+		SccProjectUniqueName2 = SisATU.Datos\\SisATU.Datos.csproj
+		SccProjectName2 = SisATU.Datos
+		SccLocalPath2 = SisATU.Datos
+		SccProjectUniqueName3 = SisATU.Negocio\\SisATU.Negocio.csproj
+		SccProjectName3 = SisATU.Negocio
+		SccLocalPath3 = SisATU.Negocio
+		SccProjectUniqueName4 = SisATU.Servicios\\SisATU.Servicios.csproj
+		SccProjectName4 = SisATU.Servicios
+		SccLocalPath4 = SisATU.Servicios
+		SccProjectUniqueName5 = SisATU.WebUI\\SisATU.WebUI.csproj
+		SccProjectName5 = SisATU.WebUI
+		SccLocalPath5 = SisATU.WebUI
+	EndGlobalSection
+EndGlobal

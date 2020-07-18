@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C31CDDC0-C5FE-4263-89BC-470ED5D8D0BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SisATU.Negocio</RootNamespace>
+    <AssemblyName>SisATU.Negocio</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Afocat\AfocatBLL.cs" />
+    <Compile Include="BackOffice\BackOfficeBLL.cs" />
+    <Compile Include="CategoriaVehiculo\CategoriaVehiculoBLL.cs" />
+    <Compile Include="CredencialOperador\CredencialOperadorBLL.cs" />
+    <Compile Include="Departamento\DepartamentoBLL.cs" />
+    <Compile Include="Distrito\DistritoBLL.cs" />
+    <Compile Include="MaestroMatriz\MaestroMatrizBLL.cs" />
+    <Compile Include="Operador\OperadorBLL.cs" />
+    <Compile Include="Pago\PagoBLL.cs" />
+    <Compile Include="Provincia\ProvinciaBLL.cs" />
+    <Compile Include="Reportes\dtsConstanciaTaxiTuc.cs">
+      <DependentUpon>dtsConstanciaTaxiTuc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\dtsConstanciaTaxiTuc.Designer.cs">
+      <DependentUpon>dtsConstanciaTaxiTuc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\dtsConstanciaTaxiTuc1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtsConstanciaTaxiTuc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Impresion_taxi_tuc.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Impresion_taxi_tuc.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Impresion_TPublico_tuc.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Impresion_TPublico_tuc.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Renovacion_Autorizacion\dtsRenovacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtsRenovacion.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Renovacion_Autorizacion\rptResolucion_Renovacion.cs">
+      <DependentUpon>rptResolucion_Renovacion.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reportes\Renovacion_Autorizacion\rptResolucion_RenovacionSTR.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptResolucion_RenovacionSTR.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReportesBLL.cs" />
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsConstancias.cs">
+      <DependentUpon>dtsConstancias.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsConstancias.designer.cs">
+      <DependentUpon>dtsConstancias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsConstancias2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtsConstancias.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsConstanciasV2.cs">
+      <DependentUpon>dtsConstanciasV2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsConstanciasV2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtsConstanciasV2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\dtsCredencial.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtsCredencial.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\Formato_Credencial_ATU.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Formato_Credencial_ATU.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_SSTE.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_Padron.cs">
+      <DependentUpon>Imp_Constancia_Padron.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_SSTR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\Imp_Credencial.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\rptConstancia.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\rptConstanciaEmp.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\Credenciales\rptConstanciaEmp2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptConstanciaEmp.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\resolucion_taxi_independiente\DtsResolucion.cs">
+      <DependentUpon>DtsResolucion.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\resolucion_taxi_independiente\DtsResolucion.Designer.cs">
+      <DependentUpon>DtsResolucion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Resoluciones\resolucion_taxi_independiente\rptResObtencion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptResObtencion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tramite\TramiteSATBLL.cs" />
+    <Compile Include="Tramite\TramiteSimpleBLL.cs" />
+    <Compile Include="Tramite\TramiteBLL.cs" />
+    <Compile Include="Usuario\UsuarioBLL.cs" />
+    <Compile Include="VehiculoAseguradora\VehiculoAseguradoraBLL.cs" />
+    <Compile Include="ClaseVehiculo\ClaseVehiculoBLL.cs" />
+    <Compile Include="CodigoTupa\CodigoTupaBLL.cs" />
+    <Compile Include="Empresa\EmpresaBLL.cs" />
+    <Compile Include="EntidadBancaria\EntidadBancariaBLL.cs" />
+    <Compile Include="Expediente\ExpedienteBLL.cs" />
+    <Compile Include="Marca\MarcaBLL.cs" />
+    <Compile Include="ModalidadServicio\ModalidadServicioBLL.cs" />
+    <Compile Include="Modelo\ModeloBLL.cs" />
+    <Compile Include="Parametro\ParametroBLL.cs" />
+    <Compile Include="Persona\PersonaBLL.cs" />
+    <Compile Include="Procedimiento\ProcedimientoBLL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recibo\ReciboBLL.cs" />
+    <Compile Include="RequisitosProcedimientos\RequisitosProcedimientosBLL.cs" />
+    <Compile Include="STD\STDBLL.cs" />
+    <Compile Include="TipoSeguro\TipoSeguroBLL.cs" />
+    <Compile Include="VehiculoCITV\VencimientoCITVBLL.cs" />
+    <Compile Include="Vehiculo\VehiculoBLL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SisATU.Base\SisATU.Base.csproj">
+      <Project>{43192661-f741-4c31-a9b3-af4ea6321199}</Project>
+      <Name>SisATU.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SisATU.Datos\SisATU.Datos.csproj">
+      <Project>{80f52cef-7ca0-406e-8c87-f00ada5600c4}</Project>
+      <Name>SisATU.Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SisATU.Servicios\SisATU.Servicios.csproj">
+      <Project>{046d1e37-d495-4425-a96e-2d7c71514f9b}</Project>
+      <Name>SisATU.Servicios</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Reportes\dtsConstanciaTaxiTuc.xsc">
+      <DependentUpon>dtsConstanciaTaxiTuc.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\dtsConstanciaTaxiTuc.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtsConstanciaTaxiTuc1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reportes\dtsConstanciaTaxiTuc.xss">
+      <DependentUpon>dtsConstanciaTaxiTuc.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Renovacion_Autorizacion\dtsRenovacion.xsc">
+      <DependentUpon>dtsRenovacion.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Renovacion_Autorizacion\dtsRenovacion.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtsRenovacion.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reportes\Renovacion_Autorizacion\dtsRenovacion.xss">
+      <DependentUpon>dtsRenovacion.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstancias.xsc">
+      <DependentUpon>dtsConstancias.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstancias.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtsConstancias2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstancias.xss">
+      <DependentUpon>dtsConstancias.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstanciasV2.xsc">
+      <DependentUpon>dtsConstanciasV2.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstanciasV2.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtsConstanciasV2.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsConstanciasV2.xss">
+      <DependentUpon>dtsConstanciasV2.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsCredencial.xsc">
+      <DependentUpon>dtsCredencial.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsCredencial.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtsCredencial.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reportes\Resoluciones\Credenciales\dtsCredencial.xss">
+      <DependentUpon>dtsCredencial.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\resolucion_taxi_independiente\DtsResolucion.xsc">
+      <DependentUpon>DtsResolucion.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\Resoluciones\resolucion_taxi_independiente\DtsResolucion.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsResolucion1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reportes\Resoluciones\resolucion_taxi_independiente\DtsResolucion.xss">
+      <DependentUpon>DtsResolucion.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ResolucionExpediente\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\Impresion_taxi_tuc.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Impresion_taxi_tuc.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Impresion_TPublico_tuc.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Impresion_TPublico_tuc.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Renovacion_Autorizacion\rptResolucion_RenovacionSTR.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptResolucion_RenovacionSTR.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Renovacion_Autorizacion\rptResolucion_Renovacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptResolucion_Renovacion.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\Formato_Credencial_ATU.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Formato_Credencial_ATU.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_SSTE.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Imp_Constancia_SSTE1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_Padron.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Imp_Constancia_Padron.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\Imp_Constancia_SSTR.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Imp_Constancia_SSTR1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\Imp_Credencial.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Imp_Credencial1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\rptConstancia.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptConstancia1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\Credenciales\rptConstanciaEmp.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptConstanciaEmp2.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Resoluciones\resolucion_taxi_independiente\rptResObtencion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptResObtencion.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

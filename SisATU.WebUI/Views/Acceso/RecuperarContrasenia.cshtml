@@ -1,0 +1,87 @@
+﻿@model SisATU.Base.ViewModel.UsuarioVM
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Recuperar Contraseña</h4>
+</div>
+
+@using (Html.BeginForm("RecuperarContrasenia", "Acceso", FormMethod.Post, new { @Class = "form-vertical", @id = "FromRecuperarContrasenia" }))
+{
+    <div class="modal-body">
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.NRO_DOCUMENTO, new { @class = "form-control", @placeholder = "Nro Documento" })
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.CORREO, new { @class = "form-control", @placeholder = "Correo" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="ladda-button btn btn-primary" id="btnGuardar" data-style="expand-left"><i class="fa fa-check"></i>&nbsp;Guardar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" title="Cerrar" id="btnCancelar"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+    </div>
+}
+
+<script>
+    var $btnGuardar = $("#btnGuardar");
+    var $NRO_DOCUMENTO = $("#NRO_DOCUMENTO");
+    var $CORREO = $("#CORREO");
+    $(function(){
+        $btnGuardar.click(function(){
+            if (!ValidarNumeroDocumento($NRO_DOCUMENTO)) {
+                return false;
+            }
+
+            if (!validarEmail($CORREO)) {
+                return false;
+            }
+
+            var formData = $("#FromRecuperarContrasenia").serializeArray();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RecuperarContrasenia", "Acceso")',
+                data: formData,
+                beforeSend: function () {
+
+                },
+                success: function (resultado) {
+                    if (resultado.codresultado == 1) {
+                        $("#modalRecuperarContrasenia").modal('hide');
+                        swal({
+                            title: "Registró Correctamente",
+                            text: "Se registró su cuenta correctamente, los datos de su cuenta fue enviada a su correo <strong>" + $CORREO.val() + "</strong>",
+                            type: "success",
+                            html: true,
+                            showCancelButton: false,
+                            confirmButtonColor: '#1ab394',
+                            confirmButtonText: 'Aceptar',
+                        }, function (isConfirm) {
+                            if (isConfirm) {
+
+                            } else {
+
+                            }
+                        });
+                    } else {
+                        MensajeAlerta("error", resultado.mensaje)
+                    }
+                },
+                complete: function (data) {
+                },
+            })
+        })
+    
+    }) 
+     
+</script>

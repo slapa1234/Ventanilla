@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx?wsdl" docRef="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx" xmlns:q1="http://tempuri.org/" binding="q1:Servicio_ATUSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://sistemas.atu.gob.pe/ServiciosATU2/servicio_atu.asmx" xmlns:q2="http://tempuri.org/" binding="q2:Servicio_ATUSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

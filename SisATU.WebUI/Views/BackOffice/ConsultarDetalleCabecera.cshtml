@@ -1,0 +1,128 @@
+﻿@model SisATU.Base.ViewModel.CabeceraBackOfficeVM
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">DETALLE DEL TRÁMITE</h4>
+</div>
+
+@using (Html.BeginForm("registrarAdministrado", "Acceso", FormMethod.Post, new { @Class = "form-vertical", @id = "FromCrearCuenta" }))
+{
+    <div class="modal-body">
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label>NRO. TRÁMITE:</label>
+                            @Html.TextBoxFor(model => model.TRAMITE, new { @class = "form-control", @placeholder = "Dias Credito", @readonly="readonly" })
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h4 class="modal-title colorLetraATU">DATOS DEL SOLICITANTE:</h4>
+                      
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"><hr color="blue" size=3></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                           
+                            <div class="form-group">
+                                <label>NRO. DOCUMENTO:</label>
+                                @Html.TextBoxFor(model => model.NUMERO_SOLICITANTE, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label>NOMBRE DEL SOLICITANTE:</label>
+                                @Html.TextBoxFor(model => model.SOLICITANTE, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <h4 class="modal-title colorLetraATU">DATOS DEL RECURRENTE:</h4>
+                        </div>
+                    </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"><hr color="blue" size=3></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                            <div class="form-group">
+                                <label>NRO. DOCUMENTO:</label>
+                                @Html.TextBoxFor(model => model.RECURRENTE, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label>NOMBRE DEL SOLICITANTE:</label>
+                                @Html.TextBoxFor(model => model.RECURRENTE, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <h4 class="modal-title colorLetraATU">DATOS DEL TRÁMITE:</h4>
+                        </div>
+                    </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"><hr color="blue" size=3></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                            <div class="form-group">
+                                <label>TIPO SOLICITUD:</label>
+                                @Html.TextBoxFor(model => model.SOLICITUD, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label>PROCEDIMIENTO Y/O ASSUNTO:</label>
+                                @Html.TextBoxFor(model => model.NOMBRE_PROCEDIMIENTO, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label>MODALIDAD DE SERVICIO:</label>
+                                @Html.TextBoxFor(model => model.MODALIDAD_SERVICIO, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <h4 class="modal-title colorLetraATU">DATOS COMPLEMENTARIOS:</h4>
+                        </div>
+                    </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"><hr color="blue" size=3></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                            <div class="form-group">
+                                <label>NRO DOCUMENTO Y/O PLACA ASOCIADO:</label>
+                                @Html.TextBoxFor(model => model.DATOREGISTRO, new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label>FECHA DE ATENCIÓN: </label>
+                                @Html.TextBoxFor(model => model.FECHA_ATENCION.ValorFechaCorta(), new { @class = "form-control", @placeholder = "Dias Credito", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+ 
+                </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="ladda-button btn btn-primary" id="btnGuardar" data-style="expand-left" onclick="registrarUsuario();"><i class="fa fa-check"></i>&nbsp;Finalizar Trámite</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" title="Cerrar" id="btnCancelar"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+    </div>
+}

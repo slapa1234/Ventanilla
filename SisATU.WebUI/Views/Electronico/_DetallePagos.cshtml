@@ -1,0 +1,260 @@
+﻿@model IEnumerable<SisATU.Base.ViewModel.ReciboVM>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Pago</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 2</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row" id="DivContenedorPagoDetalle">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        @using (Html.BeginCollectionItem("ReciboVM"))
+                        {
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                @Html.Hidden("ID_PROCEDIMIENTO", item.ID_PROCEDIMIENTO)
+                                <div style="width: 95%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-wrap: break-word;" data-toggle="tooltip" data-placement="top" title="@item.NOMBREPAGO"> @item.NOMBREPAGO</div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                <div class="form-group" data-toggle="tooltip" data-placement="top" title="Entidad Bancaria">
+                                    @Html.DropDownList("ID_ENTIDAD_BANCARIA", item.SelectEntidadBancaria, new { @class = "form-control ID_ENTIDAD_BANCARIA" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-cc-visa"></i>
+                                            </span>
+                                            @Html.TextBox("NUMERO_RECIBO", item.NUMERO_RECIBO, new { @class = "form-control NUMERO_RECIBO", @autocomplete = "off", @placeholder = "Nro Voucher", @onKeyPress = "return soloNumeros(event)" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        @Html.TextBox("FECHA_EMISION", item.FECHA_EMISION, new { @class = "form-control date", @autocomplete = "off", @Value = DateTime.Now.ToString("dd/MM/yyyy"), @placeholder = "Fecha Pago" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div style="text-align:center">
+                        <button class="ladda-button btn btn-primary" data-style="expand-left" type="button" id="btnConsultarVoucher"><i class="fa fa-check"></i>&nbsp; Validar Voucher</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var $btnConsultarVoucher = $("#btnConsultarVoucher");
+    $(function () {
+
+        $btnConsultarVoucher.on('click', function () {
+            if (validarPago()) {
+                var form = $("#FormGuardarExpediente").serializeArray();
+                var l = $btnConsultarVoucher.ladda();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ValidarPago", "Electronico")',
+                    data: form,
+                    beforeSend: function () {
+                        l.ladda('start');
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            MensajeAlerta("success", data.mensaje);
+                        } else {
+                            MensajeAlerta("error", data.mensaje);
+                        }
+                    },
+                    complete: function (data) {
+                        l.ladda('stop');
+                    },
+                })
+            }
+        })
+
+
+
+
+        var d = new Date();
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var anio = d.getFullYear();
+        var limiteFecha = mes + "/" + dia + "/" + anio;
+
+        $(".date").datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+            maxDate: moment(Date.parse(limiteFecha)),
+        });
+
+        $(".ID_ENTIDAD_BANCARIA").change(function () {
+            var nroRecibo = $(this).parent().parent().parent().children().eq(3).children().find('input');
+            if ($(this).val() == '@EnumEntidadBancaria.SCOTIABANK.ValorEntero()') {
+                nroRecibo.attr('maxlength', '15');//.val('');
+            } else if ($(this).val() == '@EnumEntidadBancaria.BANCO_NACION.ValorEntero()') {
+                nroRecibo.attr('maxlength', '6')
+            }
+            nroRecibo.val('');
+        })
+    })
+
+    function validarPago() {
+        var rptaValidacion = true;
+        var mensajeError = "";
+        var strgvoucher = "";
+        var strBanco = 0;
+
+        $("#DivContenedorPagoDetalle").children().eq(0).each(function () {
+            var selectEntidadBancaria = $(this).children().eq(2).children().children();
+            var nroVoucher = $(this).children().eq(3).children().children().children().children().eq(1);
+            var fechaPago = $(this).children().eq(4).children().children().children().eq(1);
+
+            if (selectEntidadBancaria.val() == 0) {
+                selectEntidadBancaria.parent().addClass('has-error');
+                selectEntidadBancaria.focus();
+                MensajeAlerta("error", "Ingresar la entidad bancaria.");
+                rptaValidacion = false;
+                return false;
+            } else {
+                if (selectEntidadBancaria.parent().hasClass('has-error')) {
+                    selectEntidadBancaria.parent().removeClass('has-error');
+                    rptaValidacion = true;
+                }
+            }
+
+            if (selectEntidadBancaria.val() == '@EnumEntidadBancaria.SCOTIABANK.ValorEntero()') {
+                if (nroVoucher.val().length <= 14) {
+                    MensajeAlerta("error", "Cantidad de Digitos es incorrecto.");
+                    nroVoucher.parent().addClass('has-error');
+                    nroVoucher.focus();
+                    rptaValidacion = false;
+                    return false;
+                }
+            } else if (selectEntidadBancaria.val() == '@EnumEntidadBancaria.BANCO_NACION.ValorEntero()') {
+                if (nroVoucher.val().length <= 5) {
+                    MensajeAlerta("error", "Cantidad de Digitos es incorrecto.");
+                    nroVoucher.parent().addClass('has-error');
+                    nroVoucher.focus();
+                    rptaValidacion = false;
+                    return false;
+                }
+            }
+
+            if (nroVoucher.val() == "") {
+                nroVoucher.parent().addClass('has-error');
+                nroVoucher.focus();
+                MensajeAlerta("error", "Ingresar Nro de voucher.");
+                rptaValidacion = false;
+                return false;
+            } else {
+                if (nroVoucher.parent().hasClass('has-error')) {
+                    nroVoucher.parent().removeClass('has-error');
+                    rptaValidacion = true;
+                }
+            }
+
+            //if (strgvoucher == nroVoucher.val() && strBanco == selectEntidadBancaria.val()) {
+            //    nroVoucher.parent().addClass('has-error');
+            //    nroVoucher.focus();
+            //    MensajeAlerta("error", "Ingresó un voucher repetido.");
+            //    rptaValidacion = false;
+            //    return false;
+            //} else {
+            //    if (nroVoucher.parent().hasClass('has-error')) {
+            //        nroVoucher.parent().removeClass('has-error');
+            //        rptaValidacion = true;
+            //    }
+            //}
+
+            //if (ValidarVoucher(selectEntidadBancaria.val(), nroVoucher.val(), fechaPago.val()) == 1) {
+            //    nroVoucher.parent().addClass('has-error');
+            //    nroVoucher.focus();
+            //    rptaValidacion = false;
+            //    MensajeAlerta("error", "Voucher " + nroVoucher.val() + " ya fue registrado en un proceso Anterior.");
+            //    return false;
+            //} else if (ValidarVoucher(selectEntidadBancaria.val(), nroVoucher.val(), fechaPago.val()) == 3) {
+            //    rptaValidacion = false;
+            //    MensajeAlerta("error", "Por favor ingrese los datos correctos del recibo");
+            //    return false;
+            //}
+            //else {
+            //    if (nroVoucher.parent().hasClass('has-error')) {
+            //        nroVoucher.parent().removeClass('has-error');
+            //        rptaValidacion = true;
+            //    }
+            //}
+
+            strgvoucher = nroVoucher.val();
+            strBanco = selectEntidadBancaria.val();
+        })
+
+        return rptaValidacion;
+    }
+
+    function ValidarVoucher(entidadBancaria, nroDocumento, fechaPago) {
+        var recibo = 0;
+        var fecha
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: '@Url.Action("ValidarPago", "Electronico")',
+            data: {
+                ID_ENTIDAD_BANCARIA: entidadBancaria,
+                NRO_RECIBO: nroDocumento,
+                ID_MODALIDAD_SERVICIO: $ID_MODALIDAD_SERVICIO.val(),
+                ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+                FECHA_PAGO: fechaPago,
+            },
+            success: function (data) {
+                var resultado = data;
+                console.log(resultado);
+                if (resultado.success) {
+                    if (resultado.NUMERO_RECIBO != null) {
+                        recibo = 1;
+                    } else {
+                        recibo = 0;
+                    }
+                } else {
+
+                    recibo = 3;
+                }
+            },
+        })
+        return recibo;
+    }
+</script>
+

@@ -1,0 +1,55 @@
+﻿
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title colorLetraATU">Impresión de Credencial</h4>
+</div>
+
+
+<div class="modal-body">
+    <div class="body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <iframe id="ifrResolucion" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="height:740px"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal" title="Cerrar" id="btnCancelar"><i class="fa fa-times"></i>&nbsp;Cerrar</button>
+</div>
+<script>
+
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Imprimir_tarj_taxi", "BackOffice")',
+            data: {
+                idexpediente: '@ViewBag.ID_EXPEDIENTE',
+                tipoModalidad: '@ViewBag.tipoModalidad',
+            },
+            success: function (data) {
+                $("#ifrResolucion").attr("src", URL_BASE + data.modelo);
+            }
+        })
+
+        //var param = ko.toJSON({ modelo: _modelo });
+        //$.ajax({
+        //    url: urlSitio + nomControlador + '/Imprimir',
+        //    type: "POST",
+        //    data: param,
+        //    contentType: "application/json",
+        //    success: function (result) {
+        //        if (EvaluarResultado(result)) {
+        //            $("#ifrImprimir").attr("src", urlSitio + result.modelo);
+        //        } else {
+        //            $('#frmImprimir').modal('hide');
+        //        }
+        //    },
+        //    error: msgErrorAjax
+        //});
+    })
+
+</script>

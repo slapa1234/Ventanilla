@@ -1,0 +1,195 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5 class="colorLetraATU">Tarjeta de Propiedad</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Propietario">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-book"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.NOMBRE_PROPIETARIO, new { @class = "form-control", @placeholder = "Propietario", @autocomplete = "off", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Nro. Tarjeta">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-card-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.NRO_TARJETA_PROPIETARIO, new { @class = "form-control", @placeholder = "Nro. Tarjeta", @autocomplete = "off", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Documento">
+                        @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO_PROPIETARIO, Model.SelectTipoDocumentoPropietario, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="Nro. Documento">
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-book"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.NUMERO_DOCUMENTO_PROPIEDAD, new { @class = "form-control", @readonly = "readonly", @placeholder = ".:Nro. Documento", @maxlength = "8", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Inicio">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-check-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.FECHA_INICIO_PROPIETARIO, new { @class = "form-control", @Value = DateTime.Now.ToString("dd/MM/yyyy"), @readonly = "readonly", @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group tooltip-demo">
+                        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Fecha Fin">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar-times-o"></i>
+                            </span>
+                            @Html.TextBoxFor(model => model.FECHA_FIN_PROPIETARIO, new { @class = "form-control", @Value = DateTime.Now.AddYears(5).ToString("dd/MM/yyyy"), @readonly = "readonly", @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/inspinia")
+
+<script>
+    var $NRO_TARJETA_PROPIETARIO = $("#NRO_TARJETA_PROPIETARIO");
+    var $NOMBRE_PROPIETARIO = $("#NOMBRE_PROPIETARIO");
+    var $FECHA_INICIO_PROPIETARIO = $("#FECHA_INICIO_PROPIETARIO");
+    var $FECHA_FIN_PROPIETARIO = $("#FECHA_FIN_PROPIETARIO");
+    var $NRO_DOCUMENT_PROPIETARIO = $("#NRO_DOCUMENT_PROPIETARIO");
+    var $ID_TIPO_DOCUMENTO_PROPIETARIO = $("#ID_TIPO_DOCUMENTO_PROPIETARIO");
+    var $NUMERO_DOCUMENTO_PROPIEDAD = $("#NUMERO_DOCUMENTO_PROPIEDAD");
+
+    $(function () {
+        $FECHA_FIN_PROPIETARIO.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $FECHA_INICIO_PROPIETARIO.datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        })
+    })
+
+    function ValidarTarjetaPropiedad() {
+        var rptaValidacion = true;
+        var mensajeError = "";
+
+        if ($NOMBRE_PROPIETARIO.val() == "") {
+            $NOMBRE_PROPIETARIO.parent().addClass('has-error');
+            $NOMBRE_PROPIETARIO.focus();
+            mensajeError = "No se encuentra registrado el propietario"
+            rptaValidacion = false;
+            EnviarMensaje(mensajeError);
+            return false;
+        } else {
+            if ($NOMBRE_PROPIETARIO.parent().hasClass('has-error')) {
+                $NOMBRE_PROPIETARIO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($NRO_TARJETA_PROPIETARIO.val() == "") {
+            $NRO_TARJETA_PROPIETARIO.parent().addClass('has-error');
+            $NRO_TARJETA_PROPIETARIO.focus();
+            mensajeError = "Ingresar Tarjeta de Propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($NRO_TARJETA_PROPIETARIO.parent().hasClass('has-error')) {
+                $NRO_TARJETA_PROPIETARIO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($FECHA_INICIO_PROPIETARIO.val() == "") {
+            $FECHA_INICIO_PROPIETARIO.parent().addClass('has-error');
+            $FECHA_INICIO_PROPIETARIO.focus();
+            mensajeError = "Ingresar fecha Inscripcion de la Tarjeta de propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($FECHA_INICIO_PROPIETARIO.parent().hasClass('has-error')) {
+                $FECHA_INICIO_PROPIETARIO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($FECHA_FIN_PROPIETARIO.val() == "") {
+            $FECHA_FIN_PROPIETARIO.parent().addClass('has-error');
+            $FECHA_FIN_PROPIETARIO.focus();
+            mensajeError = "ingresar fecha vencimiento de la Tarjeta de propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+            if ($FECHA_FIN_PROPIETARIO.parent().hasClass('has-error')) {
+                $FECHA_FIN_PROPIETARIO.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if ($NUMERO_DOCUMENTO_PROPIEDAD.val() == "") {
+            $NUMERO_DOCUMENTO_PROPIEDAD.parent().addClass('has-error');
+            $NUMERO_DOCUMENTO_PROPIEDAD.focus();
+            mensajeError = "ingresar Nro de Documento de la Tarjeta de propiedad."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        } else {
+
+            if ($NUMERO_DOCUMENTO_PROPIEDAD.val().length < 8) {
+                $NUMERO_DOCUMENTO_PROPIEDAD.parent().addClass('has-error');
+                $NUMERO_DOCUMENTO_PROPIEDAD.focus();
+                mensajeError = "Nro de Documento debe ser de 8 digitos."
+                EnviarMensaje(mensajeError);
+                rptaValidacion = false;
+                return false;
+            }
+
+            if ($NUMERO_DOCUMENTO_PROPIEDAD.parent().hasClass('has-error')) {
+                $NUMERO_DOCUMENTO_PROPIEDAD.parent().removeClass('has-error');
+                rptaValidacion = true;
+            }
+        }
+
+        if (parseFecha().getTime() > parseFecha($FECHA_FIN_PROPIETARIO.val()).getTime()) {
+            $FECHA_FIN_PROPIETARIO.parent().addClass('has-error');
+            $FECHA_FIN_PROPIETARIO.focus();
+            mensajeError = "Tarjeta propiedad esta vencido."
+            EnviarMensaje(mensajeError);
+            rptaValidacion = false;
+            return false;
+        }
+
+        return rptaValidacion;
+    }
+</script>

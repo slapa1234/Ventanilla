@@ -1,0 +1,1425 @@
+﻿@model SisATU.Base.ViewModel.ExpedienteVM
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .sa-button-container {
+        display: inline-flex !important;
+    }
+
+    .select-error {
+        border-color: #ed5565 !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <h2 style="font-weight: bold;margin-top:10px" class="colorLetraATU">Formulario Electrónico</h2>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                @using (Html.BeginForm("GuardarExpediente", "Electronico", FormMethod.Post, new { enctype = "multipart/form-data", @Class = "form-vertical", @id = "FormGuardarExpediente" }))
+                {
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5 class="colorLetraATU">Datos del Solicitante</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                @Html.HiddenFor(model => model.IDUNIDAD_STD, new { @class = "form-control" })
+                                @Html.HiddenFor(model => model.CODPAIS, new { @class = "form-control" })
+                                @Html.HiddenFor(model => model.CODDIST, new { @clas = "form-control" })
+                                @Html.HiddenFor(model => model.CODDPTO, new { @class = "form-control" })
+                                @Html.HiddenFor(model => model.CODPROV, new { @class = "form-control" })
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                            <div class="form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Persona">
+                                                @Html.DropDownListFor(model => model.ID_TIPO_PERSONA, Model.SelectTipoPersona, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                            <div class="form-group" data-toggle="tooltip" data-placement="top" title="Modalidad de Servicio">
+                                                @Html.DropDownListFor(model => model.ID_MODALIDAD_SERVICIO, Model.SelectTipoModalidad, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                            <div class="form-group" data-toggle="tooltip" data-placement="top" title="Trámite">
+                                                @Html.DropDownListFor(model => model.ID_TIPO_TRAMITE, Model.SelectTramite, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @Html.HiddenFor(model => model.ID_PERSONA, new { @class = "form-control" })
+
+                                    @if (Session["ID_TIPO_PERSONA"].ValorEntero() == EnumParametroTipoPersona.PersonaJuridica.ValorEntero())
+                                    {
+                                        @Html.HiddenFor(model => model.FECHA_VENCIMIENTO_EXPEDIENTE)
+
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tooltip-demo">
+                                                <div class="form-group" data-toggle="tooltip" data-placement="top" title="RUC">
+                                                    @Html.HiddenFor(modelo => Model.ID_EMPRESA, new { @class = "form-control" })
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(modelo => Model.RUC, new { @class = "form-control", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. RUC", @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tooltip-demo">
+                                                <div class="form-group" data-toggle="tooltip" data-placement="top" title="Razón social">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-id-card"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(model => model.RAZON_SOCIAL, new { @class = "form-control", @readonly = "readonly", @placeholder = "Razón Social" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <h4 class="colorLetraATU">Datos del Recurrente (Persona que realiza el tramite)</h4>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 no-padding">
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-padding">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                                                        <div id="divTipoDocumento" class="divTipoDocumento form-group" data-toggle="tooltip" data-placement="top" title="Tipo de Documento">
+                                                            @Html.DropDownListFor(model => model.ID_TIPO_DOCUMENTO, Model.SelectTipoDocumento, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tooltip-demo">
+                                                        <div class="form-group">
+                                                            <div class="input-group" data-toggle="tooltip" data-placement="top" title="Nro. Documento">
+                                                                @Html.TextBoxFor(model => model.NRO_DOCUMENTO, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. Documento", @maxlength = "8" })
+                                                                <div class="input-group-btn">
+                                                                    <button type="button" id="btnConsultarReniec" class="btn btn-primary ladda-button" data-style="zoom-in" title="Consultar Reniec">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-address-book"></i>
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.APELLIDO_PATERNO, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Apellido Paterno", @autocomplete = "off" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-address-book"></i>
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.APELLIDO_MATERNO, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Apellido Materno", @autocomplete = "off" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-address-book"></i>
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.NOMBRES, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Nombres", @autocomplete = "off" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-phone"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.TELEFONO, new { @class = "form-control", @onKeyPress = "return soloNumeros(event)", @autocomplete = "off", @placeholder = "Teléfono", @maxlength = "9", @minlegth = "4" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.CORREO, new { @class = "form-control", @autocomplete = "off", @placeholder = "E-mail" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 no-padding">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 no-padding">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-12">
+
+                                                                <div class="input-group m-b">
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-map-marker"></i>
+                                                                    </span>
+                                                                    @Html.TextBoxFor(model => model.DIRECCION, new { @class = "form-control datos-personales", @autocomplete = "off", @placeholder = "Dirección RENIEC", @readonly = "readonly" })
+
+                                                                    <span class="input-group-addon" title="Direccion RENIEC es igual a direccion Actual?">
+                                                                        <input type="checkbox" class="form-check-input" id="checkDireccionReniec" name="checkDireccionReniec"> Actual
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-map-marker"></i>
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.DIRECCION_ACTUAL, new { @class = "form-control", @autocomplete = "off", @placeholder = "Dirección Actual" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(model => model.ID_DEPARTAMENTO, Model.SelectDepartamento, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(model => model.ID_PROVINCIA, Model.SelectProvincia, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(model => model.ID_DISTRITO, Model.SelectDistrito, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <div class="checkbox i-checks">
+
+                                                            <label>@Html.TextBoxFor(model => model.FLG_CORREO, new { @class = "i-checks", @type = "checkbox" })  Autorizando a la ATU que las comunicaciones y/o notificaciones sean remitidas a su correo electrónico, en el marco de la Ley 27444.</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 no-padding">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Numero de Documento">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-address-book"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.NRO_DOCUMENTO, new { @class = "form-control", @autocomplete = "off", @onKeyPress = "return soloNumeros(event)", @placeholder = "Nro. Documento", @readonly = "readonly", @maxlength = "8" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="Apellido Paterno">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-address-book"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.APELLIDO_PATERNO, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Apellido Paterno" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="Apellido Materno">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-address-book"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.APELLIDO_MATERNO, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Apellido Materno" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="Nombres">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-address-book"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.NOMBRES, new { @class = "form-control datos-personales", @readonly = "readonly", @placeholder = "Nombres" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="top" title="Teléfono ó Celular">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-phone"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.TELEFONO, new { @class = "form-control", @onKeyPress = "return soloNumeros(event)", @autocomplete = "off", @placeholder = "Teléfono", @maxlength = "9" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="left" title="E-mail">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.CORREO, new { @class = "form-control", @autocomplete = "off", @placeholder = "E-mail" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 no-padding">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="col-sm-12">
+                                                            <div class="input-group m-b" data-toggle="tooltip" data-placement="left" title="Dirección Reniec">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-map-marker"></i>
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.DIRECCION, new { @class = "form-control datos-personales", @autocomplete = "off", @placeholder = "Dirección RENIEC", @readonly = "readonly" })
+
+                                                                <span class="input-group-addon" title="Direccion RENIEC es igual a direccion Actual?">
+                                                                    <input type="checkbox" class="form-check-input" id="checkDireccionReniec"> Actual
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <div class="form-group tooltip-demo">
+                                                        <div class="input-group" data-toggle="tooltip" data-placement="right" title="Dirección Actual">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-map-marker"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(model => model.DIRECCION_ACTUAL, new { @class = "form-control", @autocomplete = "off", @placeholder = "Dirección Actual" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Departamento">
+                                                        @Html.DropDownListFor(model => model.ID_DEPARTAMENTO, Model.SelectDepartamento, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Provincia">
+                                                        @Html.DropDownListFor(model => model.ID_PROVINCIA, Model.SelectProvincia, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 tooltip-demo">
+                                                    <div class="form-group" data-toggle="tooltip" data-placement="top" title="Provincia">
+                                                        @Html.DropDownListFor(model => model.ID_DISTRITO, Model.SelectDistrito, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <div class="checkbox i-checks">
+                                                            <label>@Html.TextBoxFor(model => model.FLG_CORREO, new { @class = "i-checks", @type = "checkbox", @Value = "false" })  Autorizando a la ATU que las comunicaciones y/o notificaciones sean remitidas a su correo electrónico, en el marco de la Ley 27444.</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-padding">
+                                    <h5 class="colorLetraATU">Datos del Trámite</h5>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:right">
+                                    <label id="TIPO_TRAMITE" style="font-weight:bold; color:#ED7D31;font-size:17px"></label>
+                                </div>
+                                @*<div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                            <li>
+                                                <a href="#" class="dropdown-item">Config option 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Config option 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tooltip-demo">
+                                        <div class="form-group" data-toggle="tooltip" data-placement="top" title="Procedimiento">
+                                            @if (Session["TIPO_EXPEDIENTE"].ValorEntero() == EnumTipoExpediente.NoTupa.ValorEntero())
+                                            {
+                                                @Html.TextAreaFor(model => model.ASUNTO_NO_TUPA, new { @class = "form-control", @placeholder = "Asunto" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(model => model.ID_PROCEDIMIENTO, Model.SelectTipoProcedimiento, new { @class = "form-control" })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 no-padding" id="DivContenedorPago"></div>
+
+                    <div class="col-lg-12 no-padding">
+                        <div class="col-lg-12 no-padding" id="DivContenedorVehiculo"></div>
+                        <div class="col-lg-4 no-padding" id="DivContenedorPropietario"></div>
+                        <div class="col-lg-4 no-padding" id="DivContenedorSeguro"></div>
+                        <div class="col-lg-4 no-padding" id="DivContenedorCITV"></div>
+                    </div>
+
+                    <div class="col-lg-12 no-padding" id="DivContenedorOperador"></div>
+                    <div class="col-lg-12 no-padding" id="DivContenedorCredencialOperador"></div>
+
+                    
+
+                    <div class="col-lg-12" id="DivContenedorDatosComplementario">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5 class="colorLetraATU">Datos Complementarios</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input id="NumeroDocumento" class="form-control" autocomplete="off" placeholder="NroDocumento" />
+                                                    <div class="input-group-btn" id="DivContenedorBotonAgregar">
+                                                        <button type="button" id="btnAgregarDatos" class="btn btn-primary ladda-button" data-style="zoom-in">
+                                                            <i class="fa fa-plus"></i> Agregar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="DivRequisito">
+                                        <h4 class="colorLetraATU">Requisitos</h4>
+                                    </div>
+
+                                    <div id="DivContenedorRequisitos" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="DivContenedorDetalleRequisito">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover" id="TbRequisitos">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N° Placa / N° Documento</th>
+                                                        <th>Requisitos</th>
+                                                        <th>Recibo</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.DetalleSolicitudVM)
+                                                    {
+                                                        Html.RenderPartial("_DetalleRequisitos", item);
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                        <div class="form-group">
+                                            <div class="checkbox i-checks">
+                                                <label>@Html.TextBoxFor(model => model.DECLARACION_JURADA, new { @class = "i-checks", @type = "checkbox" })  La información brindada tiene carácter de <strong>DECLARACIÓN JURADA</strong>, en caso de proporcionar información falsa, uso de documentación falsificada o adulterada o el titular hubiera incumplimiento con los requisitos establecidos en la Plataforma, la autoridad administrativa podrá declarar la nulidad del acto sustentada en dicha declaración, información o documento, así como imponer una multa de entre dos o cinco unidades impositivas tributarias, sin perjuicio del inicio de la acción penal en caso corresponda (Numeral 32.3 del Art. 32° de la Ley N° 27444).</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center">
+                                        <button class="ladda-button btn btn-primary" data-style="expand-left" type="button" id="btnGuardarTramite"><i class="fa fa-check"></i>&nbsp; Registrar Trámite</button>
+                                    </div>
+                                    <hr width="100%" style="border-style: solid;margin-top:10px;margin-bottom:10px" />
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p><span style="color: #999999;"><strong>Condiciones del Formulario Electrónico </strong></span></p>
+                                        <ul style="list-style-type: square;">
+                                            <li><span style="color: #999999;">El formulario es de uso obligatorio y exclusivo para las personas que deseen realizar tr&aacute;mites en la ATU.</span></li>
+                                            <li><span style="color: #999999;">El usuario que se registra en el formulario, ser&aacute; la &uacute;nica persona habilitada para realizar el tr&aacute;mite en la ATU.</span></li>
+                                            <li><span style="color: #999999;">El horario de atenci&oacute;n es de lunes a viernes de 8:30 am a 4:30 pm. </span></li>
+                                            <li><span style="color: #999999;">Las personas que no hayan podido asistir a la fecha y hora programada, tendr&aacute;n que registrarse nuevamente en el formulario electr&oacute;nico para que se le programe una nueva fecha de atenci&oacute;n.</span></li>
+                                            <li><span style="color: #999999;">En caso de no presentarse el titular de la solicitud, se deberá presentar una carta poder</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var $ID_TIPO_PERSONA = $("#ID_TIPO_PERSONA");
+    var $ID_TIPO_DOCUMENTO = $("#ID_TIPO_DOCUMENTO");
+    var $RUC = $("#RUC");
+    var $NRO_DOCUMENTO = $("#NRO_DOCUMENTO");
+    var $btnConsultarReniec = $("#btnConsultarReniec");
+    var $APELLIDO_PATERNO = $("#APELLIDO_PATERNO");
+    var $APELLIDO_MATERNO = $("#APELLIDO_MATERNO");
+    var $NOMBRES = $("#NOMBRES");
+    var $TextNroDocumento = $("#TextNroDocumento");
+    var $ID_PROCEDIMIENTO = $("#ID_PROCEDIMIENTO");
+    var $DivContenedorDatosComplementario = $("#DivContenedorDatosComplementario");
+    var $DivContenedorRequisitos = $("#DivContenedorRequisitos");
+    var $DivContenedorPago = $("#DivContenedorPago");
+    var $btnAgregarDatos = $("#btnAgregarDatos");
+    var $NumeroDocumento = $("#NumeroDocumento");
+    var $DivContenedorBotonAgregar = $("#DivContenedorBotonAgregar");
+    var $DivRequisito = $("#DivRequisito");
+    var $DivContenedorDetalleRequisito = $("#DivContenedorDetalleRequisito")
+    var $btnGuardarTramite = $("#btnGuardarTramite");
+    var $ID_EMPRESA = $("#ID_EMPRESA");
+    var $DIRECCION = $("#DIRECCION");
+    var $DivContenedorVehiculo = $("#DivContenedorVehiculo");
+    var $DivContenedorPropietario = $("#DivContenedorPropietario");
+    var $DivContenedorSeguro = $("#DivContenedorSeguro");
+    var $DivContenedorCITV = $("#DivContenedorCITV");
+    var $DivContenedorOperador = $("#DivContenedorOperador");
+    var $DivContenedorCredencialOperador = $("#DivContenedorCredencialOperador");
+    var $checkDireccionReniec = $("#checkDireccionReniec");
+    var $DIRECCION_ACTUAL = $("#DIRECCION_ACTUAL");
+    var $CORREO = $("#CORREO");
+    var $TELEFONO = $("#TELEFONO");
+    var $ID_DEPARTAMENTO = $("#ID_DEPARTAMENTO");
+    var $ID_PROVINCIA = $("#ID_PROVINCIA ");
+    var $ID_DISTRITO = $("#ID_DISTRITO");
+    var $ID_MODALIDAD_SERVICIO = $("#ID_MODALIDAD_SERVICIO");
+    var $FECHA_VENCIMIENTO_EXPEDIENTE = $("#FECHA_VENCIMIENTO_EXPEDIENTE");
+    var $DECLARACION_JURADA = $("#DECLARACION_JURADA");
+
+    $(function () {
+
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+        });
+
+        $('input').on('ifChanged', function (event) {
+            esCheckeado(this);
+        });
+
+        $ID_DEPARTAMENTO.select2();
+        $ID_PROVINCIA.select2();
+        $ID_DISTRITO.select2();
+        $ID_PROCEDIMIENTO.select2();
+
+        validarDivDatosTramite();
+
+        $btnConsultarReniec.click(function () {
+            consultarDocumento();
+        })
+
+        $checkDireccionReniec.click(function () {
+            if ($(this).is(':checked')) {
+                $DIRECCION_ACTUAL.val($DIRECCION.val());
+                $DIRECCION_ACTUAL.attr('readonly', true);
+            } else {
+                $DIRECCION_ACTUAL.val("");
+                $DIRECCION_ACTUAL.attr('readonly', false);
+            }
+        })
+
+        $NRO_DOCUMENTO.keyup(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                $btnConsultarReniec.click()
+            } else if (keycode == '8') {
+                limpiar();
+            }
+        });
+
+        $ID_TIPO_DOCUMENTO.change(function () {
+            if ($(this).val() == '@EnumParametro.DNI.ValorEntero()') {
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro de Documento", "maxlength": "8" });
+                $checkDireccionReniec.attr('disabled', false);
+                $DIRECCION_ACTUAL.prop("readonly", true);
+                limpiar();
+            } else if ($(this).val() == '@EnumParametro.CE.ValorEntero()') {
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro Carnet de Extranjería", "maxlength": "9" });
+                $checkDireccionReniec.attr('disabled', true);
+                $DIRECCION_ACTUAL.prop("readonly", false);
+                limpiar();
+            } else if ($(this).val() == '@EnumParametro.PTP.ValorEntero()') {
+                $NRO_DOCUMENTO.attr({ "placeholder": "Nro de PTP", "maxlength": "9" });
+                $checkDireccionReniec.attr('disabled', true);
+                $DIRECCION_ACTUAL.prop("readonly", false);
+                limpiar();
+            }
+        })
+
+        $ID_PROCEDIMIENTO.change(function () {
+            consultaProcedimiento();
+        });
+
+        $ID_DEPARTAMENTO.change(function () {
+            consultarProvincia($(this).val());
+            if ($DivContenedorCredencialOperador.children().is(':visible') && $ID_MODALIDAD_SERVICIO.val() != '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                $ID_DEPARTAMENTO_OPERADOR.val($ID_DEPARTAMENTO.val());
+                consultarProvinciaCredencial($ID_DEPARTAMENTO.val());
+            }
+        })
+
+        $ID_PROVINCIA.change(function () {
+            consultarDistrito($(this).val());
+            if ($DivContenedorCredencialOperador.children().is(':visible') && $ID_MODALIDAD_SERVICIO.val() != '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                $ID_PROVINCIA_OPERADOR.val($ID_PROVINCIA.val());
+                consultarDistritoCredencial($ID_PROVINCIA.val());
+            }
+        });
+
+        $ID_DISTRITO.change(function () {
+            if ($DivContenedorCredencialOperador.children().is(':visible') && $ID_MODALIDAD_SERVICIO.val() != '@EnumModalidadServicio.TransporteRegularPersona.ValorEntero()') {
+                $ID_DISTRITO_OPERADOR.val($(this).val());
+            }
+        })
+
+        $btnAgregarDatos.click(function () {
+            var l = $(this).ladda();
+            var strRequerisitos = "";
+            var validarCheck = "";
+            var divRequisitos = $("#DivContenedorRequisitos").children().children().children();
+            var tieneDocumento = 0;
+            var cantidadRequisitos = 0;
+            var cantidadRequisitoEntregado = 0;
+
+            $.each(divRequisitos, function (index, value) {
+                var codigo = $(value).children().eq(1).val();
+                var check = $(value).find('input').val();
+                strRequerisitos += codigo + "-" + check + "|";
+                validarCheck += check + "-";
+                cantidadRequisitos++;
+            })
+
+            strRequerisitos = strRequerisitos.substring(0, strRequerisitos.length - 1);
+            validarCheck = validarCheck.substring(0, validarCheck.length - 1);
+
+            $.each(validarCheck.split("-"), function (index, valor) {
+                if (valor == "true") {
+                    tieneDocumento = 1;
+                    cantidadRequisitoEntregado++;
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("_DetalleRequisitos", "Electronico")',
+                data: {
+                    numeroDocumento: $NumeroDocumento.val(),
+                    strRequisitos: strRequerisitos,
+                    nroVoucher: $(".NUMERO_RECIBO").val(),
+                    totalRequisito: cantidadRequisitos,
+                    totalRequisitoEntregado: cantidadRequisitoEntregado,
+                    idEntidadBancaria: $(".ID_ENTIDAD_BANCARIA").val(),
+                },
+                beforeSend: function () {
+                    l.ladda('start');
+                },
+                success: (function (data) {
+                    if (tieneDocumento == 0) {
+                        MensajeAlerta("error", "Seleccionar un requisito")
+                        return;
+                    }
+                    $("#TbRequisitos").append(data)
+                    $NumeroDocumento.val("");
+                    obtenerRequisitos();
+                }),
+                complete: function (data) {
+                    l.ladda('stop');
+                },
+            })
+        })
+
+        $btnGuardarTramite.click(function () {
+            var fechaActual = moment().format('DD/MM/YYYY');
+            var mesFuturo = moment().add(1, 'M').format('DD/MM/YYYY');
+
+            if (!ValidarTipoDocumento($ID_TIPO_DOCUMENTO)) {
+                return false;
+            }
+
+            if (!ValidarNumeroDocumento($NRO_DOCUMENTO)) {
+                return false;
+            }
+
+            if ($(".datos-personales").val().length == 0) {
+                MensajeAlerta("error", "Debe consultar los datos personales.")
+                $(".datos-personales").parent().addClass('has-error');
+                $NRO_DOCUMENTO.focus();
+                return false;
+            } else {
+                if ($(".datos-personales").parent().hasClass('has-error')) {
+                    $(".datos-personales").parent().removeClass('has-error');
+                }
+            }
+
+            $(".datos-personales").parent().removeClass('has-error');
+
+            //validando el teléfono
+            if (!ValidarCelular($TELEFONO, true)) {
+                return false;
+            }
+
+            //validando el correo
+            if (!validarEmail($CORREO)) {
+                return false;
+            }
+
+            //validando la direccion
+            if (!ValidarDireccion($DIRECCION_ACTUAL)) {
+                return false;
+            }
+
+            if ($ID_DEPARTAMENTO.val() == 0) {
+                MensajeAlerta("error", "Seleccionar un Departamento")
+                $ID_DEPARTAMENTO.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+                return false;
+            }
+
+            if ($ID_PROVINCIA.val() == 0) {
+                MensajeAlerta("error", "Seleccionar un Provincia")
+                $ID_PROVINCIA.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+                return false;
+            }
+
+            if (Number($ID_DISTRITO.val()) == 0) {
+                MensajeAlerta("error", "Seleccionar un Distrito")
+                $ID_DISTRITO.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+                return false;
+            } else {
+                if ($ID_DISTRITO.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                    $ID_DISTRITO.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                }
+            }
+
+            if (Number($ID_PROCEDIMIENTO.val()) == 0) {
+                MensajeAlerta("error", "Seleccionar un procedimiento")
+                $ID_PROCEDIMIENTO.parent().children().eq(1).find('.select2-selection').addClass('select-error');
+                return false;
+            }
+
+            if (!$DECLARACION_JURADA.is(':checked')) {
+                MensajeAlerta("error", "Debe aceptar la declaración jurada")
+                $DECLARACION_JURADA.focus();
+                return false;
+            }
+
+            var idProcedimiento = Number($('#ID_PROCEDIMIENTO').val());
+            switch (idProcedimiento) {
+                case 1://1.1
+                    if (!validaProcedimientoCredencial()) {
+                        return false;
+                    } else if (!validarPago()) {
+                        return false;
+                    };
+                    break;
+                case 4:
+                    if (!validaProcedimientoCredencial()) {
+                        return false;
+                    } else if (!validarPago()) {
+                        return false;
+                    };
+                    break;
+                case 26: //procedimiento 7.2
+                    if (!validacionRegistroOperador()) {
+                        return false;
+                    };
+                    break;
+                case 51: //procedimiento
+                    if (!validacionVehiculo()) {
+                        return false;
+                    } else if (!ValidarTarjetaPropiedad()) {
+                        return false;
+                    } else if (!ValidarSeguro()) {
+                        return false;
+                    } else if (!ValidarCITV()) {
+                        return false;
+                    } else if (!validarPago()) {
+                        return false;
+                    };
+                    break;
+                case 55: //procedimiento
+                    if (!validacionVehiculo()) {
+                        return false;
+                    };
+                    break;
+                default:
+                    if (!validarPago()) {
+                        return false;
+                    };
+                    break;
+            }
+
+            if (!$('#FLG_CORREO').is(':checked')) {
+                swal({
+                    title: "IMPORTANTE",
+                    text: "<p style='text-align:justify;margin:0 62px'>Debe autorizar a la ATU a enviar a su correo  <strong>" + $CORREO.val() + "</strong>, los documentos de constancias del trámite realizado, en caso contrario, deberá acercarse a la sede de la ATU el día <strong>" + mesFuturo + "</strong> a recoger sus documentos.</p>",
+                    type: "warning",
+                    showCancelButton: true,
+                    html: true,
+                    confirmButtonColor: "#1ab394",
+                    confirmButtonText: "Aceptar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        confirmacionGuardaTramite()
+                    } else {
+                        swal.close();
+                        $('#FLG_CORREO').focus();
+
+                    }
+                });
+                return false;
+            }
+            confirmacionGuardaTramite();
+
+        })
+    })
+
+    function confirmacionGuardaTramite() {
+        swal({
+            title: "¿REGISTRAR TRÁMITE?",
+            text: "Acepta Usted, que los datos ingresados son correctos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1ab394",
+            confirmButtonText: "Aceptar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+       function (isConfirm) {
+           if (isConfirm) {
+               guardarExpediente();
+               swal.close();
+           } else {
+               swal.close();
+           }
+       });
+    }
+
+    function validarDivDatosTramite() {
+        $DivContenedorDatosComplementario.hide();
+        $DivContenedorPago.show();
+        $DivContenedorRequisitos.show();
+        $DivContenedorBotonAgregar.show();
+        $DivRequisito.show();
+        $DivContenedorDetalleRequisito.show();
+    }
+
+    function consultarDocumento() {
+        var l = $('#btnConsultarReniec').ladda();
+        var urlAccion = "";
+
+        if (!ValidarTipoDocumento($ID_TIPO_DOCUMENTO)) {
+            return false;
+        }
+
+        if (!ValidarNumeroDocumento($NRO_DOCUMENTO)) {
+            return false;
+        }
+
+        if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()') {
+            urlAccion = '@Url.Action("ConsultaDNI", "Conductor")'
+        } else if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.CE.ValorEntero()') {
+            urlAccion = '@Url.Action("ConsultaCE", "Conductor")'
+        } else if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.PTP.ValorEntero()') {
+            urlAccion = '@Url.Action("ConsultaPTP", "Conductor")'
+        }
+        $.ajax({
+            type: "POST",
+            url: urlAccion,
+            data: {
+                DNI: $NRO_DOCUMENTO.val()
+            },
+            beforeSend: function () {
+                l.ladda('start');
+            },
+            success: function (data) {
+                var resultado = data.modelo
+                if (resultado.NOMBRES != null && resultado.NOMBRES != "") {
+                    $NOMBRES.val(resultado.NOMBRES ? resultado.NOMBRES : '');
+                    $APELLIDO_PATERNO.val(resultado.APELLIDO_PATERNO ? resultado.APELLIDO_PATERNO : '');
+                    $APELLIDO_MATERNO.val(resultado.APELLIDO_MATERNO ? resultado.APELLIDO_MATERNO : '');
+                    $DIRECCION.val(resultado.DIRECCION ? resultado.DIRECCION : '');
+                    $DIRECCION_ACTUAL.val(resultado.DIRECCION_ACTUAL ? resultado.DIRECCION_ACTUAL : '');
+                    $TELEFONO.val(resultado.TELEFONO ? resultado.TELEFONO : '');
+
+                    if (resultado.ID_DEPARTAMENTO != 0) {
+                        $ID_DEPARTAMENTO.select2('destroy');
+                        $ID_DEPARTAMENTO.val(resultado.ID_DEPARTAMENTO);
+                        $ID_DEPARTAMENTO.select2();
+
+                        if (resultado.ID_PROVINCIA != 0) {
+                            consultarProvincia(resultado.ID_DEPARTAMENTO, resultado.ID_PROVINCIA);
+                            if (resultado.ID_DISTRITO != 0) {
+                                consultarDistrito(resultado.ID_PROVINCIA, resultado.ID_DISTRITO)
+                            }
+                        }
+
+                    }
+
+                    //$ID_PROVINCIA.val(resultado.ID_PROVINCIA);
+                    //$ID_DISTRITO.val(resultado.ID_DISTRITO);
+
+                    if (resultado.CORREO != null && resultado.CORREO != "") {
+                        $CORREO.val(resultado.CORREO);
+                        $CORREO.prop('readonly', true)
+                    } else {
+                        $CORREO.prop('readonly', false)
+                    }
+                    MensajeAlerta("success", "Se cargo informacion correctamente.")
+                    $('.datos-personales').prop("readonly", true);
+                    if ($('.datos-personales').parent().hasClass('has-error')) {
+                        $('.datos-personales').parent().removeClass('has-error');
+                    }
+                } else {
+                    if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.PTP.ValorEntero()') {
+                        MensajeAlerta("warning", "La persona consultada no cuenta con carné PTP, ingrese sus datos manualmente.");
+                        $('.datos-personales').val('')
+                        $('.datos-personales').prop("readonly", false);
+                        $DIRECCION.prop('readonly', true);
+                        $NRO_DOCUMENTO.focus();
+                    }
+                    else if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.CE.ValorEntero()') {
+                        MensajeAlerta("warning", "La persona consultada no se encuetran registrada en migraciones, no puede continuar con el trámite.");
+                        $('.datos-personales').val('')
+                        $('.datos-personales').prop("readonly", false);
+                        $DIRECCION.prop('readonly', true);
+                        $NRO_DOCUMENTO.focus();
+                    }
+                    else {
+                        MensajeAlerta("error", "No se ha encontrado informacion de la persona.");
+                        $('.datos-personales').val('')
+                        $('.datos-personales').prop("readonly", true);
+                        $NRO_DOCUMENTO.focus();
+                    }
+                }
+            },
+            complete: function (data) {
+                l.ladda('stop');
+            },
+        })
+    }
+
+    function obtenerRequisitos() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("_ObtenerRequisitos", "Electronico")',
+            data: {
+                ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val()
+            },
+            success: function (data) {
+                $DivContenedorDatosComplementario.show();
+                $DivContenedorRequisitos.html(data);
+            },
+        });
+    }
+
+    function esCheckeado(element) {
+        if (element.checked) {
+            $(element).attr('checked', 'checked');
+            $(element).attr('value', true);
+        } else {
+            $(element).attr('value', false);
+            $(element).removeAttr('checked');
+        }
+    }
+
+    function guardarExpediente() {
+
+        var formData = $("#FormGuardarExpediente").serializeArray();
+        var l = $btnGuardarTramite.ladda();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GuardarExpediente", "Electronico")',
+            data: formData,
+            beforeSend: function () {
+                l.ladda('start');
+            },
+            success: function (data) {
+                if ($ID_PROCEDIMIENTO.val() == 26) {//cambiar
+                    CargarOperador();
+                }
+                if (data.success) {
+                    swal({
+                        title: "Registro Correctamente",
+                        text: "Se registró su trámite correctamente, la documentación generada fue enviada a su correo <strong>" + $CORREO.val() + "</strong>",
+                        type: "success",
+                        html: true,
+                        showCancelButton: false,
+                        confirmButtonColor: '#1ab394',
+                        confirmButtonText: 'Aceptar',
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            $ID_PROCEDIMIENTO.val(0).trigger('change');
+                            consultaProcedimiento();
+                            //location.reload();
+                        } else {
+
+                        }
+                    });
+
+                } else {
+                    MensajeAlerta("error", data.mensaje)
+                }
+            },
+            complete: function (data) {
+                l.ladda('stop');
+            },
+        })
+    }
+
+    function consultaProcedimiento() {
+        if ($ID_PROCEDIMIENTO.val() != 0) {
+            console.log($ID_PROCEDIMIENTO.val());
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ConsultarProcesoTUC", "Electronico")',
+                data: {
+                    ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+                    ID_TIPO_PERSONA: $ID_TIPO_PERSONA.val(),
+                },
+                success: function (data) {
+                    var resultado = data.modelo
+                    @*if (resultado.FLAG_AUTOMATIZACION == '@EnumProcedimientoFlag.TUC.ValorEntero()') { //TUC JOAO
+                        cargarTarjetaPropiedad();
+                        cargarSeguro();
+                        cargarCITV();
+                        CargaVehiculo();
+                        $DivContenedorDatosComplementario.hide();
+                        $DivContenedorOperador.empty();
+                        $DivContenedorCredencialOperador.empty();
+                        $("#TIPO_TRAMITE").text("TRÁMITE VIRTUAL");
+
+                    } else if (resultado.FLAG_AUTOMATIZACION == '@EnumProcedimientoFlag.CredencialOperador.ValorEntero()') { // CREDENCIALES OPERADOR CESAR
+                        CargarCredencialOperador();
+                        $DivContenedorDatosComplementario.hide();
+                        $DivContenedorOperador.empty();
+                        $DivContenedorVehiculo.empty();
+                        $DivContenedorPropietario.empty();
+                        $DivContenedorSeguro.empty();
+                        $DivContenedorCITV.empty();
+                        $("#TIPO_TRAMITE").text("TRÁMITE VIRTUAL");
+
+                    } else if (resultado.FLAG_AUTOMATIZACION == '@EnumProcedimientoFlag.Operador.ValorEntero()') { // OPERADORES WILL
+                        CargarOperador();
+                        $DivContenedorDatosComplementario.hide();
+                        $DivContenedorCredencialOperador.empty();
+                        $DivContenedorVehiculo.empty();
+                        $DivContenedorPropietario.empty();
+                        $DivContenedorSeguro.empty();
+                        $DivContenedorCITV.empty();
+                        $("#TIPO_TRAMITE").text("TRÁMITE VIRTUAL");
+
+                    } else if (resultado.FLAG_AUTOMATIZACION == '@EnumProcedimientoFlag.RenovacionAutorizacion.ValorEntero()') {
+                        $DivContenedorDatosComplementario.hide();
+                        $("#TIPO_TRAMITE").text("TRÁMITE VIRTUAL");
+
+                    } else if (resultado.FLAG_AUTOMATIZACION == '@EnumProcedimientoFlag.DuplicadoTUC.ValorEntero()') {
+                        cargarTarjetaPropiedad();
+                        cargarSeguro();
+                        cargarCITV();
+                        CargaVehiculo();
+                        bool_pertenece_solicitante = true;
+                        $DivContenedorDatosComplementario.hide();
+                        $DivContenedorOperador.empty();
+                        $DivContenedorCredencialOperador.empty();
+                        $("#TIPO_TRAMITE").text("TRÁMITE VIRTUAL");
+
+                    } else { // Requisitos
+                        obtenerRequisitos();
+                        $DivContenedorVehiculo.empty();
+                        $DivContenedorPropietario.empty();
+                        $DivContenedorSeguro.empty();
+                        $DivContenedorCITV.empty();
+                        $DivContenedorOperador.empty();
+                        $DivContenedorCredencialOperador.empty()
+
+                        if (resultado.DETALLE_MODALIDAD == 'TODOS' || resultado.DETALLE_MODALIDAD == '') {
+                            $NumeroDocumento.attr('placeholder', 'Nro Placa / Nro Documento');
+                        } else if (resultado.DETALLE_MODALIDAD == 'OPERADOR' || resultado.DETALLE_MODALIDAD == 'EMPRESA' || resultado.DETALLE_MODALIDAD == 'EMPRESA/PERSONA') {
+                            $NumeroDocumento.attr('placeholder', 'Nro Documento');
+                        } else if (resultado.DETALLE_MODALIDAD == 'VEHICULO') {
+                            $NumeroDocumento.attr('placeholder', 'Nro Placa');
+                        } else if (resultado.DETALLE_MODALIDAD == 'RUTA') {
+                            $NumeroDocumento.attr('placeholder', 'Ruta');
+                        }
+                        $("#TIPO_TRAMITE").text("TRÁMITE PRESENCIAL");
+                    }
+
+                    if ($ID_PROCEDIMIENTO.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                        $ID_PROCEDIMIENTO.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                    }*@
+                    
+                    consultarCantidadPago(resultado.MONTO.trim());
+                },
+            })
+        } else {
+            $DivContenedorVehiculo.empty();
+            $DivContenedorPropietario.empty();
+            $DivContenedorSeguro.empty();
+            $DivContenedorCITV.empty();
+            $DivContenedorDatosComplementario.hide();
+            $DivContenedorPago.empty();
+            $DivContenedorCredencialOperador.empty();
+            $("#TIPO_TRAMITE").text("");
+        }
+    }
+
+    function consultarCantidadPago(monto) {
+        if (monto == "Gratuito") {
+            $DivContenedorPago.empty();
+        } else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("_DetallePagos", "Electronico")',
+                beforeSend: function () {
+                    CargandoTarjeta($DivContenedorPago, "col-lg-12", '134');
+                },
+                data: {
+                    ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+                }
+            }).done(function (data) {
+                $DivContenedorPago.html(data);
+            })
+        }
+    }
+
+    function CargaVehiculo() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearVehiculo", "Vehiculo")',
+            data: {
+                ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+            },
+            async: false,
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorVehiculo, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorVehiculo.html(data);
+        })
+    }
+
+    function cargarTarjetaPropiedad() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearTarjetaPropiedad", "Propietario")',
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorPropietario, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorPropietario.html(data);
+        })
+    }
+
+    function cargarSeguro() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearSeguro", "Seguro")',
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorSeguro, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorSeguro.html(data);
+        })
+    }
+
+    function cargarCITV() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearCITV", "CITV")',
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorCITV, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorCITV.html(data);
+        })
+    }
+
+    function CargarOperador() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearOperador", "Operador")',
+            data: {
+                nroRUC: $RUC.val(),
+                ID_TIPO_PERSONA: $ID_TIPO_PERSONA.val(),
+                ID_MODALIDAD_SERVICIO: $ID_MODALIDAD_SERVICIO.val(),
+            },
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorOperador, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorOperador.html(data);
+        })
+    }
+
+    function CargarCredencialOperador() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearCredencialOperador", "CredencialOperador")',
+            data: {
+                NRO_DOCUMENTO: $NRO_DOCUMENTO.val(),
+                ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+            },
+            beforeSend: function () {
+                CargandoTarjeta($DivContenedorCredencialOperador, "col-lg-12", '183');
+            },
+        }).done(function (data) {
+            $DivContenedorCredencialOperador.html(data);
+        })
+    }
+
+    function EliminarDetalle($element) {
+        swal({
+            title: "¿Eliminar?",
+            text: "¿Esta seguro de eliminar este registro?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1ab394",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        $element.remove();
+                                        swal.close();
+                                        MensajeAlerta("success", "Eliminó correctamente.");
+                                    } else {
+                                        swal.close();
+                                    }
+                                });
+        return
+    }
+
+    @*function ValidarVoucher(entidadBancaria, nroDocumento, fechaPago) {
+        var recibo = 0;
+        var fecha
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: '@Url.Action("ValidarPago", "Electronico")',
+            data: {
+                ID_ENTIDAD_BANCARIA: entidadBancaria,
+                NRO_RECIBO: nroDocumento,
+                ID_MODALIDAD_SERVICIO: $ID_MODALIDAD_SERVICIO.val(),
+                ID_PROCEDIMIENTO: $ID_PROCEDIMIENTO.val(),
+                FECHA_PAGO: fechaPago,
+            },
+            success: function (data) {
+                var resultado = data;
+                console.log(resultado);
+                if (resultado.success) {
+                    if (resultado.NUMERO_RECIBO != null) {
+                        recibo = 1;
+                    } else {
+                        recibo = 0;
+                    }
+                } else {
+                    //MensajeAlerta("error", resultado.mensaje);
+                    recibo = 3;
+                }
+            },
+        })
+        return recibo;
+    }*@
+
+    function limpiar() {
+        $NRO_DOCUMENTO.val("");
+        $("#btnConsultarReniec").val("");
+        $APELLIDO_PATERNO.val("");
+        $APELLIDO_MATERNO.val("");
+        $NOMBRES.val("");
+        $("#TextNroDocumento").val("");
+        $("#DIRECCION_ACTUAL").val("");
+        $("#DIRECCION").val("");
+        $("#CORREO").val("");
+        $("#TELEFONO").val("");
+        $("#ID_DEPARTAMENTO").val(0).trigger('change');
+        $("#ID_PROVINCIA").val(0).trigger('change');
+        $("#ID_DISTRITO").val(0).trigger('change');
+
+        $('.datos-personales').parent().removeClass('has-error');
+        $('#NRO_DOCUMENTO').parent().removeClass('has-error');
+        document.getElementById('checkDireccionReniec').checked = false;
+        document.getElementById('FLG_CORREO').checked = false;
+        if ($ID_TIPO_DOCUMENTO.val() == '@EnumParametro.DNI.ValorEntero()') {
+            $("#DIRECCION_ACTUAL").prop('readonly', false);
+        }
+        $APELLIDO_PATERNO.prop('readonly', true);
+        $APELLIDO_MATERNO.prop('readonly', true);
+        $NOMBRES.prop('readonly', true);
+        $DIRECCION.prop('readonly', true);
+    }
+    /******************************************Pago Modificado**************************************/
+    
+
+    //function EnviarMensaje(mensaje) {
+    //    MensajeAlerta("error", mensaje);
+    //}
+
+    function consultarProvincia(ID_DEPARTAMENTO, ID_PROVINCIA) {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ConsultarProvinica", "Electronico")',
+            data: {
+                Id_Departamento: ID_DEPARTAMENTO
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                $ID_PROVINCIA.empty();
+                $.each(resultado, function (index, valor) {
+                    $ID_PROVINCIA.append('<option value= ' + valor.ID_PROVINCIA + '> ' + valor.NOMBRE_PROVINCIA + '</option>')
+                })
+                if (ID_PROVINCIA != null) {
+                    $ID_PROVINCIA.select2('destroy');
+                    $ID_PROVINCIA.val(ID_PROVINCIA);
+                    $ID_PROVINCIA.select2();
+                } else {
+                    if ($ID_DEPARTAMENTO.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                        $ID_DEPARTAMENTO.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                    }
+                    $ID_PROVINCIA.trigger('change')
+                }
+            }
+        })
+    }
+
+    function consultarDistrito(ID_PROVINCIA, ID_DISTRITO) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ConsultarDistrito", "Electronico")',
+            data: {
+                Id_Provincia: ID_PROVINCIA
+            },
+            success: function (data) {
+                var resultado = data.modelo;
+                $ID_DISTRITO.empty();
+                $.each(resultado, function (index, valor) {
+                    $ID_DISTRITO.append('<option value= ' + valor.ID_DISTRITO + '> ' + valor.NOMBRE_DISTRITO + '</option>')
+                })
+                if (ID_DISTRITO != null) {
+                    $ID_DISTRITO.select2('destroy');
+                    $ID_DISTRITO.val(ID_DISTRITO);
+                    $ID_DISTRITO.select2();
+                } else {
+                    if ($ID_PROVINCIA.parent().children().eq(1).find('.select2-selection').hasClass('select-error')) {
+                        $ID_PROVINCIA.parent().children().eq(1).find('.select2-selection').removeClass('select-error');
+                    }
+                    $ID_DISTRITO.trigger('change');
+                }
+
+            }
+        })
+    }
+</script>

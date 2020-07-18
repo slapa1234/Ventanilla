@@ -1,0 +1,52 @@
+﻿@model SisATU.Base.ViewModel.OperadorVM
+
+<tr data-ioper="@Model.ID_OPERADOR">
+    @using (Html.BeginCollectionItem("OperadorVM"))
+    {
+        <td class="vertical-align">
+
+            @Html.HiddenFor(model => model.ID_OPERADOR)
+            @Html.HiddenFor(model => model.APELLIDO_PATERNO)
+            @Html.HiddenFor(model => model.APELLIDO_MATERNO)
+            @Html.HiddenFor(model => model.NOMBRES)
+            @Html.HiddenFor(model => model.ID_TIPO_DOCUMENTO)
+            @Html.HiddenFor(model => model.DIRECCION)
+            @Html.HiddenFor(model => model.TELEFONO_CEL)
+            @Html.HiddenFor(model => model.TELEFONO_CASA)
+            @Html.HiddenFor(model => model.CORREO)
+            @Html.HiddenFor(model => model.ID_TIPO_OPERADOR)
+            @Html.HiddenFor(model => model.NRO_LICENCIA)
+            @Html.HiddenFor(model => model.CATEGORIA)
+            @Html.HiddenFor(model => model.FECHA_EXPEDICION)
+            @Html.HiddenFor(model => model.FECHA_REVALIDACION)
+            @Html.HiddenFor(model => model.FOTO_BASE64)
+            @Html.HiddenFor(model => model.ID_SEXO)
+            @Html.HiddenFor(model => model.FECHA_NACIMIENTO)
+            @Html.HiddenFor(model => model.ID_DEPARTAMENTO_OPERADOR)
+            @Html.HiddenFor(model => model.ID_PROVINCIA_OPERADOR)
+            @Html.HiddenFor(model => model.ID_DISTRITO_OPERADOR)
+            @Html.HiddenFor(model => model.REGISTRO_AGREGADO)
+            @*@if (Model.ID_OPERADOR > 0)
+                {*@
+            @(Model.NRO_ORDEN)
+            @*}*@
+        </td>
+        <td class="vertical-align">
+            @Html.HiddenFor(model => model.NRO_DOCUMENTO)
+            @Model.NOMBRE_TIPO_DOCUMENTO
+        </td>
+        <td class="vertical-align">@Model.NOMBRE_TIPO_OPERADOR</td>
+        <td class="vertical-align">@Model.NRO_DOCUMENTO</td>
+        <td class="vertical-align">@Model.APELLIDO_PATERNO @Model.APELLIDO_MATERNO, @Model.NOMBRES</td>
+        <td style="width:20px;">
+            @if (Model.ID_OPERADOR > 0)
+            {
+                <span class="fa fa-eye" title="Ver Datos" style="color: #1ab394;font-size: 19px;"></span>
+            }
+            else
+            {
+                <span onclick="EliminarDetalle($(this).parent().parent(), $(this));" class="fa fa-close" title="EliminarTemporal" style="cursor:pointer;color: #ed5666;font-size: 19px;"></span>
+            }
+        </td>
+    }
+</tr>

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43192661-F741-4C31-A9B3-AF4EA6321199}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SisATU.Base</RootNamespace>
+    <AssemblyName>SisATU.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dominio\AfocatModelo.cs" />
+    <Compile Include="Dominio\AseguradoraModelo.cs" />
+    <Compile Include="Dominio\CategoriaVehiculoModelo.cs" />
+    <Compile Include="Dominio\ClaseVehiculoModelo.cs" />
+    <Compile Include="Dominio\CodigoTupaModelo.cs" />
+    <Compile Include="Dominio\CredencialOperadorModelo.cs" />
+    <Compile Include="Dominio\DepartamentoModelo.cs" />
+    <Compile Include="Dominio\DetalleSolicitudModelo.cs" />
+    <Compile Include="Dominio\DistritoModelo.cs" />
+    <Compile Include="Dominio\EmpresaModelo.cs" />
+    <Compile Include="Dominio\EntidadBancariaModelo.cs" />
+    <Compile Include="Dominio\ExpedienteModelo.cs" />
+    <Compile Include="Dominio\MaestroMatrizModelo.cs" />
+    <Compile Include="Dominio\MarcaModelo.cs" />
+    <Compile Include="Dominio\ModalidadServicioModelo.cs" />
+    <Compile Include="Dominio\Modelo.cs" />
+    <Compile Include="Dominio\OperadorEmpresaModelo.cs" />
+    <Compile Include="Dominio\OperadorModelo.cs" />
+    <Compile Include="Dominio\ParametroModelo.cs" />
+    <Compile Include="Dominio\PersonaModelo.cs" />
+    <Compile Include="Dominio\ProcedimientoModelo.cs" />
+    <Compile Include="Dominio\PropietarioModelo.cs" />
+    <Compile Include="Dominio\ProvinciaModelo.cs" />
+    <Compile Include="Dominio\ReciboModelo.cs" />
+    <Compile Include="Dominio\RequisitosProcedimientosModelo.cs" />
+    <Compile Include="Dominio\ResolucionExpedienteModelo.cs" />
+    <Compile Include="Dominio\ResolucionModelo.cs" />
+    <Compile Include="Dominio\STDModelo.cs" />
+    <Compile Include="Dominio\TarjetaCirculacionModelo.cs" />
+    <Compile Include="Dominio\TarjetaPropiedadModelo.cs" />
+    <Compile Include="Dominio\TipoSeguroModelo.cs" />
+    <Compile Include="Dominio\UsuarioModelo.cs" />
+    <Compile Include="Dominio\VehiculoAseguradoraModelo.cs" />
+    <Compile Include="Dominio\VehiculoCITVModelo.cs" />
+    <Compile Include="Dominio\VehiculoModelo.cs" />
+    <Compile Include="Enumeradores\EnumEntidadBancaria.cs" />
+    <Compile Include="Enumeradores\EnumEstado.cs" />
+    <Compile Include="Enumeradores\EnumModalidadServicio.cs" />
+    <Compile Include="Enumeradores\EnumParametro.cs" />
+    <Compile Include="Enumeradores\EnumParametroSecuenciaTipoOperador.cs" />
+    <Compile Include="Enumeradores\EnumParametroTipo.cs" />
+    <Compile Include="Enumeradores\EnumParametroTipoOperador.cs" />
+    <Compile Include="Enumeradores\EnumParametroTipoPersona.cs" />
+    <Compile Include="Enumeradores\EnumProcedimientoFlag.cs" />
+    <Compile Include="Constante\Procedimiento.cs" />
+    <Compile Include="Enumeradores\EnumTipoCredencial.cs" />
+    <Compile Include="Enumeradores\EnumTipoExpediente.cs" />
+    <Compile Include="Enumeradores\EnumTipoSeguro.cs" />
+    <Compile Include="Extensiones\EnumExtensiones.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AccesoAdministrado\DatosAccesoAdministradoVM.cs" />
+    <Compile Include="ViewModel\AccesoAdministrado\DatosVentanaPrincipalVM.cs" />
+    <Compile Include="ViewModel\Afocat\ComboAfocatVM.cs" />
+    <Compile Include="ViewModel\Aseguradora\AseguradoraVM.cs" />
+    <Compile Include="ViewModel\BackOffice\BackOfficeVM.cs" />
+    <Compile Include="ViewModel\CabeceraBackOffice\CabeceraBackOfficeVM.cs" />
+    <Compile Include="ViewModel\CategoriaVehiculo\ComboCategoriaVehiculoVM.cs" />
+    <Compile Include="ViewModel\ClaseVehiculo\ComboClaseVehiculoVM.cs" />
+    <Compile Include="ViewModel\CodigoTupa\CodigoTupaVM.cs" />
+    <Compile Include="ViewModel\ConstanciaOperador\ConstanciaOperadorVM.cs" />
+    <Compile Include="ViewModel\CredencialOperadorModelo\CredencialOperadorVM.cs" />
+    <Compile Include="ViewModel\DataTable\DataTableModelo.cs" />
+    <Compile Include="ViewModel\Departamento\ComboDepartamentoVM.cs" />
+    <Compile Include="ViewModel\Departamento\DepartamentoVM.cs" />
+    <Compile Include="ViewModel\DetalleRegistro\DetalleRegistroVM.cs" />
+    <Compile Include="ViewModel\DetalleSolicitud\DetalleSolicitudVM.cs" />
+    <Compile Include="ViewModel\Distrito\DistritoVM.cs" />
+    <Compile Include="ViewModel\Empresa\EmpresaVM.cs" />
+    <Compile Include="ViewModel\EntidadBancaria\EntidadBancariaVM.cs" />
+    <Compile Include="ViewModel\Expediente\DTListaExpedienteVM.cs" />
+    <Compile Include="ViewModel\Expediente\ExpedienteVM.cs" />
+    <Compile Include="ViewModel\Expediente_Cita\Expediente_CitaVM.cs" />
+    <Compile Include="ViewModel\MaestroMatriz\MaestroMatrizVM.cs" />
+    <Compile Include="ViewModel\Marca\ComboMarcaVM.cs" />
+    <Compile Include="ViewModel\Marca\MarcaVM.cs" />
+    <Compile Include="ViewModel\ModalidadServicio\ComboModalidadServicioVM.cs" />
+    <Compile Include="ViewModel\Modelo\ComboModeloVM.cs" />
+    <Compile Include="ViewModel\Operador\OperadorVM.cs" />
+    <Compile Include="ViewModel\Operador\PapeletaVM.cs" />
+    <Compile Include="ViewModel\Operador\ResultadoMTC.cs" />
+    <Compile Include="ViewModel\Persona\PersonaVM.cs" />
+    <Compile Include="ViewModel\ProcedimientoNOTUPA\ProcedimientoNOTUPAVM.cs" />
+    <Compile Include="ViewModel\Procedimiento\ComboProcedimientoVM.cs" />
+    <Compile Include="ViewModel\Procedimiento\ProcedimientoVM.cs" />
+    <Compile Include="ViewModel\Propietario\PropietarioVM.cs" />
+    <Compile Include="ViewModel\Provincia\ComboProvinciaVM.cs" />
+    <Compile Include="ViewModel\Provincia\ProvinciaVM.cs" />
+    <Compile Include="ViewModel\Recibo\ReciboVM.cs" />
+    <Compile Include="ViewModel\RequisitosProcedimientos\ComboRequisitosProcedimientosVM.cs" />
+    <Compile Include="ViewModel\Resoluciones\ResolucionesVM.cs" />
+    <Compile Include="ViewModel\ResolucionExpediente\ResolucionExpedienteVM.cs" />
+    <Compile Include="ViewModel\Resolucion\ReporteResolucionVM.cs" />
+    <Compile Include="ViewModel\Resolucion\ResolucionVM.cs" />
+    <Compile Include="ViewModel\Resultado\ResultadoProcedimientoVM.cs" />
+    <Compile Include="ViewModel\Resultado\ResultadoUsuarioVM.cs" />
+    <Compile Include="ViewModel\STD\STDVM.cs" />
+    <Compile Include="ViewModel\TarjetaCirculacion\TarjetaCirculacionVM.cs" />
+    <Compile Include="ViewModel\TarjetaPropiedad\TarjetaPropiedadVM.cs" />
+    <Compile Include="ViewModel\TarjetaCirculacion\TarjetaUnicaCirculacionVM.cs" />
+    <Compile Include="ViewModel\Tarjeta_Credencial\TarjetaCredencialOperadorVM.cs" />
+    <Compile Include="ViewModel\TipoSeguro\ComboTipoSeguroVM.cs" />
+    <Compile Include="ViewModel\Tramite\TramiteSATVM.cs" />
+    <Compile Include="ViewModel\Tramite\MultaVM.cs" />
+    <Compile Include="ViewModel\Tramite\TramiteSimpleVM.cs" />
+    <Compile Include="ViewModel\Tramite\TramiteVM.cs" />
+    <Compile Include="ViewModel\Usuario\UsuarioVM.cs" />
+    <Compile Include="ViewModel\VehiculoAseguradora\VehiculoAseguradoraVM.cs" />
+    <Compile Include="ViewModel\VehiculoCITV\VehiculoCITVVM.cs" />
+    <Compile Include="ViewModel\Vehiculo\ConsultarVehiculoVM.cs" />
+    <Compile Include="ViewModel\Vehiculo\VehiculoVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

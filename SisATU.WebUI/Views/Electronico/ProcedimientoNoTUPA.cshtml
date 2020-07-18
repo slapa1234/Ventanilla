@@ -1,0 +1,70 @@
+﻿
+@model SisATU.Base.ViewModel.ProcedimientoNOTUPAVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATU | PROCEDIMIENTO NO TUPA</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    @Styles.Render("~/plugins/toastrStyles")
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/Util.js"></script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen">
+        <div>
+            <div>
+                <h1 class="logo-name">
+                    <img src="~/Images/ATU/Logos/LOGO_CAMBIO_360.png" />
+                </h1>
+            </div>
+            <h3>Procedimiento NO TUPA</h3>
+            <p>Registrar solicitud.</p>
+            @using (Html.BeginForm("validarAcceso", "Acceso", FormMethod.Post, new { @Class = "m-t", @id = "frmAccesoAdministrado" }))
+            {
+                <div class="form-group">
+                    @Html.TextBoxFor(modelo => Model.NRO_RUC, new {
+                           @readonly = "true", @maxlength = "11",
+                           @onKeyPress = "return soloNumeros(event)",
+                           @class = "form-control", @placeholder = "RUC"
+                    })
+                </div>
+                <div class="form-group">
+                    @Html.TextAreaFor(modelo => Model.ASUNTO, new {
+                           @onKeyPress = "return soloNumeros(event)",
+                           @class = "form-control", @placeholder = "Asunto"
+                    })
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(modelo => Model.NRO_PLACA, new
+                   {
+                       @maxlength = "6",
+                       @class = "form-control",
+                       @placeholder = "Número de placa"
+                   })
+                </div>
+                <button type="submit" class="btn btn-success block full-width m-b">Enviar</button>
+            }
+            <p class="m-t"><small>ATU&copy; 2020</small></p>
+        </div>
+    </div>
+</body>
+</html>
+
+
